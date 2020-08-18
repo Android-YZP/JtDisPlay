@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_sales"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:focusable="auto"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:nextFocusRight="@id/tv_car"
+            android:nextFocusDown="@id/tv_cost"
+            android:text="销售主题"
+            android:textColor="#fff"
+            android:textSize="@dimen/main_sp"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/tv_car"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:focusable="auto"
+            android:gravity="center"
+            android:nextFocusLeft="@id/tv_sales"
+            android:nextFocusDown="@id/tv_transport"
+            android:text="送仓车辆调度主题"
+            android:textColor="#fff"
+            android:textSize="@dimen/main_sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cost"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:focusable="auto"
+            android:gravity="center"
+            android:nextFocusRight="@id/tv_transport"
+            android:nextFocusUp="@id/tv_sales"
+            android:text="转运主题"
+            android:textColor="#fff"
+            android:textSize="@dimen/main_sp"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/tv_transport"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:focusable="auto"
+            android:gravity="center"
+            android:nextFocusLeft="@id/tv_cost"
+            android:nextFocusUp="@id/tv_car"
+            android:text="成本主题"
+            android:textColor="#fff"
+            android:textSize="@dimen/main_sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
