@@ -31,14 +31,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="提货计划体积 \n 333平方米" />
+                android:text="提货计划体积 \n 333m³" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="提货计划体积 \n 333平方米" />
+                android:text="提货计划体积 \n 333m³" />
         </LinearLayout>
 
         <LinearLayout

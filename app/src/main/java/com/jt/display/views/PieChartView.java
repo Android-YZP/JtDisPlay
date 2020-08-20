@@ -18,8 +18,6 @@ import java.util.List;
 
 /**
  * 饼状统计图，带有标注线，都可以自行设定其多种参数选项
- * <p/>
- * Created By: Seal.Wu
  */
 public class PieChartView extends View {
 

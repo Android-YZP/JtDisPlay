@@ -69,44 +69,46 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <com.jt.display.views.ManyBarChart
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.jt.display.views.CLineChart
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.jt.display.views.PieChartView
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <com.jt.display.views.CLineChart
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.jt.display.views.HBarChart
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.jt.display.views.HBarChart
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
     </LinearLayout>
