@@ -35,5 +35,22 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
+    <com.jt.display.views.PieChartView
+        android:id="@+id/pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="#ccc"
+        android:paddingLeft="20dp"
+        android:paddingBottom="40dp"
+        android:visibility="gone"
+        app:circleRadius="100dp"
+        app:textSize="13sp" />
+
+    <com.jt.display.views.HBarChart
+        android:id="@+id/h_bar_chart"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </RelativeLayout>

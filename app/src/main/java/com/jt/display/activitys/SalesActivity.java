@@ -3,8 +3,8 @@ package com.jt.display.activitys;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Bundle;
-
+import android.graphics.Color;
+import com.github.mikephil.charting.animation.Easing;
 import com.jt.display.R;
 import com.jt.display.base.BaseDisplayActivity;
 import com.jt.display.bean.BarJsonBean;
@@ -12,13 +12,15 @@ import com.jt.display.bean.lineChartBean;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.views.CLineChart;
 import com.jt.display.views.CustomPieChart;
+import com.jt.display.views.HBarChart;
 import com.jt.display.views.ManyBarChart;
+import com.jt.display.views.PieChartView;
 import com.jt.display.views.SingleBarChart;
 import com.orhanobut.logger.Logger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -38,6 +40,7 @@ public class SalesActivity extends BaseDisplayActivity {
     private List<Integer> colors;
     private List<BarJsonBean.StFinDateBean.VtDateValueBean> dateValueList;
     private BarJsonBean barJsonBean;
+    private HBarChart mHorizontalBarChart;
 
     @Override
     public int getLayoutId() {
@@ -50,6 +53,8 @@ public class SalesActivity extends BaseDisplayActivity {
         mLineChart = (CLineChart) findViewById(R.id.line_chart);
         mSingleBarChart = (SingleBarChart) findViewById(R.id.single_bar_chart);
         mManyBarChart = (ManyBarChart) findViewById(R.id.many_bar_chart);
+        mHorizontalBarChart = findViewById(R.id.h_bar_chart);
+        initHorizontalBarChart();
     }
 
     @Override
@@ -59,12 +64,10 @@ public class SalesActivity extends BaseDisplayActivity {
         clientAccumulativeRate = lineChartBean1.getGRID0().getResult().getClientAccumulativeRate();
         compositeIndexShenzhen = lineChartBean1.getGRID0().getResult().getCompositeIndexShenzhen();
 
-                String json2 = getJson(SalesActivity.this, "test2.json").trim();
+        String json2 = getJson(SalesActivity.this, "test2.json").trim();
         lineChartBean lineChartBean2 = GsonUtil.GsonToBean(json2, lineChartBean.class);
         clientAccumulativeRate2 = lineChartBean2.getGRID0().getResult().getClientAccumulativeRate();
         compositeIndexShenzhen2 = lineChartBean2.getGRID0().getResult().getCompositeIndexShenzhen();
-
-
 
 
         colors = Arrays.asList(
@@ -87,6 +90,9 @@ public class SalesActivity extends BaseDisplayActivity {
 
     private void initMBar() {
         //多条柱状图
+        mManyBarChart.animateY(1000, Easing.EasingOption.Linear);
+        mManyBarChart.animateX(1000, Easing.EasingOption.Linear);
+
         mManyBarChart.clear();
         mManyBarChart.showBarChart(mManyBarChart.initXData(barJsonBean), mManyBarChart.initYData(barJsonBean), colors);
 
@@ -94,6 +100,9 @@ public class SalesActivity extends BaseDisplayActivity {
 
     private void initSBar() {
         //单条柱状图
+        mSingleBarChart.animateY(1000, Easing.EasingOption.Linear);
+        mSingleBarChart.animateX(1000, Easing.EasingOption.Linear);
+
         mSingleBarChart.clear();
         mSingleBarChart.showBarChart(dateValueList, "净资产收益率（%）", getResources().getColor(R.color.them_colors));
 
@@ -101,18 +110,24 @@ public class SalesActivity extends BaseDisplayActivity {
 
     private void initPie() {
         //饼状图
+        customPieChart.animateY(1000, Easing.EasingOption.EaseInOutQuad);
         customPieChart.showPieChart(customPieChart.getPieChartData());
     }
 
     private void initLine() {
-        Logger.e( "initLine");
+        Logger.e("initLine");
         //线形图
         mLineChart.animateY(1000);
         mLineChart.animateX(1000);
         mLineChart.showLineChart(clientAccumulativeRate2, "我的收益", getResources().getColor(R.color.them_colors));
         mLineChart.addLine(compositeIndexShenzhen2, "上证指数", getResources().getColor(R.color.black));
-
     }
+
+
+    private void initHorizontalBarChart() {
+        mHorizontalBarChart.loadData();
+    }
+
 
     @Override
     public void initListener() {
@@ -121,7 +136,23 @@ public class SalesActivity extends BaseDisplayActivity {
         addView(mLineChart);
         addView(mSingleBarChart);
         addView(mManyBarChart);
-        startAnim();
+
+
+        //饼状图
+        PieChartView pieChartView = (PieChartView) findViewById(R.id.pie_chart);
+        List<PieChartView.PieceDataHolder> pieceDataHolders = new ArrayList<>();
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(100, 0xFF77CCAA, "今天，１"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(1000, 0xFF11AA33, "明天，２"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(1200, Color.GRAY, "就是风，３"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(1200, Color.GRAY, "就是风，３"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(1200, Color.GRAY, "就是风，３"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(1200, Color.GRAY, "就是风，３"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(1200, Color.GRAY, "就是风，３"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(5000, Color.YELLOW, "呵呵，４"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(10000, Color.RED, "小京，５"));
+        pieceDataHolders.add(new PieChartView.PieceDataHolder(13000, Color.BLUE, "花花，６"));
+        pieChartView.setData(pieceDataHolders);
+
     }
 
     @Override

@@ -79,7 +79,7 @@ public class CLineChart extends LineChart {
         leftYAxis.setDrawGridLines(true);
         rightYaxis.setEnabled(false);
         //设置X Y轴网格线为虚线（实体线长度、间隔距离、偏移量：通常使用 0）
-        leftYAxis.enableGridDashedLine(0f, 10f, 0f);
+        leftYAxis.enableGridDashedLine(10f, 10f, 0f);
 
         //X轴设置显示位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -200,16 +200,16 @@ public class CLineChart extends LineChart {
         lineDataSet.setLineWidth(1f);
         lineDataSet.setCircleRadius(3f);
         //设置曲线值的圆点是实心还是空心
-        lineDataSet.setDrawCircleHole(false);
+        lineDataSet.setDrawCircleHole(true);
         lineDataSet.setValueTextSize(10f);
         //设置折线图填充
-        lineDataSet.setDrawFilled(true);
+        lineDataSet.setDrawFilled(false);
         lineDataSet.setFormLineWidth(1f);
         lineDataSet.setFormSize(15.f);
         //不显示点
-        lineDataSet.setDrawCircles(false);
+        lineDataSet.setDrawCircles(true);
         //不显示值
-        lineDataSet.setDrawValues(true);
+        lineDataSet.setDrawValues(false);
         //线条值的更改
         lineDataSet.setValueFormatter(new IValueFormatter() {
             @Override
@@ -222,7 +222,7 @@ public class CLineChart extends LineChart {
 
         if (mode == null) {
             //设置曲线展示为圆滑曲线（如果不设置则默认折线）
-            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         } else {
             lineDataSet.setMode(mode);
         }

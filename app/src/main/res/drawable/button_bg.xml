@@ -11,8 +11,8 @@
 
             <corners android:radius="23dp" />
 
-            <stroke android:width="3dp" android:color="#339ecf" />
-            <solid android:color="#3f339ecf" />
+            <stroke android:width="3dp" android:color="#0f0" />
+            <solid android:color="#3f000000" />
             <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp" />
 
         </shape>
@@ -28,7 +28,7 @@
 
             <corners android:radius="23dp" />
 
-            <solid android:color="#3f339ecf" />
+            <solid android:color="#3f000000" />
 
             <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp" />
 

@@ -7,10 +7,114 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="今日销售额\n435548"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font25" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="今日销售额\n435548"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font25" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="今额\n435548"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font25" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="今额\n435548"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font25" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.jt.display.views.ManyBarChart
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+
+        <com.jt.display.views.CLineChart
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+
+        <com.jt.display.views.PieChartView
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.jt.display.views.CLineChart
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+
+        <com.jt.display.views.HBarChart
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+
+        <com.jt.display.views.HBarChart
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -23,8 +127,8 @@
             android:focusable="auto"
             android:focusableInTouchMode="true"
             android:gravity="center"
+            android:nextFocusLeft="@id/tv_cost"
             android:nextFocusRight="@id/tv_car"
-            android:nextFocusDown="@id/tv_cost"
             android:text="销售主题"
             android:textColor="#fff"
             android:textSize="@dimen/main_sp"
@@ -40,35 +144,11 @@
             android:focusable="auto"
             android:gravity="center"
             android:nextFocusLeft="@id/tv_sales"
-            android:nextFocusDown="@id/tv_transport"
+            android:nextFocusRight="@id/tv_transport"
             android:text="送仓车辆调度主题"
             android:textColor="#fff"
             android:textSize="@dimen/main_sp" />
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_cost"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_bg"
-            android:focusable="auto"
-            android:gravity="center"
-            android:nextFocusRight="@id/tv_transport"
-            android:nextFocusUp="@id/tv_sales"
-            android:text="转运主题"
-            android:textColor="#fff"
-            android:textSize="@dimen/main_sp"
-            tools:ignore="NestedWeights" />
 
         <TextView
             android:id="@+id/tv_transport"
@@ -79,14 +159,29 @@
             android:background="@drawable/button_bg"
             android:focusable="auto"
             android:gravity="center"
-            android:nextFocusLeft="@id/tv_cost"
-            android:nextFocusUp="@id/tv_car"
+            android:nextFocusLeft="@id/tv_car"
+            android:nextFocusRight="@id/tv_cost"
+            android:text="转运主题"
+            android:textColor="#fff"
+            android:textSize="@dimen/main_sp"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/tv_cost"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:focusable="auto"
+            android:gravity="center"
+            android:nextFocusLeft="@id/tv_transport"
+            android:nextFocusRight="@id/tv_sales"
             android:text="成本主题"
             android:textColor="#fff"
             android:textSize="@dimen/main_sp" />
 
 
     </LinearLayout>
-
 
 </LinearLayout>

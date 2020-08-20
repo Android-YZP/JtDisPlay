@@ -39,7 +39,7 @@ public abstract class BaseDisplayActivity<T extends BasePresenter> extends AppCo
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            nextPager(pager, 2000);
+            nextPager(pager, 10000);
         }
     };
 
@@ -89,7 +89,7 @@ public abstract class BaseDisplayActivity<T extends BasePresenter> extends AppCo
     }
 
     public void startAnim() {
-        nextPager(pager, 4000);
+        nextPager(pager, 10000);
     }
 
 
