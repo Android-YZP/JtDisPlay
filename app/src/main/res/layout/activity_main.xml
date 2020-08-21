@@ -3,66 +3,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg"
+    android:background="@color/bg_color"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@color/bg_data"
+            android:paddingStart="10dp"
             android:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
             android:text="今日销售额\n435548"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font25" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@color/bg_data"
+            android:paddingStart="10dp"
             android:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
             android:text="今日销售额\n435548"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font25" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@color/bg_data"
+            android:paddingStart="10dp"
             android:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
             android:text="今额\n435548"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font25" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@color/bg_data"
+            android:paddingStart="10dp"
             android:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
             android:text="今额\n435548"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font25" />
 
     </LinearLayout>
@@ -116,7 +147,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <TextView
@@ -124,6 +155,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_bg"
             android:focusable="auto"
@@ -132,7 +165,7 @@
             android:nextFocusLeft="@id/tv_cost"
             android:nextFocusRight="@id/tv_car"
             android:text="销售主题"
-            android:textColor="#fff"
+            android:textColor="@drawable/selector_bottom_text"
             android:textSize="@dimen/main_sp"
             tools:ignore="NestedWeights" />
 
@@ -141,6 +174,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_bg"
             android:focusable="auto"
@@ -148,7 +183,7 @@
             android:nextFocusLeft="@id/tv_sales"
             android:nextFocusRight="@id/tv_transport"
             android:text="送仓车辆调度主题"
-            android:textColor="#fff"
+            android:textColor="@drawable/selector_bottom_text"
             android:textSize="@dimen/main_sp" />
 
 
@@ -157,6 +192,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_bg"
             android:focusable="auto"
@@ -164,7 +201,7 @@
             android:nextFocusLeft="@id/tv_car"
             android:nextFocusRight="@id/tv_cost"
             android:text="转运主题"
-            android:textColor="#fff"
+            android:textColor="@drawable/selector_bottom_text"
             android:textSize="@dimen/main_sp"
             tools:ignore="NestedWeights" />
 
@@ -173,6 +210,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_bg"
             android:focusable="auto"
@@ -180,7 +219,7 @@
             android:nextFocusLeft="@id/tv_transport"
             android:nextFocusRight="@id/tv_sales"
             android:text="成本主题"
-            android:textColor="#fff"
+            android:textColor="@drawable/selector_bottom_text"
             android:textSize="@dimen/main_sp" />
 
 

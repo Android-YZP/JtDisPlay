@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -59,15 +60,18 @@ public class CLineChart extends LineChart {
         lineChart.setDragEnabled(false);
         //是否有触摸事件
         lineChart.setTouchEnabled(true);
-        lineChart.setBackgroundColor(Color.parseColor("#ffffff"));
+        lineChart.setBackgroundColor(Color.parseColor("#242230"));
         //设置XY轴动画效果
         lineChart.animateY(1000);
         lineChart.animateX(1000);
         //右下角的刻度显示
-//        Description description = new Description();
-//        description.setText("哈哈哈");
-//        description.setEnabled(true);
-//        lineChart.setDescription(description);
+        Description description = new Description();
+        description.setText("哈哈哈");
+        description.setPosition(100, 10);
+        description.setTextSize(28f);
+        description.setTextColor(Color.parseColor("#ffffff"));
+        description.setEnabled(true);
+        lineChart.setDescription(description);
         /***XY轴的设置***/
         xAxis = lineChart.getXAxis();
         leftYAxis = lineChart.getAxisLeft();
@@ -90,10 +94,24 @@ public class CLineChart extends LineChart {
         leftYAxis.setAxisMinimum(0f);
         rightYaxis.setAxisMinimum(0f);
 
+        //X,Y轴数据设置
+        leftYAxis.setAxisLineColor(Color.TRANSPARENT);
+        leftYAxis.setTextColor(Color.parseColor("#8FC7CC"));
+        xAxis.setTextColor(Color.parseColor("#8FC7CC"));
+        xAxis.setAxisLineColor(Color.TRANSPARENT);
+
+//        //是否启用绘制零线:设置为true后才有后面的操作
+        leftYAxis.setDrawZeroLine(false);
+//        //设置绘制零线宽度
+//        leftYAxis.setZeroLineWidth(1.2f);
+//        //绘制零线颜色
+//        leftYAxis.setZeroLineColor(Color.YELLOW);
+
+
         /***折线图例 标签 设置***/
         legend = lineChart.getLegend();
         //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
-        legend.setForm(Legend.LegendForm.LINE);
+        legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setTextSize(12f);
         //显示位置 左下方
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -120,7 +138,7 @@ public class CLineChart extends LineChart {
         }
         // 每一个LineDataSet代表一条线
         LineDataSet lineDataSet = new LineDataSet(entries, name);
-        initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
+        initLineDataSet(lineDataSet, color, LineDataSet.Mode.CUBIC_BEZIER);
         getLineData().addDataSet(lineDataSet);
         invalidate();
     }
@@ -161,7 +179,7 @@ public class CLineChart extends LineChart {
         }
         // 每一个LineDataSet代表一条线
         LineDataSet lineDataSet = new LineDataSet(entries, name);
-        initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
+        initLineDataSet(lineDataSet, color, LineDataSet.Mode.CUBIC_BEZIER);
         LineData lineData = new LineData(lineDataSet);
 
         setData(lineData);
@@ -200,14 +218,14 @@ public class CLineChart extends LineChart {
         lineDataSet.setLineWidth(1f);
         lineDataSet.setCircleRadius(3f);
         //设置曲线值的圆点是实心还是空心
-        lineDataSet.setDrawCircleHole(true);
+        lineDataSet.setDrawCircleHole(false);
         lineDataSet.setValueTextSize(10f);
         //设置折线图填充
         lineDataSet.setDrawFilled(false);
         lineDataSet.setFormLineWidth(1f);
         lineDataSet.setFormSize(15.f);
         //不显示点
-        lineDataSet.setDrawCircles(true);
+        lineDataSet.setDrawCircles(false);
         //不显示值
         lineDataSet.setDrawValues(false);
         //线条值的更改
@@ -222,12 +240,11 @@ public class CLineChart extends LineChart {
 
         if (mode == null) {
             //设置曲线展示为圆滑曲线（如果不设置则默认折线）
-            lineDataSet.setMode(LineDataSet.Mode.LINEAR);
+            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         } else {
-            lineDataSet.setMode(mode);
+            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         }
     }
-
 
 
 }

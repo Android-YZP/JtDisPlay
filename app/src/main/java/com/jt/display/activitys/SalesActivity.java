@@ -78,8 +78,8 @@ public class SalesActivity extends BaseDisplayActivity {
         dateValueList = barJsonBean.getStFinDate().getVtDateValue();
         Collections.reverse(dateValueList);//将集合 逆序排列，转换成需要的顺序
 
-        mLineChart.showLineChart(clientAccumulativeRate, "我的收益", getResources().getColor(R.color.them_colors));
-        mLineChart.addLine(compositeIndexShenzhen, "上证指数", getResources().getColor(R.color.black));
+        mLineChart.showLineChart(clientAccumulativeRate, "我的收益", getResources().getColor(R.color.white));
+        mLineChart.addLine(compositeIndexShenzhen, "上证指数", getResources().getColor(R.color.text_color));
 
         initPie();
         initSBar();

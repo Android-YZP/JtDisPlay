@@ -12,32 +12,44 @@ import retrofit2.http.Query;
 public interface APIService {
 //
 //    //用户登录
-//    @POST("jwms-auth/oauth/token")
-//    Flowable<LoginDataBean> login(@Header("Authorization") String authorization,
-//                                  @Header("Content-Type") String ContentType,
-//                                  @Header("Tenant-Id") String TenantId,
-//                                  @Query("grant_type") String grant_type,
-//                                  @Query("username") String username,
-//                                  @Query("password") String password,
-//                                  @Query("scope") String scope,
-//                                  @Query("tenantid") String Tenant_id);
-//
-//    //选择仓库
-//    @GET("/jwms-basic-data/warehouse_users")
-//    Flowable<JsonResult> warehouse_users(@Query("account") String account,
-//                                         @Query("tenantId") String tenantId);
-//
-//
-//    /**
-//     * 选择上架功能
-//     */
-//
-//
-//    //效验容器  blade-auth就是token
-//    @GET("/jwms-inbound/putaway/actions/scan_container_code")
-//    Flowable<JsonResult> scan_container_code(@Header("Authorization") String authorization, @Header("blade-auth") String blade_auth,
-//                                             @Query("containerCode") String containerCode,
-//                                             @Query("warehouseId") String warehouseId);
+    @POST("/jtms-auth/token")
+    Flowable<JsonResult> login(@Header("Authorization") String authorization,
+                                  @Query("grantType") String grant_type,
+                                  @Query("tenantId") String tenantId,
+                                  @Query("account") String account,
+                                  @Query("password") String password
+                                 );
+
+
+
+    @GET("/api/jtms-order/reportForm/lastSevenDaysSales")
+    Flowable<JsonResult> lastSevenDaysSales(@Header("Authorization") String authorization,
+                                             @Header("blade-auth") String blade_auth);
+
+    @GET("/api/jtms-order/reportForm/lastSixMonthSales")
+    Flowable<JsonResult> lastSixMonthSales(@Header("Authorization") String authorization,
+                                             @Header("blade-auth") String blade_auth);
+
+    @GET("/api/jtms-order/reportForm/customerSalesSort")
+    Flowable<JsonResult> customerSalesSort(@Header("Authorization") String authorization,
+                                             @Header("blade-auth") String blade_auth,
+                                             @Query("type") String type);
+
+    @GET("/api/jtms-logistics/reportForm/lastSevenCarCost")
+    Flowable<JsonResult> lastSevenCarCost(@Header("Authorization") String authorization,
+                                             @Header("blade-auth") String blade_auth);
+
+    @GET("/api/jtms-warehouse/reportForm/currentReceiveDelivery")
+    Flowable<JsonResult> currentReceiveDelivery(@Header("Authorization") String authorization,
+                                             @Header("blade-auth") String blade_auth);
+
+    @GET("/api/jtms-logistics/reportForm/currentDateLoadAndUnloadVolume")
+    Flowable<JsonResult> currentDateLoadAndUnloadVolume(@Header("Authorization") String authorization,
+                                             @Header("blade-auth") String blade_auth);
+
+
+
+
 //
 //    //查询容器内库存数据  blade-auth就是token
 //    @GET("/jwms-inventory/realtime_inventory/container_inventory")

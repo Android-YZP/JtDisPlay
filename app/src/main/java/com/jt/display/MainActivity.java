@@ -1,27 +1,28 @@
 package com.jt.display;
 
 import android.content.Intent;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.jt.display.activitys.CarActivity;
 import com.jt.display.activitys.CostActivity;
 import com.jt.display.activitys.SalesActivity;
 import com.jt.display.activitys.TransportActivity;
 import com.jt.display.base.BaseDisplayActivity;
-import com.orhanobut.logger.Logger;
+import com.jt.display.base.Constants;
+import com.jt.display.base.JsonResult;
+import com.jt.display.bean.LoginData;
+import com.jt.display.presenter.ComPresenter;
+import com.jt.display.utils.GsonUtil;
+import com.jt.display.utils.SharePreferenceUtils;
 
-public class MainActivity extends BaseDisplayActivity {
-
+public class MainActivity extends BaseDisplayActivity implements View.OnFocusChangeListener {
 
     private TextView mTvSales;
     private TextView mTvCar;
     private TextView mTvCost;
     private TextView mTvTransport;
+    private ComPresenter mPresenter;
 
     @Override
     public int getLayoutId() {
@@ -38,7 +39,9 @@ public class MainActivity extends BaseDisplayActivity {
 
     @Override
     public void initData() {
-
+        mPresenter = new ComPresenter();
+        mPresenter.attachView(this);
+        mPresenter.login();
     }
 
     @Override
@@ -46,7 +49,7 @@ public class MainActivity extends BaseDisplayActivity {
         mTvSales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              startActivity(new Intent(mContext, SalesActivity.class));
+                startActivity(new Intent(mContext, SalesActivity.class));
             }
         });
         mTvCar.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +71,21 @@ public class MainActivity extends BaseDisplayActivity {
             }
         });
 
+        mTvTransport.setOnFocusChangeListener(this);
+        mTvSales.setOnFocusChangeListener(this);
+        mTvCar.setOnFocusChangeListener(this);
+        mTvCost.setOnFocusChangeListener(this);
     }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        if (b) {
+            zoomAnim(view);
+        } else {
+            unZoomAnim(view);
+        }
+    }
+
 
     @Override
     protected void onPageSelected(int pager) {
@@ -77,7 +94,14 @@ public class MainActivity extends BaseDisplayActivity {
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
-
+        if (type == Constants.METHOD_ONE) {
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+                SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
+                mPresenter.lastSevenDaysSales();
+            } else {
+                show(((JsonResult) jsonResult).getMsg());
+            }
+        }
     }
 
     @Override
@@ -93,29 +117,13 @@ public class MainActivity extends BaseDisplayActivity {
 
     @Override
     public void onError(Throwable throwable) {
-
+        show(throwable.getMessage());
     }
 
-//
-//    @Override
-//    public boolean dispatchKeyEvent(KeyEvent event) {
-//        int keyCode = event.getKeyCode();
-//        int action = event.getAction();
-//        return handleKeyEvent(action, keyCode) || super.dispatchKeyEvent(event);
-//    }
-//
-//    private boolean handleKeyEvent(int action, int keyCode) {
-//        if (action != KeyEvent.ACTION_DOWN)
-//            return false;
-//        switch (keyCode) {
-//            case KeyEvent.KEYCODE_ENTER:
-//            case KeyEvent.KEYCODE_DPAD_CENTER:
-//
-//                break;
-//            default:
-//                break;
-//        }
-//        return false;
-//    }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null)
+            mPresenter.detachView();
+    }
 }

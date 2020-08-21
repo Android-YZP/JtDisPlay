@@ -24,10 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class BaseDisplayActivity<T extends BasePresenter> extends AppCompatActivity implements IBaseView {
+public abstract class BaseDisplayActivity extends AppCompatActivity implements IBaseView {
 
 
-    protected T mPresenter;
     protected Context mContext;
 
 
@@ -95,9 +94,6 @@ public abstract class BaseDisplayActivity<T extends BasePresenter> extends AppCo
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
         if (translationAnimatorSet != null) {
             translationAnimatorSet.cancel();
             translationAnimatorSet = null;
@@ -162,6 +158,32 @@ public abstract class BaseDisplayActivity<T extends BasePresenter> extends AppCo
         });
         translationAnimatorSet.start();
     }
+
+
+    public void zoomAnim(final View view) {
+
+        translationAnimatorSet = new AnimatorSet();
+        translationAnimatorSet.playTogether(
+                ObjectAnimator.ofFloat(view, "ScaleX", 1.0f,1.1f, 1.05f)
+                        .setDuration(400),
+                ObjectAnimator.ofFloat(view, "ScaleY", 1.0f,1.1f, 1.05f)
+                        .setDuration(400)
+        );
+        translationAnimatorSet.start();
+    }
+
+    public void unZoomAnim(final View view) {
+
+        translationAnimatorSet = new AnimatorSet();
+        translationAnimatorSet.playTogether(
+                ObjectAnimator.ofFloat(view, "ScaleX", 1.05f, 1f)
+                        .setDuration(300),
+                ObjectAnimator.ofFloat(view, "ScaleY", 1.05f, 1f)
+                        .setDuration(300)
+        );
+        translationAnimatorSet.start();
+    }
+
 
     protected abstract void onPageSelected(int pager);
 

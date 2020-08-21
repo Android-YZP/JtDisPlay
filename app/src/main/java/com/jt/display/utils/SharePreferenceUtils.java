@@ -3,6 +3,8 @@ package com.jt.display.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.jt.display.bean.LoginData;
+
 public class SharePreferenceUtils {
     public static final String FILE_NAME = "data";
 
@@ -90,5 +92,17 @@ public class SharePreferenceUtils {
         return sp.edit();
     }
 
+    public static void putLoginData(Context context, String object) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString("LoginData", object);
+        editor.commit();
+    }
 
+
+    public static LoginData getLoginData(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        String string = sp.getString("LoginData", "");
+        return GsonUtil.GsonToBean(string, LoginData.class);
+    }
 }

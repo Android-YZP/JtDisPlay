@@ -9,10 +9,10 @@
         <shape>
 
 
-            <corners android:radius="23dp" />
+            <corners android:radius="5dp" />
 
-            <stroke android:width="3dp" android:color="#0f0" />
-            <solid android:color="#3f000000" />
+<!--            <stroke android:width="2dp" android:color="#af000000" />-->
+            <solid android:color="#5f000000" />
             <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp" />
 
         </shape>
@@ -26,9 +26,9 @@
         <shape>
 
 
-            <corners android:radius="23dp" />
+            <corners android:radius="5dp" />
 
-            <solid android:color="#3f000000" />
+            <solid android:color="#2f000000" />
 
             <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp" />
 

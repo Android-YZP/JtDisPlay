@@ -4,26 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/bg_color"
     android:orientation="horizontal"
     tools:context=".activitys.CarActivity">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:layout_weight="1"
+        android:background="@color/bg_data"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="提货汇总" />
+            android:text="提货汇总"
+            android:textSize="@dimen/font45" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@color/bg_color"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="100dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingExtra="15dp"
+                android:text="提货计划体积 \n 333m³"
+                android:textSize="@dimen/font25" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingExtra="15dp"
+                android:text="已货计划体积 \n 233m³"
+                android:textSize="@dimen/font25" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -31,14 +65,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="提货计划体积 \n 333m³" />
+                android:text="提货直发车辆"
+                android:textSize="@dimen/font20" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="提货计划体积 \n 333m³" />
+                android:text="提货回仓车辆"
+                android:textSize="@dimen/font20" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,34 +87,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="提货直发车辆" />
+                android:text="333平方米     222平方米"
+                android:textSize="@dimen/font20" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="提货回仓车辆" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="333平方米     222平方米" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="333平方米     222平方米" />
+                android:text="333平方米     222平方米"
+                android:textSize="@dimen/font20" />
         </LinearLayout>
 
         <LinearLayout
@@ -92,6 +115,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25dp"
+                android:background="@color/bg_color" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="0dp"
@@ -105,19 +134,53 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:layout_weight="1"
+        android:background="@color/bg_data"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="出货汇总" />
+            android:text="提货汇总"
+            android:textSize="@dimen/font45" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@color/bg_color"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="100dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingExtra="15dp"
+                android:text="提货计划体积 \n 333m³"
+                android:textSize="@dimen/font25" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingExtra="15dp"
+                android:text="已货计划体积 \n 233m³"
+                android:textSize="@dimen/font25" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -125,14 +188,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="出货计划体积 \n 333平方米" />
+                android:text="提货直发车辆"
+                android:textSize="@dimen/font20" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="出货计划体积 \n 333平方米" />
+                android:text="提货回仓车辆"
+                android:textSize="@dimen/font20" />
         </LinearLayout>
 
         <LinearLayout
@@ -145,34 +210,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="出货直发车辆" />
+                android:text="333平方米     222平方米"
+                android:textSize="@dimen/font20" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="出货回仓车辆" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="333平方米     222平方米" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="333平方米     222平方米" />
+                android:text="333平方米     222平方米"
+                android:textSize="@dimen/font20" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,6 +238,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25dp"
+                android:background="@color/bg_color" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="0dp"

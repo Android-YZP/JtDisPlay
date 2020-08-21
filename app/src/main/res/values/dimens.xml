@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="main_sp">20sp</dimen>
+    <dimen name="main_sp">17sp</dimen>
     <dimen name="font25">25sp</dimen>
+    <dimen name="font45">45sp</dimen>
+    <dimen name="font15">15sp</dimen>
+    <dimen name="font20">20sp</dimen>
 </resources>
