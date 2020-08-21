@@ -23,7 +23,7 @@ public class ComModel {
                 token);
     }
 
-    public Flowable<JsonResult> customerSalesSort(String type,String token) {
+    public Flowable<JsonResult> customerSalesSort(String token, String type) {
         return RetrofitClient.getInstance().getApi().customerSalesSort(Authorization.getInstance().getAuthorization(),
                 token, type);
     }

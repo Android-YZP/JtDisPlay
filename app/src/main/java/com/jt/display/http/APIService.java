@@ -10,44 +10,41 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface APIService {
-//
+    //
 //    //用户登录
     @POST("/jtms-auth/token")
     Flowable<JsonResult> login(@Header("Authorization") String authorization,
-                                  @Query("grantType") String grant_type,
-                                  @Query("tenantId") String tenantId,
-                                  @Query("account") String account,
-                                  @Query("password") String password
-                                 );
+                               @Query("grantType") String grant_type,
+                               @Query("tenantId") String tenantId,
+                               @Query("account") String account,
+                               @Query("password") String password
+    );
 
 
-
-    @GET("/api/jtms-order/reportForm/lastSevenDaysSales")
+    @GET("/jtms-order/reportForm/lastSevenDaysSales")
     Flowable<JsonResult> lastSevenDaysSales(@Header("Authorization") String authorization,
-                                             @Header("blade-auth") String blade_auth);
+                                            @Header("Blade-Auth") String blade_auth);
 
-    @GET("/api/jtms-order/reportForm/lastSixMonthSales")
+    @GET("/jtms-order/reportForm/lastSixMonthSales")
     Flowable<JsonResult> lastSixMonthSales(@Header("Authorization") String authorization,
-                                             @Header("blade-auth") String blade_auth);
+                                           @Header("blade-auth") String blade_auth);
 
-    @GET("/api/jtms-order/reportForm/customerSalesSort")
+    @GET("/jtms-order/reportForm/customerSalesSort")
     Flowable<JsonResult> customerSalesSort(@Header("Authorization") String authorization,
-                                             @Header("blade-auth") String blade_auth,
-                                             @Query("type") String type);
+                                           @Header("blade-auth") String blade_auth,
+                                           @Query("type") String type);
 
-    @GET("/api/jtms-logistics/reportForm/lastSevenCarCost")
+    @GET("/jtms-logistics/reportForm/lastSevenCarCost")
     Flowable<JsonResult> lastSevenCarCost(@Header("Authorization") String authorization,
-                                             @Header("blade-auth") String blade_auth);
+                                          @Header("blade-auth") String blade_auth);
 
-    @GET("/api/jtms-warehouse/reportForm/currentReceiveDelivery")
+    @GET("/jtms-warehouse/reportForm/currentReceiveDelivery")
     Flowable<JsonResult> currentReceiveDelivery(@Header("Authorization") String authorization,
-                                             @Header("blade-auth") String blade_auth);
+                                                @Header("blade-auth") String blade_auth);
 
-    @GET("/api/jtms-logistics/reportForm/currentDateLoadAndUnloadVolume")
+    @GET("/jtms-logistics/reportForm/currentDateLoadAndUnloadVolume")
     Flowable<JsonResult> currentDateLoadAndUnloadVolume(@Header("Authorization") String authorization,
-                                             @Header("blade-auth") String blade_auth);
-
-
+                                                        @Header("blade-auth") String blade_auth);
 
 
 //
