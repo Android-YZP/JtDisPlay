@@ -45,10 +45,10 @@ public class HBarChart extends HorizontalBarChart {
     }
 
     //设置标题
-    public void setDes(String desc) {
+    public void setDes(String desc,int Xposition) {
         Description description = new Description();
         description.setText(desc);
-        description.setPosition(400, 60);
+        description.setPosition(Xposition, 60);
         description.setTextSize(13f);
         description.setTextColor(Color.parseColor("#ffffff"));
         description.setEnabled(true);
@@ -86,7 +86,7 @@ public class HBarChart extends HorizontalBarChart {
     //设置x轴
     private void setXAxis(final List<String> xstrings) {
         XAxis xAxis = getXAxis();
-        xAxis.setTextSize(8f);
+        xAxis.setTextSize(10f);
         xAxis.setAxisMaximum(2f);
         //把最小值设置为负数能够为下方留出点空白距离
         xAxis.setAxisMinimum(-0.5f);

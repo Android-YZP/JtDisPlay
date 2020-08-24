@@ -55,10 +55,10 @@ public class CLineChart extends LineChart {
 
 
     //设置标题
-    public void setDes(String desc) {
+    public void setDes(String desc,int Xposition) {
         Description description = new Description();
-        description.setText("折线图");
-        description.setPosition(180, 60);
+        description.setText(desc);
+        description.setPosition(Xposition, 60);
         description.setTextSize(13f);
         description.setTextColor(Color.parseColor("#ffffff"));
         description.setEnabled(true);

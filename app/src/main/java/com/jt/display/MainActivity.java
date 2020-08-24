@@ -203,7 +203,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> XData = initXData(lastSevenDaysSalesBean);
         LinkedHashMap<String, List<Float>> YData = initYData(lastSevenDaysSalesBean);
         mLastSevenDaysChart.showBarChart(XData, YData);
-        mLastSevenDaysChart.setDes("近七日销量");
+        mLastSevenDaysChart.setDes("近七日销量", 230);
 
     }
 
@@ -256,7 +256,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initLineXData(lastSixMonthSalesBean);
         LinkedHashMap<String, List<Float>> Ystrings = initLineYData(lastSixMonthSalesBean);
         mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings);
-        mLastSixMonthSalesChart.setDes("近六个月销量");
+        mLastSixMonthSalesChart.setDes("近六个月销量", 270);
     }
 
     private List<String> initLineXData(LastSixMonthSalesBean lastSixMonthSalesBean) {
@@ -300,8 +300,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
-        mCustomerSalesSortChart.setPieChartCircleRadius(220);
-        mCustomerSalesSortChart.setTextSize(10f);
+        mCustomerSalesSortChart.setPieChartCircleRadius(210);
+        mCustomerSalesSortChart.setTextSize(8f);
         mCustomerSalesSortChart.setData(getPieChartData(customerSalesSortBean));
     }
 
@@ -338,7 +338,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initCarLineXData(lastSevenCarCostBean);
         LinkedHashMap<String, List<Float>> Ystrings = initCarLineYData(lastSevenCarCostBean);
         mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings);
-        mLastSevenCarCostChart.setDes("近七日车辆成本");
+        mLastSevenCarCostChart.setDes("近七日车辆成本", 300);
     }
 
     private List<String> initCarLineXData(LastSevenCarCostBean lastSevenCarCostBean) {
@@ -378,7 +378,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
         LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(bean);
         mCurrentReceiveDeliveryChart.loadData(colors, Xstrings, Ystring);
-        mCurrentReceiveDeliveryChart.setDes("当日收发货");
+        mCurrentReceiveDeliveryChart.setDes("当日收发货", 230);
     }
 
     private List<String> initReceiveBarXData(CurrentReceiveDeliveryBean bean) {
@@ -449,7 +449,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         Logger.e(GsonUtil.GsonString(Xstrings));
         Logger.e(GsonUtil.GsonString(Ystring));
         mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring);
-        mCurrentDateLoadAndUnloadVolumeChart.setDes("当日装卸方数");
+        mCurrentDateLoadAndUnloadVolumeChart.setDes("当日装卸方数", 270);
         mCurrentDateLoadAndUnloadVolumeChart.postInvalidate();
     }
 

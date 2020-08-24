@@ -92,7 +92,9 @@ public class ManyBarChart extends BarChart {
         //不显示左侧Y轴
         leftAxis.setEnabled(true);
         rightAxis.setEnabled(false);
-
+        xAxis.setTextColor(Color.parseColor("#8FC7CC"));
+        leftAxis.setTextColor(Color.parseColor("#8FC7CC"));
+        leftAxis.setAxisLineColor(Color.TRANSPARENT);
         //不显示X轴网格线
         xAxis.setDrawGridLines(false);
         //右侧Y轴网格线设置为虚线
@@ -122,10 +124,10 @@ public class ManyBarChart extends BarChart {
     }
 
     //设置标题
-    public void setDes(String desc) {
+    public void setDes(String desc,int Xposition) {
         Description description = new Description();
         description.setText(desc);
-        description.setPosition(400, 60);
+        description.setPosition(Xposition, 60);
         description.setTextSize(13f);
         description.setTextColor(Color.parseColor("#ffffff"));
         description.setEnabled(true);

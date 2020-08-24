@@ -6,7 +6,7 @@ import com.jt.display.http.RetrofitClient;
 
 import io.reactivex.Flowable;
 
-public class ComModel {
+    public class ComModel {
 
     public Flowable<JsonResult> login() {
         return RetrofitClient.getInstance().getApi().login(Authorization.getInstance().getAuthorization(),
