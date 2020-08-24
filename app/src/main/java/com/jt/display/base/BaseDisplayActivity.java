@@ -164,9 +164,9 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
         translationAnimatorSet = new AnimatorSet();
         translationAnimatorSet.playTogether(
-                ObjectAnimator.ofFloat(view, "ScaleX", 1.0f,1.1f, 1.05f)
+                ObjectAnimator.ofFloat(view, "ScaleX", 1.0f, 1.1f, 1.05f)
                         .setDuration(400),
-                ObjectAnimator.ofFloat(view, "ScaleY", 1.0f,1.1f, 1.05f)
+                ObjectAnimator.ofFloat(view, "ScaleY", 1.0f, 1.1f, 1.05f)
                         .setDuration(400)
         );
         translationAnimatorSet.start();
@@ -193,7 +193,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     }
 
     public void show(String msg) {
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, msg + "", Toast.LENGTH_SHORT).show();
     }
 
 

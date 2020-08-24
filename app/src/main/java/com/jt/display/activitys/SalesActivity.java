@@ -78,8 +78,8 @@ public class SalesActivity extends BaseDisplayActivity {
         dateValueList = barJsonBean.getStFinDate().getVtDateValue();
         Collections.reverse(dateValueList);//将集合 逆序排列，转换成需要的顺序
 
-        mLineChart.showLineChart(clientAccumulativeRate, "我的收益", getResources().getColor(R.color.white));
-        mLineChart.addLine(compositeIndexShenzhen, "上证指数", getResources().getColor(R.color.text_color));
+//        mLineChart.showLineChart(clientAccumulativeRate, "我的收益", getResources().getColor(R.color.white));
+//        mLineChart.addLine(compositeIndexShenzhen, "上证指数", getResources().getColor(R.color.text_color));
 
         initPie();
         initSBar();
@@ -94,7 +94,7 @@ public class SalesActivity extends BaseDisplayActivity {
         mManyBarChart.animateX(1000, Easing.EasingOption.Linear);
 
         mManyBarChart.clear();
-        mManyBarChart.showBarChart(mManyBarChart.initXData(barJsonBean), mManyBarChart.initYData(barJsonBean), colors);
+        mManyBarChart.showBarChart(mManyBarChart.initXData(barJsonBean), mManyBarChart.initYData(barJsonBean));
 
     }
 
@@ -119,8 +119,8 @@ public class SalesActivity extends BaseDisplayActivity {
         //线形图
         mLineChart.animateY(1000);
         mLineChart.animateX(1000);
-        mLineChart.showLineChart(clientAccumulativeRate2, "我的收益", getResources().getColor(R.color.them_colors));
-        mLineChart.addLine(compositeIndexShenzhen2, "上证指数", getResources().getColor(R.color.black));
+//        mLineChart.showLineChart(clientAccumulativeRate2, "我的收益", getResources().getColor(R.color.them_colors));
+//        mLineChart.addLine(compositeIndexShenzhen2, "上证指数", getResources().getColor(R.color.black));
     }
 
 

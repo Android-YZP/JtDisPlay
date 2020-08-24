@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorRes;
 import android.util.AttributeSet;
+
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -16,8 +17,11 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.jt.display.R;
 import com.jt.display.bean.BarJsonBean;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -98,18 +102,17 @@ public class ManyBarChart extends BarChart {
 
         //保证Y轴从0开始，不然会上移一点
 
-//        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMinimum(-0.2f);
         //保证Y轴从0开始，不会显示不全
         leftAxis.setAxisMinimum(0f);
         rightAxis.setAxisMinimum(0f);
-        xAxis.setAxisMaximum(5);
-
         xAxis.setCenterAxisLabels(true);
+
 
         /***折线图例 标签 设置***/
         legend = barChart.getLegend();
         legend.setForm(Legend.LegendForm.LINE);
-        legend.setTextSize(18f);
+        legend.setTextSize(10f);
         //显示位置
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
@@ -125,10 +128,15 @@ public class ManyBarChart extends BarChart {
      * @param xValues   X轴的值
      * @param dataLists LinkedHashMap<String, List<Float>>
      *                  key对应柱状图名字  List<Float> 对应每类柱状图的Y值
-     * @param colors
      */
-    public void showBarChart(final List<String> xValues, LinkedHashMap<String, List<Float>> dataLists,
-                             @ColorRes List<Integer> colors) {
+    public void showBarChart(final List<String> xValues, LinkedHashMap<String, List<Float>> dataLists) {
+
+        List<Integer> colors = Arrays.asList(
+                getResources().getColor(R.color.them_colors),
+                getResources().getColor(R.color.bt_focus),
+                getResources().getColor(R.color.bt_focus),
+                getResources().getColor(R.color.bt_focus)
+        );
 
         List<IBarDataSet> dataSets = new ArrayList<>();
         int currentPosition = 0;//用于柱状图颜色集合的index
@@ -146,6 +154,7 @@ public class ManyBarChart extends BarChart {
             BarDataSet barDataSet = new BarDataSet(entries, name);
             initBarDataSet(barDataSet, colors.get(currentPosition));
             dataSets.add(barDataSet);
+            xAxis.setAxisMaximum((float) yValueList.size() + 0.2f);
 
             currentPosition++;
         }
@@ -165,8 +174,8 @@ public class ManyBarChart extends BarChart {
                 return (int) (value) + "%";
             }
         });
-        xAxis.setTextSize(18f);
-        leftAxis.setTextSize(18f);
+        xAxis.setTextSize(8f);
+        leftAxis.setTextSize(8f);
         BarData data = new BarData(dataSets);
         /**
          * float groupSpace = 0.3f;   //柱状图组之间的间距
@@ -177,9 +186,9 @@ public class ManyBarChart extends BarChart {
          */
         int barAmount = dataLists.size(); //需要显示柱状图的类别 数量
         //设置组间距占比30% 每条柱状图宽度占比 70% /barAmount  柱状图间距占比 0%
-        float groupSpace = 0.3f; //柱状图组之间的间距
-        float barWidth = (1f - groupSpace) / barAmount;
-        float barSpace = 0.01f;
+        float groupSpace = 0.1f; //柱状图组之间的间距
+        float barSpace = 0f;
+        float barWidth = (1f - groupSpace - barSpace) / barAmount;
         //设置柱状图宽度
         data.setBarWidth(barWidth);
         //(起始点、柱状图组间距、柱状图之间间距)

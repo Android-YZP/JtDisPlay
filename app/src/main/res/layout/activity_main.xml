@@ -105,11 +105,13 @@
         android:orientation="horizontal">
 
         <com.jt.display.views.ManyBarChart
+            android:id="@+id/lastSevenDays_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.jt.display.views.CLineChart
+            android:id="@+id/lastSixMonthSales_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />

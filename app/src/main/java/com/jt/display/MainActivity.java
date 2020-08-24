@@ -3,6 +3,9 @@ package com.jt.display;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.data.Entry;
 import com.jt.display.activitys.CarActivity;
 import com.jt.display.activitys.CostActivity;
 import com.jt.display.activitys.SalesActivity;
@@ -10,15 +13,25 @@ import com.jt.display.activitys.TransportActivity;
 import com.jt.display.base.BaseDisplayActivity;
 import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
+import com.jt.display.bean.BarJsonBean;
 import com.jt.display.bean.CurrentDateLoadAndUnloadVolumeBean;
 import com.jt.display.bean.CurrentReceiveDeliveryBean;
 import com.jt.display.bean.CustomerSalesSortBean;
 import com.jt.display.bean.LastSevenCarCostBean;
 import com.jt.display.bean.LastSevenDaysSalesBean;
 import com.jt.display.bean.LastSixMonthSalesBean;
+import com.jt.display.bean.lineChartBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.utils.SharePreferenceUtils;
+import com.jt.display.views.CLineChart;
+import com.jt.display.views.ManyBarChart;
+import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class MainActivity extends BaseDisplayActivity implements View.OnFocusChangeListener {
 
@@ -27,6 +40,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private TextView mTvCost;
     private TextView mTvTransport;
     private ComPresenter mPresenter;
+    private ManyBarChart mLastSevenDaysChart;
+    private CLineChart mLastSixMonthSalesChart;
 
     @Override
     public int getLayoutId() {
@@ -39,6 +54,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mTvCar = findViewById(R.id.tv_car);
         mTvCost = findViewById(R.id.tv_cost);
         mTvTransport = findViewById(R.id.tv_transport);
+        mLastSevenDaysChart = findViewById(R.id.lastSevenDays_chart);
+        mLastSixMonthSalesChart = findViewById(R.id.lastSixMonthSales_chart);
     }
 
     @Override
@@ -101,28 +118,26 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         if (type == Constants.METHOD_ONE) {//登录
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
-//                mPresenter.lastSevenDaysSales();
-//                mPresenter.lastSixMonthSales();
+                mPresenter.lastSevenDaysSales();
+                mPresenter.lastSixMonthSales();
 //                mPresenter.customerSalesSort("1");
 //                mPresenter.lastSevenCarCost();
-                mPresenter.currentReceiveDelivery();
+//                mPresenter.currentReceiveDelivery();
 //                mPresenter.currentDateLoadAndUnloadVolume();
-
-
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_TWO) {//近七日销量
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSevenDaysSalesBean lastSevenDaysSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenDaysSalesBean.class);
-
+                initMBar(lastSevenDaysSalesBean);
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_THREE) {//近六个月销量
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSixMonthSalesBean lastSixMonthSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSixMonthSalesBean.class);
-
+                initLine(lastSixMonthSalesBean);
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
@@ -160,6 +175,109 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         }
     }
 
+
+    private void initMBar(LastSevenDaysSalesBean lastSevenDaysSalesBean) {
+        //多条柱状图
+        mLastSevenDaysChart.animateY(1000, Easing.EasingOption.Linear);
+        mLastSevenDaysChart.animateX(1000, Easing.EasingOption.Linear);
+        mLastSevenDaysChart.clear();
+        List<String> XData = initXData(lastSevenDaysSalesBean);
+        LinkedHashMap<String, List<Float>> YData = initYData(lastSevenDaysSalesBean);
+        mLastSevenDaysChart.showBarChart(XData, YData);
+
+    }
+
+    private LinkedHashMap<String, List<Float>> initYData(LastSevenDaysSalesBean barJsonBean) {
+        //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
+        LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
+        List<Float> yValue1 = new ArrayList<>();
+        List<Float> yValue2 = new ArrayList<>();
+        List<Float> yValue3 = new ArrayList<>();
+        List<Float> yValue4 = new ArrayList<>();
+
+        List<LastSevenDaysSalesBean.DataBean> barJsonBeanData = barJsonBean.getData();
+
+        for (LastSevenDaysSalesBean.DataBean valueBean : barJsonBeanData) {
+            yValue1.add(Float.parseFloat(valueBean.getSalesAmount()));
+        }
+        for (LastSevenDaysSalesBean.DataBean valueAvgBean : barJsonBeanData) {
+            yValue2.add(Float.parseFloat(valueAvgBean.getVolume()));
+        }
+        for (LastSevenDaysSalesBean.DataBean valueAvgBean : barJsonBeanData) {
+            yValue3.add(Float.parseFloat(valueAvgBean.getWeight()));
+        }
+        for (LastSevenDaysSalesBean.DataBean valueAvgBean : barJsonBeanData) {
+            yValue4.add(Float.parseFloat(valueAvgBean.getCartonNum()));
+        }
+
+        chartDataMap.put("销售金额", yValue1);
+        chartDataMap.put("体积", yValue2);
+        chartDataMap.put("重量", yValue3);
+        chartDataMap.put("总箱数", yValue4);
+        return chartDataMap;
+    }
+
+    private List<String> initXData(LastSevenDaysSalesBean barJsonBean) {
+        //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
+        List<String> xValues = new ArrayList<>();
+        List<LastSevenDaysSalesBean.DataBean> barJsonBeanData = barJsonBean.getData();
+        for (LastSevenDaysSalesBean.DataBean valueBean : barJsonBeanData) {
+            xValues.add(valueBean.getOrderDay());
+        }
+        return xValues;
+    }
+
+
+    private void initLine(LastSixMonthSalesBean lastSixMonthSalesBean) {
+        Logger.e("initLine");
+        //线形图
+        mLastSixMonthSalesChart.animateY(1000);
+        mLastSixMonthSalesChart.animateX(1000);
+        List<String> Xstrings = initLineXData(lastSixMonthSalesBean);
+        LinkedHashMap<String, List<Float>> Ystrings = initLineYData(lastSixMonthSalesBean);
+        mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings);
+    }
+
+    private List<String> initLineXData(LastSixMonthSalesBean lastSixMonthSalesBean) {
+        List<String> xValues = new ArrayList<>();
+        for (int i = 0; i < lastSixMonthSalesBean.getData().size(); i++) {
+            xValues.add(lastSixMonthSalesBean.getData().get(i).getOrderMonth());
+        }
+        return xValues;
+    }
+
+    private LinkedHashMap<String, List<Float>> initLineYData(LastSixMonthSalesBean lastSixMonthSalesBean) {
+
+        LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
+        List<Float> yValue1 = new ArrayList<>();
+        List<Float> yValue2 = new ArrayList<>();
+        List<Float> yValue3 = new ArrayList<>();
+        List<Float> yValue4 = new ArrayList<>();
+
+        List<LastSixMonthSalesBean.DataBean> sixMonthSalesBeanData = lastSixMonthSalesBean.getData();
+
+        for (LastSixMonthSalesBean.DataBean valueBean : sixMonthSalesBeanData) {
+            yValue1.add(Float.parseFloat(valueBean.getSalesAmount()));
+        }
+        for (LastSixMonthSalesBean.DataBean valueAvgBean : sixMonthSalesBeanData) {
+            yValue2.add(Float.parseFloat(valueAvgBean.getVolume()));
+        }
+        for (LastSixMonthSalesBean.DataBean valueAvgBean : sixMonthSalesBeanData) {
+            yValue3.add(Float.parseFloat(valueAvgBean.getWeight()));
+        }
+        for (LastSixMonthSalesBean.DataBean valueAvgBean : sixMonthSalesBeanData) {
+            yValue4.add(Float.parseFloat(valueAvgBean.getCartonNum()));
+        }
+
+        chartDataMap.put("销售金额", yValue1);
+        chartDataMap.put("体积", yValue2);
+        chartDataMap.put("重量", yValue3);
+        chartDataMap.put("总箱数", yValue4);
+
+        return chartDataMap;
+    }
+
+
     @Override
     public void showLoading() {
 
@@ -173,6 +291,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     public void onError(Throwable throwable) {
+        throwable.printStackTrace();
         show(throwable.getMessage());
     }
 

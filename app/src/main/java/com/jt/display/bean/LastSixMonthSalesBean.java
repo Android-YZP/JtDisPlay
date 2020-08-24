@@ -51,13 +51,13 @@ public class LastSixMonthSalesBean {
          */
 
         private String orderMonth;
-        private double salesAmount;
-        private double volume;
-        private int weight;
-        private int cartonNum;
-        private double cusSettleAmount;
-        private double channelSettleAmount;
-        private int orderCost;
+        private String salesAmount;
+        private String volume;
+        private String weight;
+        private String cartonNum;
+        private String cusSettleAmount;
+        private String channelSettleAmount;
+        private String orderCost;
 
         public String getOrderMonth() {
             return orderMonth;
@@ -67,59 +67,59 @@ public class LastSixMonthSalesBean {
             this.orderMonth = orderMonth;
         }
 
-        public double getSalesAmount() {
+        public String getSalesAmount() {
             return salesAmount;
         }
 
-        public void setSalesAmount(double salesAmount) {
+        public void setSalesAmount(String salesAmount) {
             this.salesAmount = salesAmount;
         }
 
-        public double getVolume() {
+        public String getVolume() {
             return volume;
         }
 
-        public void setVolume(double volume) {
+        public void setVolume(String volume) {
             this.volume = volume;
         }
 
-        public int getWeight() {
+        public String getWeight() {
             return weight;
         }
 
-        public void setWeight(int weight) {
+        public void setWeight(String weight) {
             this.weight = weight;
         }
 
-        public int getCartonNum() {
+        public String getCartonNum() {
             return cartonNum;
         }
 
-        public void setCartonNum(int cartonNum) {
+        public void setCartonNum(String cartonNum) {
             this.cartonNum = cartonNum;
         }
 
-        public double getCusSettleAmount() {
+        public String getCusSettleAmount() {
             return cusSettleAmount;
         }
 
-        public void setCusSettleAmount(double cusSettleAmount) {
+        public void setCusSettleAmount(String cusSettleAmount) {
             this.cusSettleAmount = cusSettleAmount;
         }
 
-        public double getChannelSettleAmount() {
+        public String getChannelSettleAmount() {
             return channelSettleAmount;
         }
 
-        public void setChannelSettleAmount(double channelSettleAmount) {
+        public void setChannelSettleAmount(String channelSettleAmount) {
             this.channelSettleAmount = channelSettleAmount;
         }
 
-        public int getOrderCost() {
+        public String getOrderCost() {
             return orderCost;
         }
 
-        public void setOrderCost(int orderCost) {
+        public void setOrderCost(String orderCost) {
             this.orderCost = orderCost;
         }
     }
