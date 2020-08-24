@@ -2,7 +2,9 @@ package com.jt.display;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -132,10 +134,10 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         if (type == Constants.METHOD_ONE) {//登录
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
-//                mPresenter.lastSevenDaysSales();
-//                mPresenter.lastSixMonthSales();
-//                mPresenter.customerSalesSort("2");
-//                mPresenter.lastSevenCarCost();
+                mPresenter.lastSevenDaysSales();
+                mPresenter.lastSixMonthSales();
+                mPresenter.customerSalesSort("2");
+                mPresenter.lastSevenCarCost();
                 mPresenter.currentReceiveDelivery();
                 mPresenter.currentDateLoadAndUnloadVolume();
             } else {
@@ -172,9 +174,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             }
         } else if (type == Constants.METHOD_SIX) {//当日收发货
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-                CurrentReceiveDeliveryBean currentReceiveDeliveryBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceiveDeliveryBean.class);
-                initReceiveBar(currentReceiveDeliveryBean);
-
+                CurrentReceiveDeliveryBean bean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceiveDeliveryBean.class);
+                initReceiveBar(bean);
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
@@ -182,7 +183,11 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean =
                         GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentDateLoadAndUnloadVolumeBean.class);
+
+
                 initLoadAndUnloadVolumeChart(currentDateLoadAndUnloadVolumeBean);
+
+
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
@@ -198,6 +203,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> XData = initXData(lastSevenDaysSalesBean);
         LinkedHashMap<String, List<Float>> YData = initYData(lastSevenDaysSalesBean);
         mLastSevenDaysChart.showBarChart(XData, YData);
+        mLastSevenDaysChart.setDes("近七日销量");
 
     }
 
@@ -250,6 +256,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initLineXData(lastSixMonthSalesBean);
         LinkedHashMap<String, List<Float>> Ystrings = initLineYData(lastSixMonthSalesBean);
         mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings);
+        mLastSixMonthSalesChart.setDes("近六个月销量");
     }
 
     private List<String> initLineXData(LastSixMonthSalesBean lastSixMonthSalesBean) {
@@ -331,6 +338,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initCarLineXData(lastSevenCarCostBean);
         LinkedHashMap<String, List<Float>> Ystrings = initCarLineYData(lastSevenCarCostBean);
         mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings);
+        mLastSevenCarCostChart.setDes("近七日车辆成本");
     }
 
     private List<String> initCarLineXData(LastSevenCarCostBean lastSevenCarCostBean) {
@@ -353,7 +361,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     }
 
 
-    private void initReceiveBar(CurrentReceiveDeliveryBean currentReceiveDeliveryBean) {
+    private void initReceiveBar(CurrentReceiveDeliveryBean bean) {
         List<Integer> colors = Arrays.asList(
                 Color.BLUE,
                 Color.BLUE,
@@ -366,24 +374,22 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 Color.LTGRAY,
                 Color.WHITE
         );
-        List<String> Xstrings = initReceiveBarXData(currentReceiveDeliveryBean);
+        List<String> Xstrings = initReceiveBarXData(bean);
 
-        LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(currentReceiveDeliveryBean);
+        LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(bean);
         mCurrentReceiveDeliveryChart.loadData(colors, Xstrings, Ystring);
-
-        Logger.e(GsonUtil.GsonString(Xstrings));
-        Logger.e(GsonUtil.GsonString(Ystring));
+        mCurrentReceiveDeliveryChart.setDes("当日收发货");
     }
 
-    private List<String> initReceiveBarXData(CurrentReceiveDeliveryBean currentReceiveDeliveryBean) {
+    private List<String> initReceiveBarXData(CurrentReceiveDeliveryBean bean) {
         List<String> xValues = new ArrayList<>();
-        for (int i = 0; i < currentReceiveDeliveryBean.getData().size(); i++) {
-            xValues.add(currentReceiveDeliveryBean.getData().get(i).getCurrentDate());
+        for (int i = 0; i < bean.getData().size(); i++) {
+            xValues.add(bean.getData().get(i).getCurrentDate());
         }
         return xValues;
     }
 
-    private LinkedHashMap<String, List<String>> initReceiveBarYData(CurrentReceiveDeliveryBean currentReceiveDeliveryBean) {
+    private LinkedHashMap<String, List<String>> initReceiveBarYData(CurrentReceiveDeliveryBean bean) {
         LinkedHashMap<String, List<String>> chartDataMap = new LinkedHashMap<>();
 
         List<String> yValue1 = new ArrayList<>();
@@ -393,7 +399,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> yValue5 = new ArrayList<>();
         List<String> yValue6 = new ArrayList<>();
 
-        List<CurrentReceiveDeliveryBean.DataBean> data = currentReceiveDeliveryBean.getData();
+        List<CurrentReceiveDeliveryBean.DataBean> data = bean.getData();
 
         for (CurrentReceiveDeliveryBean.DataBean valueBean : data) {
             yValue1.add(valueBean.getReceiveVolume());
@@ -424,7 +430,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initLoadAndUnloadVolumeChart(CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean) {
-        List<Integer> colors = Arrays.asList(
+        final List<Integer> colors = Arrays.asList(
                 Color.BLUE,
                 Color.BLUE,
                 Color.GRAY,
@@ -439,15 +445,19 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
         List<String> Xstrings = initLoadAndUnloadVolumeBarXData(currentDateLoadAndUnloadVolumeBean);
         LinkedHashMap<String, List<String>> Ystring = initLoadAndUnloadVolumeBarYData(currentDateLoadAndUnloadVolumeBean);
+
         Logger.e(GsonUtil.GsonString(Xstrings));
         Logger.e(GsonUtil.GsonString(Ystring));
         mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring);
+        mCurrentDateLoadAndUnloadVolumeChart.setDes("当日装卸方数");
+        mCurrentDateLoadAndUnloadVolumeChart.postInvalidate();
     }
+
 
     private List<String> initLoadAndUnloadVolumeBarXData(CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean) {
         List<String> xValues = new ArrayList<>();
         for (int i = 0; i < currentDateLoadAndUnloadVolumeBean.getData().size(); i++) {
-            xValues.add(currentDateLoadAndUnloadVolumeBean.getData().get(i).getCurrentDate()+"");
+            xValues.add(currentDateLoadAndUnloadVolumeBean.getData().get(i).getCurrentDate() + "");
         }
         return xValues;
     }
@@ -458,30 +468,23 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> yValue1 = new ArrayList<>();
         List<String> yValue2 = new ArrayList<>();
         List<String> yValue3 = new ArrayList<>();
-        List<String> yValue4 = new ArrayList<>();
-
 
         List<CurrentDateLoadAndUnloadVolumeBean.DataBean> data = currentDateLoadAndUnloadVolumeBean.getData();
 
         for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
-            yValue1.add("1222.2");
+            yValue1.add(valueBean.getTakeWareLoadAndUnloadVolume());
         }
         for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
-            yValue2.add("2322.3");
+            yValue2.add(valueBean.getTcLoadAndUnloadVolume());
         }
         for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
-            yValue3.add("3555.5");
-        }
-        for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
-            yValue4.add("4555.4");
+            yValue3.add(valueBean.getJdLoadAndUnloadVolume());
         }
 
+
         chartDataMap.put("提货装卸体积", yValue1);
-        chartDataMap.put("转运仓装卸体积", yValue2);
-        chartDataMap.put("京东仓装卸体积", yValue3);
-        chartDataMap.put("京东仓装卸体积2", yValue4);
-        chartDataMap.put("京东仓装卸体积5", yValue4);
-        chartDataMap.put("京东仓装卸体积3", yValue4);
+        chartDataMap.put("转运仓装卸货体积", yValue2);
+        chartDataMap.put("京东仓装卸货体积", yValue3);
         return chartDataMap;
     }
 

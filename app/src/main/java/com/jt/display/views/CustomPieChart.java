@@ -87,7 +87,7 @@ public class CustomPieChart extends PieChart {
         pieChart.setDescription(description);
         //设置半透明圆环的半径, 0为透明
         pieChart.setTransparentCircleRadius(0.5f);
-
+        pieChart. setBackgroundColor(Color.parseColor("#0f1e3d"));
         //设置初始旋转角度
         pieChart.setRotationAngle(-95);
         //数据连接线距图形片内部边界的距离，为百分数

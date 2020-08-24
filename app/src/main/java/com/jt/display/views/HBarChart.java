@@ -45,19 +45,22 @@ public class HBarChart extends HorizontalBarChart {
     }
 
     //设置标题
-    public void setDes() {
+    public void setDes(String desc) {
         Description description = new Description();
-        description.setText("违章车辆的违章次数占比分布图统计");
-        description.setTextSize(20f);
-        description.setTextColor(Color.BLACK);
-        description.setPosition(0, 40);
-        setDescription(description);
+        description.setText(desc);
+        description.setPosition(400, 60);
+        description.setTextSize(13f);
+        description.setTextColor(Color.parseColor("#ffffff"));
+        description.setEnabled(true);
+       setDescription(description);
     }
 
     //设置y轴
     private void setYAxis() {
+        setBackgroundColor(Color.parseColor("#0f1e3d"));
         //两边的y轴都要设置y轴的最小值才能在柱状图上面显示数值
         //不然是看不到效果的
+        setNoDataText("正在加载中....");
         YAxis tepAxis = getAxisLeft();
 //        tepAxis.setAxisMaximum(80f);
         tepAxis.setAxisMinimum(0f);
@@ -74,8 +77,7 @@ public class HBarChart extends HorizontalBarChart {
         yAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                Logger.e(value+"");
-                return (int) value + "";
+                return value + "";
             }
         });
     }
@@ -103,7 +105,6 @@ public class HBarChart extends HorizontalBarChart {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                Logger.e(value+"");
                 return value == 0f ? xstrings.get((int) value) : "";
             }
         });
@@ -129,7 +130,7 @@ public class HBarChart extends HorizontalBarChart {
         legend.setDrawInside(false);
         //自动对齐
         setFitBars(true);
-        setExtraOffsets(0, 0, 0, 0);
+        setExtraOffsets(0, 30, 0, 0);
         //将文本绘制在柱块上还是柱块里面
         setDrawValueAboveBar(true);
 
@@ -172,6 +173,7 @@ public class HBarChart extends HorizontalBarChart {
         barData.groupBars(-0.5f, groupSpace, barSpace);
 
         setData(barData);
+        invalidate();
     }
 
 }

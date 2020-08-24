@@ -101,8 +101,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <com.jt.display.views.ManyBarChart
             android:id="@+id/lastSevenDays_chart"
@@ -110,25 +114,40 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color" />
+
         <com.jt.display.views.CLineChart
             android:id="@+id/lastSixMonthSales_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color" />
+
         <com.jt.display.views.PieChartView
             android:id="@+id/customerSalesSort_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#0f1e3d" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <com.jt.display.views.CLineChart
             android:id="@+id/lastSevenCarCost_chart"
@@ -136,11 +155,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color" />
+
         <com.jt.display.views.HBarChart
             android:id="@+id/currentReceiveDelivery_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color" />
 
         <com.jt.display.views.HBarChart
             android:id="@+id/currentDateLoadAndUnloadVolume_chart"

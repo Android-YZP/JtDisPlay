@@ -57,8 +57,9 @@ public class ManyBarChart extends BarChart {
      */
     private void initBarChart(BarChart barChart) {
         /***图表设置***/
+        setNoDataText("正在加载中....");
         //背景颜色
-        barChart.setBackgroundColor(Color.parseColor("#ffffff"));
+        barChart.setBackgroundColor(Color.parseColor("#0f1e3d"));
         //不显示图表网格
         barChart.setDrawGridBackground(false);
         //背景阴影
@@ -67,10 +68,7 @@ public class ManyBarChart extends BarChart {
         //显示边框
         barChart.setDrawBorders(false);
         //不显示右下角类容
-        Description description = new Description();
-        description.setEnabled(false);
-        barChart.setDescription(description);
-
+        setExtraOffsets(0, 30, 0, 0);
         //设置动画效果
         barChart.animateY(1000, Easing.EasingOption.Linear);
         barChart.animateX(1000, Easing.EasingOption.Linear);
@@ -123,6 +121,16 @@ public class ManyBarChart extends BarChart {
 
     }
 
+    //设置标题
+    public void setDes(String desc) {
+        Description description = new Description();
+        description.setText(desc);
+        description.setPosition(400, 60);
+        description.setTextSize(13f);
+        description.setTextColor(Color.parseColor("#ffffff"));
+        description.setEnabled(true);
+        setDescription(description);
+    }
 
     /**
      * @param xValues   X轴的值

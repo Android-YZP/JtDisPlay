@@ -54,11 +54,24 @@ public class CLineChart extends LineChart {
     }
 
 
+    //设置标题
+    public void setDes(String desc) {
+        Description description = new Description();
+        description.setText("折线图");
+        description.setPosition(180, 60);
+        description.setTextSize(13f);
+        description.setTextColor(Color.parseColor("#ffffff"));
+        description.setEnabled(true);
+        setDescription(description);
+    }
+
+
     /**
      * 线形图
      */
     private void initChart(LineChart lineChart) {
         /***图表设置***/
+        setNoDataText("正在加载中....");
         //是否展示网格线
         lineChart.setDrawGridBackground(false);
         //是否显示边界
@@ -67,18 +80,13 @@ public class CLineChart extends LineChart {
         lineChart.setDragEnabled(false);
         //是否有触摸事件
         lineChart.setTouchEnabled(true);
-        lineChart.setBackgroundColor(Color.parseColor("#242230"));
+        lineChart.setBackgroundColor(Color.parseColor("#0f1e3d"));
         //设置XY轴动画效果
         lineChart.animateY(1000);
         lineChart.animateX(1000);
         //右下角的刻度显示
-        Description description = new Description();
-        description.setText("");
-        description.setPosition(100, 10);
-        description.setTextSize(0f);
-        description.setTextColor(Color.parseColor("#ffffff"));
-        description.setEnabled(false);
-        lineChart.setDescription(description);
+
+
         /***XY轴的设置***/
         xAxis = lineChart.getXAxis();
         leftYAxis = lineChart.getAxisLeft();
@@ -148,8 +156,6 @@ public class CLineChart extends LineChart {
     /**
      * 展示曲线
      *
-     * @param name  曲线名称
-     * @param color 曲线颜色
      */
     public void showLineChart(final List<String> XValue, LinkedHashMap<String, List<Float>> YValue) {
         List<ILineDataSet> dataSets = new ArrayList<>();
