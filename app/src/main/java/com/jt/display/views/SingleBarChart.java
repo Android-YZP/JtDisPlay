@@ -107,12 +107,12 @@ public class SingleBarChart extends BarChart {
 
         /***折线图例 标签 设置***/
         legend = barChart.getLegend();
-        legend.setForm(Legend.LegendForm.LINE);
+        legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setTextSize(18f);
         legend.setTextColor(Color.BLACK);
         //显示位置
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         //是否绘制在图表里面
         legend.setDrawInside(false);

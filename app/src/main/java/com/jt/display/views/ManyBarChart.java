@@ -98,7 +98,7 @@ public class ManyBarChart extends BarChart {
         //不显示X轴网格线
         xAxis.setDrawGridLines(false);
         //右侧Y轴网格线设置为虚线
-        rightAxis.enableGridDashedLine(0f, 10f, 0f);
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
 
         //保证Y轴从0开始，不然会上移一点
 
@@ -111,11 +111,11 @@ public class ManyBarChart extends BarChart {
 
         /***折线图例 标签 设置***/
         legend = barChart.getLegend();
-        legend.setForm(Legend.LegendForm.LINE);
+        legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setTextSize(10f);
         //显示位置
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         //是否绘制在图表里面
         legend.setDrawInside(false);

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -21,25 +19,24 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.jt.display.R;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class HBarChart extends HorizontalBarChart {
-    public HBarChart(Context context) {
+public class H2BarChart extends HorizontalBarChart {
+    public H2BarChart(Context context) {
         super(context);
         setYAxis();
     }
 
-    public HBarChart(Context context, AttributeSet attrs) {
+    public H2BarChart(Context context, AttributeSet attrs) {
         super(context, attrs);
         setYAxis();
     }
 
-    public HBarChart(Context context, AttributeSet attrs, int defStyle) {
+    public H2BarChart(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setYAxis();
     }

@@ -50,12 +50,12 @@ public class CurrentReceiveDeliveryBean {
          */
 
         private String currentDate;
-        private int receiveVolume;
-        private int receiveWeight;
-        private int deliveryVolume;
-        private int deliveryWeight;
-        private int currentVolumeStorageCapacity;
-        private int currentWeightStorageCapacity;
+        private String receiveVolume;
+        private String receiveWeight;
+        private String deliveryVolume;
+        private String deliveryWeight;
+        private String currentVolumeStorageCapacity;
+        private String currentWeightStorageCapacity;
 
         public String getCurrentDate() {
             return currentDate;
@@ -65,51 +65,51 @@ public class CurrentReceiveDeliveryBean {
             this.currentDate = currentDate;
         }
 
-        public int getReceiveVolume() {
+        public String getReceiveVolume() {
             return receiveVolume;
         }
 
-        public void setReceiveVolume(int receiveVolume) {
+        public void setReceiveVolume(String receiveVolume) {
             this.receiveVolume = receiveVolume;
         }
 
-        public int getReceiveWeight() {
+        public String getReceiveWeight() {
             return receiveWeight;
         }
 
-        public void setReceiveWeight(int receiveWeight) {
+        public void setReceiveWeight(String receiveWeight) {
             this.receiveWeight = receiveWeight;
         }
 
-        public int getDeliveryVolume() {
+        public String getDeliveryVolume() {
             return deliveryVolume;
         }
 
-        public void setDeliveryVolume(int deliveryVolume) {
+        public void setDeliveryVolume(String deliveryVolume) {
             this.deliveryVolume = deliveryVolume;
         }
 
-        public int getDeliveryWeight() {
+        public String getDeliveryWeight() {
             return deliveryWeight;
         }
 
-        public void setDeliveryWeight(int deliveryWeight) {
+        public void setDeliveryWeight(String deliveryWeight) {
             this.deliveryWeight = deliveryWeight;
         }
 
-        public int getCurrentVolumeStorageCapacity() {
+        public String getCurrentVolumeStorageCapacity() {
             return currentVolumeStorageCapacity;
         }
 
-        public void setCurrentVolumeStorageCapacity(int currentVolumeStorageCapacity) {
+        public void setCurrentVolumeStorageCapacity(String currentVolumeStorageCapacity) {
             this.currentVolumeStorageCapacity = currentVolumeStorageCapacity;
         }
 
-        public int getCurrentWeightStorageCapacity() {
+        public String getCurrentWeightStorageCapacity() {
             return currentWeightStorageCapacity;
         }
 
-        public void setCurrentWeightStorageCapacity(int currentWeightStorageCapacity) {
+        public void setCurrentWeightStorageCapacity(String currentWeightStorageCapacity) {
             this.currentWeightStorageCapacity = currentWeightStorageCapacity;
         }
     }

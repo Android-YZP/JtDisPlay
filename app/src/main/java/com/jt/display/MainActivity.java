@@ -1,11 +1,13 @@
 package com.jt.display;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieEntry;
 import com.jt.display.activitys.CarActivity;
 import com.jt.display.activitys.CostActivity;
 import com.jt.display.activitys.SalesActivity;
@@ -25,10 +27,14 @@ import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.utils.SharePreferenceUtils;
 import com.jt.display.views.CLineChart;
+import com.jt.display.views.CustomPieChart;
+import com.jt.display.views.HBarChart;
 import com.jt.display.views.ManyBarChart;
+import com.jt.display.views.PieChartView;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,6 +48,10 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private ComPresenter mPresenter;
     private ManyBarChart mLastSevenDaysChart;
     private CLineChart mLastSixMonthSalesChart;
+    private PieChartView mCustomerSalesSortChart;
+    private CLineChart mLastSevenCarCostChart;
+    private HBarChart mCurrentReceiveDeliveryChart;
+    private HBarChart mCurrentDateLoadAndUnloadVolumeChart;
 
     @Override
     public int getLayoutId() {
@@ -56,6 +66,10 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mTvTransport = findViewById(R.id.tv_transport);
         mLastSevenDaysChart = findViewById(R.id.lastSevenDays_chart);
         mLastSixMonthSalesChart = findViewById(R.id.lastSixMonthSales_chart);
+        mCustomerSalesSortChart = findViewById(R.id.customerSalesSort_chart);
+        mLastSevenCarCostChart = findViewById(R.id.lastSevenCarCost_chart);
+        mCurrentReceiveDeliveryChart = findViewById(R.id.currentReceiveDelivery_chart);
+        mCurrentDateLoadAndUnloadVolumeChart = findViewById(R.id.currentDateLoadAndUnloadVolume_chart);
     }
 
     @Override
@@ -118,12 +132,12 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         if (type == Constants.METHOD_ONE) {//登录
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
-                mPresenter.lastSevenDaysSales();
-                mPresenter.lastSixMonthSales();
-//                mPresenter.customerSalesSort("1");
+//                mPresenter.lastSevenDaysSales();
+//                mPresenter.lastSixMonthSales();
+//                mPresenter.customerSalesSort("2");
 //                mPresenter.lastSevenCarCost();
-//                mPresenter.currentReceiveDelivery();
-//                mPresenter.currentDateLoadAndUnloadVolume();
+                mPresenter.currentReceiveDelivery();
+                mPresenter.currentDateLoadAndUnloadVolume();
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
@@ -144,14 +158,14 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         } else if (type == Constants.METHOD_FOUR) {//客户销量排名
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CustomerSalesSortBean customerSalesSortBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CustomerSalesSortBean.class);
-
+                initPieChart(customerSalesSortBean);
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_FIVE) {//近七日车辆成本
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSevenCarCostBean lastSevenCarCostBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenCarCostBean.class);
-
+                initCarLineChart(lastSevenCarCostBean);
 
             } else {
                 show(((JsonResult) jsonResult).getMsg());
@@ -159,7 +173,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         } else if (type == Constants.METHOD_SIX) {//当日收发货
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentReceiveDeliveryBean currentReceiveDeliveryBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceiveDeliveryBean.class);
-
+                initReceiveBar(currentReceiveDeliveryBean);
 
             } else {
                 show(((JsonResult) jsonResult).getMsg());
@@ -168,7 +182,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean =
                         GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentDateLoadAndUnloadVolumeBean.class);
-
+                initLoadAndUnloadVolumeChart(currentDateLoadAndUnloadVolumeBean);
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
@@ -274,6 +288,200 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         chartDataMap.put("重量", yValue3);
         chartDataMap.put("总箱数", yValue4);
 
+        return chartDataMap;
+    }
+
+
+    private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
+        mCustomerSalesSortChart.setPieChartCircleRadius(220);
+        mCustomerSalesSortChart.setTextSize(10f);
+        mCustomerSalesSortChart.setData(getPieChartData(customerSalesSortBean));
+    }
+
+
+    public List<PieChartView.PieceDataHolder> getPieChartData(CustomerSalesSortBean customerSalesSortBean) {
+        int currentPosition = 0;
+        List<Integer> colors = Arrays.asList(
+                Color.BLUE,
+                Color.BLUE,
+                Color.GRAY,
+                Color.GRAY,
+                Color.GREEN,
+                Color.GREEN,
+                Color.RED,
+                Color.RED,
+                Color.LTGRAY,
+                Color.WHITE
+        );
+
+        List<CustomerSalesSortBean.DataBean> dataBeanList = customerSalesSortBean.getData();
+        List<PieChartView.PieceDataHolder> pieceDataHolders = new ArrayList<>();
+        for (CustomerSalesSortBean.DataBean data : dataBeanList) {
+            pieceDataHolders.add(new PieChartView.PieceDataHolder(Float.parseFloat(data.getChannelSettleAmount()),
+                    colors.get(currentPosition), data.getCustomerName()));
+            currentPosition++;
+        }
+
+        return pieceDataHolders;
+    }
+
+    private void initCarLineChart(LastSevenCarCostBean lastSevenCarCostBean) {
+        mLastSevenCarCostChart.animateY(1000);
+        mLastSevenCarCostChart.animateX(1000);
+        List<String> Xstrings = initCarLineXData(lastSevenCarCostBean);
+        LinkedHashMap<String, List<Float>> Ystrings = initCarLineYData(lastSevenCarCostBean);
+        mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings);
+    }
+
+    private List<String> initCarLineXData(LastSevenCarCostBean lastSevenCarCostBean) {
+        List<String> xValues = new ArrayList<>();
+        for (int i = 0; i < lastSevenCarCostBean.getData().size(); i++) {
+            xValues.add(lastSevenCarCostBean.getData().get(i).getDispatchCarDay());
+        }
+        return xValues;
+    }
+
+    private LinkedHashMap<String, List<Float>> initCarLineYData(LastSevenCarCostBean lastSevenCarCostBean) {
+        LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
+        List<Float> yValue1 = new ArrayList<>();
+        List<LastSevenCarCostBean.DataBean> lastSevenCarCostBeanData = lastSevenCarCostBean.getData();
+        for (LastSevenCarCostBean.DataBean valueBean : lastSevenCarCostBeanData) {
+            yValue1.add(Float.parseFloat(valueBean.getTransChargeSum()));
+        }
+        chartDataMap.put("费用", yValue1);
+        return chartDataMap;
+    }
+
+
+    private void initReceiveBar(CurrentReceiveDeliveryBean currentReceiveDeliveryBean) {
+        List<Integer> colors = Arrays.asList(
+                Color.BLUE,
+                Color.BLUE,
+                Color.GRAY,
+                Color.GRAY,
+                Color.GREEN,
+                Color.GREEN,
+                Color.RED,
+                Color.RED,
+                Color.LTGRAY,
+                Color.WHITE
+        );
+        List<String> Xstrings = initReceiveBarXData(currentReceiveDeliveryBean);
+
+        LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(currentReceiveDeliveryBean);
+        mCurrentReceiveDeliveryChart.loadData(colors, Xstrings, Ystring);
+
+        Logger.e(GsonUtil.GsonString(Xstrings));
+        Logger.e(GsonUtil.GsonString(Ystring));
+    }
+
+    private List<String> initReceiveBarXData(CurrentReceiveDeliveryBean currentReceiveDeliveryBean) {
+        List<String> xValues = new ArrayList<>();
+        for (int i = 0; i < currentReceiveDeliveryBean.getData().size(); i++) {
+            xValues.add(currentReceiveDeliveryBean.getData().get(i).getCurrentDate());
+        }
+        return xValues;
+    }
+
+    private LinkedHashMap<String, List<String>> initReceiveBarYData(CurrentReceiveDeliveryBean currentReceiveDeliveryBean) {
+        LinkedHashMap<String, List<String>> chartDataMap = new LinkedHashMap<>();
+
+        List<String> yValue1 = new ArrayList<>();
+        List<String> yValue2 = new ArrayList<>();
+        List<String> yValue3 = new ArrayList<>();
+        List<String> yValue4 = new ArrayList<>();
+        List<String> yValue5 = new ArrayList<>();
+        List<String> yValue6 = new ArrayList<>();
+
+        List<CurrentReceiveDeliveryBean.DataBean> data = currentReceiveDeliveryBean.getData();
+
+        for (CurrentReceiveDeliveryBean.DataBean valueBean : data) {
+            yValue1.add(valueBean.getReceiveVolume());
+        }
+        for (CurrentReceiveDeliveryBean.DataBean valueBean : data) {
+            yValue2.add(valueBean.getReceiveWeight());
+        }
+        for (CurrentReceiveDeliveryBean.DataBean valueBean : data) {
+            yValue3.add(valueBean.getDeliveryVolume());
+        }
+        for (CurrentReceiveDeliveryBean.DataBean valueBean : data) {
+            yValue4.add(valueBean.getDeliveryWeight());
+        }
+        for (CurrentReceiveDeliveryBean.DataBean valueBean : data) {
+            yValue5.add(valueBean.getCurrentVolumeStorageCapacity());
+        }
+        for (CurrentReceiveDeliveryBean.DataBean valueBean : data) {
+            yValue6.add(valueBean.getCurrentWeightStorageCapacity());
+        }
+        chartDataMap.put("收货体积", yValue1);
+        chartDataMap.put("收货重量", yValue2);
+        chartDataMap.put("发货体积", yValue3);
+        chartDataMap.put("发货重量", yValue4);
+        chartDataMap.put("库存体积", yValue5);
+        chartDataMap.put("库存重量", yValue6);
+        return chartDataMap;
+    }
+
+
+    private void initLoadAndUnloadVolumeChart(CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean) {
+        List<Integer> colors = Arrays.asList(
+                Color.BLUE,
+                Color.BLUE,
+                Color.GRAY,
+                Color.GRAY,
+                Color.GREEN,
+                Color.GREEN,
+                Color.RED,
+                Color.RED,
+                Color.LTGRAY,
+                Color.WHITE
+        );
+
+        List<String> Xstrings = initLoadAndUnloadVolumeBarXData(currentDateLoadAndUnloadVolumeBean);
+        LinkedHashMap<String, List<String>> Ystring = initLoadAndUnloadVolumeBarYData(currentDateLoadAndUnloadVolumeBean);
+        Logger.e(GsonUtil.GsonString(Xstrings));
+        Logger.e(GsonUtil.GsonString(Ystring));
+        mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring);
+    }
+
+    private List<String> initLoadAndUnloadVolumeBarXData(CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean) {
+        List<String> xValues = new ArrayList<>();
+        for (int i = 0; i < currentDateLoadAndUnloadVolumeBean.getData().size(); i++) {
+            xValues.add(currentDateLoadAndUnloadVolumeBean.getData().get(i).getCurrentDate()+"");
+        }
+        return xValues;
+    }
+
+    private LinkedHashMap<String, List<String>> initLoadAndUnloadVolumeBarYData(CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean) {
+        LinkedHashMap<String, List<String>> chartDataMap = new LinkedHashMap<>();
+
+        List<String> yValue1 = new ArrayList<>();
+        List<String> yValue2 = new ArrayList<>();
+        List<String> yValue3 = new ArrayList<>();
+        List<String> yValue4 = new ArrayList<>();
+
+
+        List<CurrentDateLoadAndUnloadVolumeBean.DataBean> data = currentDateLoadAndUnloadVolumeBean.getData();
+
+        for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
+            yValue1.add("1222.2");
+        }
+        for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
+            yValue2.add("2322.3");
+        }
+        for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
+            yValue3.add("3555.5");
+        }
+        for (CurrentDateLoadAndUnloadVolumeBean.DataBean valueBean : data) {
+            yValue4.add("4555.4");
+        }
+
+        chartDataMap.put("提货装卸体积", yValue1);
+        chartDataMap.put("转运仓装卸体积", yValue2);
+        chartDataMap.put("京东仓装卸体积", yValue3);
+        chartDataMap.put("京东仓装卸体积2", yValue4);
+        chartDataMap.put("京东仓装卸体积5", yValue4);
+        chartDataMap.put("京东仓装卸体积3", yValue4);
         return chartDataMap;
     }
 

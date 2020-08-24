@@ -89,7 +89,7 @@ public class CustomPieChart extends PieChart {
         pieChart.setTransparentCircleRadius(0.5f);
 
         //设置初始旋转角度
-        pieChart.setRotationAngle(-15);
+        pieChart.setRotationAngle(-95);
         //数据连接线距图形片内部边界的距离，为百分数
         dataSet.setValueLinePart1OffsetPercentage(90f);
         //设置连接线的颜色
@@ -99,7 +99,7 @@ public class CustomPieChart extends PieChart {
         pieChart.setHoleColor(Color.WHITE);
         pieChart.setCenterText("车辆调度中心");
         pieChart.setCenterTextColor(Color.BLACK);
-        pieChart.setCenterTextSize(20f);
+        pieChart.setCenterTextSize(7f);
         // 连接线在饼状图外面
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);//lable外部展示
         dataSet.setYValuePosition(PieDataSet.ValuePosition.INSIDE_SLICE);//value外部展示
@@ -108,16 +108,16 @@ public class CustomPieChart extends PieChart {
 
 
         // 设置饼块之间的间隔
-        dataSet.setSliceSpace(1f);
+        dataSet.setSliceSpace(0f);
         dataSet.setHighlightEnabled(true);
         // 不显示图例
         Legend l = pieChart.getLegend();
         l.setEnabled(true);
-        l.setTextSize(20f);
+        l.setTextSize(7f);
         l.setTextColor(Color.WHITE);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
 
         // 和四周相隔一段距离,显示数据
@@ -136,7 +136,7 @@ public class CustomPieChart extends PieChart {
         // 绘制内容value，设置字体颜色大小
         pieData.setDrawValues(true);
         pieData.setValueFormatter(new PercentFormatter());
-        pieData.setValueTextSize(20f);
+        pieData.setValueTextSize(8f);
         pieData.setValueTextColor(Color.BLACK);
         pieChart.setData(pieData);
         // 更新 piechart 视图

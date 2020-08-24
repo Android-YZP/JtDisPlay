@@ -125,7 +125,7 @@ public class SalesActivity extends BaseDisplayActivity {
 
 
     private void initHorizontalBarChart() {
-        mHorizontalBarChart.loadData();
+//        mHorizontalBarChart.loadData();
     }
 
 

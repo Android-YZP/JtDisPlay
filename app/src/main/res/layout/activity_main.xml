@@ -117,6 +117,7 @@
             android:layout_weight="1" />
 
         <com.jt.display.views.PieChartView
+            android:id="@+id/customerSalesSort_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
@@ -130,16 +131,19 @@
         android:orientation="horizontal">
 
         <com.jt.display.views.CLineChart
+            android:id="@+id/lastSevenCarCost_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.jt.display.views.HBarChart
+            android:id="@+id/currentReceiveDelivery_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.jt.display.views.HBarChart
+            android:id="@+id/currentDateLoadAndUnloadVolume_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />

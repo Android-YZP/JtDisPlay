@@ -53,14 +53,14 @@ public class CustomerSalesSortBean {
          */
 
         private String customerName;
-        private int sumVolume;
-        private int sumWeight;
-        private int sumAmount;
-        private int cusSettleAmount;
-        private int channelSettleAmount;
-        private int orderCost;
-        private int orderNum;
-        private int acceptNum;
+        private String sumVolume;
+        private String sumWeight;
+        private String sumAmount;
+        private String cusSettleAmount;
+        private String channelSettleAmount;
+        private String orderCost;
+        private String orderNum;
+        private String acceptNum;
 
         public String getCustomerName() {
             return customerName;
@@ -70,67 +70,67 @@ public class CustomerSalesSortBean {
             this.customerName = customerName;
         }
 
-        public int getSumVolume() {
+        public String getSumVolume() {
             return sumVolume;
         }
 
-        public void setSumVolume(int sumVolume) {
+        public void setSumVolume(String sumVolume) {
             this.sumVolume = sumVolume;
         }
 
-        public int getSumWeight() {
+        public String getSumWeight() {
             return sumWeight;
         }
 
-        public void setSumWeight(int sumWeight) {
+        public void setSumWeight(String sumWeight) {
             this.sumWeight = sumWeight;
         }
 
-        public int getSumAmount() {
+        public String getSumAmount() {
             return sumAmount;
         }
 
-        public void setSumAmount(int sumAmount) {
+        public void setSumAmount(String sumAmount) {
             this.sumAmount = sumAmount;
         }
 
-        public int getCusSettleAmount() {
+        public String getCusSettleAmount() {
             return cusSettleAmount;
         }
 
-        public void setCusSettleAmount(int cusSettleAmount) {
+        public void setCusSettleAmount(String cusSettleAmount) {
             this.cusSettleAmount = cusSettleAmount;
         }
 
-        public int getChannelSettleAmount() {
+        public String getChannelSettleAmount() {
             return channelSettleAmount;
         }
 
-        public void setChannelSettleAmount(int channelSettleAmount) {
+        public void setChannelSettleAmount(String channelSettleAmount) {
             this.channelSettleAmount = channelSettleAmount;
         }
 
-        public int getOrderCost() {
+        public String getOrderCost() {
             return orderCost;
         }
 
-        public void setOrderCost(int orderCost) {
+        public void setOrderCost(String orderCost) {
             this.orderCost = orderCost;
         }
 
-        public int getOrderNum() {
+        public String getOrderNum() {
             return orderNum;
         }
 
-        public void setOrderNum(int orderNum) {
+        public void setOrderNum(String orderNum) {
             this.orderNum = orderNum;
         }
 
-        public int getAcceptNum() {
+        public String getAcceptNum() {
             return acceptNum;
         }
 
-        public void setAcceptNum(int acceptNum) {
+        public void setAcceptNum(String acceptNum) {
             this.acceptNum = acceptNum;
         }
     }

@@ -47,9 +47,9 @@ public class CurrentDateLoadAndUnloadVolumeBean {
          */
 
         private String currentDate;
-        private double takeWareLoadAndUnloadVolume;
-        private int tcLoadAndUnloadVolume;
-        private int jdLoadAndUnloadVolume;
+        private String takeWareLoadAndUnloadVolume;
+        private String tcLoadAndUnloadVolume;
+        private String jdLoadAndUnloadVolume;
 
         public String getCurrentDate() {
             return currentDate;
@@ -59,27 +59,27 @@ public class CurrentDateLoadAndUnloadVolumeBean {
             this.currentDate = currentDate;
         }
 
-        public double getTakeWareLoadAndUnloadVolume() {
+        public String getTakeWareLoadAndUnloadVolume() {
             return takeWareLoadAndUnloadVolume;
         }
 
-        public void setTakeWareLoadAndUnloadVolume(double takeWareLoadAndUnloadVolume) {
+        public void setTakeWareLoadAndUnloadVolume(String takeWareLoadAndUnloadVolume) {
             this.takeWareLoadAndUnloadVolume = takeWareLoadAndUnloadVolume;
         }
 
-        public int getTcLoadAndUnloadVolume() {
+        public String getTcLoadAndUnloadVolume() {
             return tcLoadAndUnloadVolume;
         }
 
-        public void setTcLoadAndUnloadVolume(int tcLoadAndUnloadVolume) {
+        public void setTcLoadAndUnloadVolume(String tcLoadAndUnloadVolume) {
             this.tcLoadAndUnloadVolume = tcLoadAndUnloadVolume;
         }
 
-        public int getJdLoadAndUnloadVolume() {
+        public String getJdLoadAndUnloadVolume() {
             return jdLoadAndUnloadVolume;
         }
 
-        public void setJdLoadAndUnloadVolume(int jdLoadAndUnloadVolume) {
+        public void setJdLoadAndUnloadVolume(String jdLoadAndUnloadVolume) {
             this.jdLoadAndUnloadVolume = jdLoadAndUnloadVolume;
         }
     }

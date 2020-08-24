@@ -45,7 +45,7 @@ public class LastSevenCarCostBean {
          */
 
         private String dispatchCarDay;
-        private int transChargeSum;
+        private String transChargeSum;
 
         public String getDispatchCarDay() {
             return dispatchCarDay;
@@ -55,11 +55,11 @@ public class LastSevenCarCostBean {
             this.dispatchCarDay = dispatchCarDay;
         }
 
-        public int getTransChargeSum() {
+        public String getTransChargeSum() {
             return transChargeSum;
         }
 
-        public void setTransChargeSum(int transChargeSum) {
+        public void setTransChargeSum(String transChargeSum) {
             this.transChargeSum = transChargeSum;
         }
     }

@@ -98,8 +98,7 @@ public class CLineChart extends LineChart {
         xAxis.setGranularity(1f);
 
         //保证Y轴从0开始，不然会上移一点
-        leftYAxis.setAxisMinimum(-0.1f);
-        rightYaxis.setAxisMinimum(0f);
+        leftYAxis.setAxisMinimum(0f);
 
         //X,Y轴数据设置
         leftYAxis.setAxisLineColor(Color.TRANSPARENT);
@@ -108,7 +107,7 @@ public class CLineChart extends LineChart {
         xAxis.setAxisLineColor(Color.TRANSPARENT);
 
 //        //是否启用绘制零线:设置为true后才有后面的操作
-        leftYAxis.setDrawZeroLine(false);
+//        leftYAxis.setDrawZeroLine(false);
 //        //设置绘制零线宽度
 //        leftYAxis.setZeroLineWidth(1.2f);
 //        //绘制零线颜色
@@ -118,11 +117,11 @@ public class CLineChart extends LineChart {
         /***折线图例 标签 设置***/
         legend = lineChart.getLegend();
         //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
-        legend.setForm(Legend.LegendForm.LINE);
+        legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setTextSize(8f);
         //显示位置 左下方
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         //是否绘制在图表里面
         legend.setDrawInside(false);
@@ -165,6 +164,7 @@ public class CLineChart extends LineChart {
         for (LinkedHashMap.Entry<String, List<Float>> entry : YValue.entrySet()) {
             String key = entry.getKey();
             List<Float> yValueList = entry.getValue();
+            Logger.e(key + GsonUtil.GsonString(yValueList));
             List<Entry> entries = new ArrayList<>();
             for (int i = 0; i < yValueList.size(); i++) {
 
@@ -177,10 +177,10 @@ public class CLineChart extends LineChart {
             }
             // 每一个LineDataSet代表一条线
             LineDataSet lineDataSet = new LineDataSet(entries, key);
-            initLineDataSet(lineDataSet, colors.get(currentPosition), LineDataSet.Mode.CUBIC_BEZIER);
+            initLineDataSet(lineDataSet, colors.get(currentPosition), LineDataSet.Mode.LINEAR);
             dataSets.add(lineDataSet);
             currentPosition++;
-            xAxis.setAxisMaximum((float) yValueList.size() - 0.8f);
+            xAxis.setAxisMaximum((float) yValueList.size() - 0.7f);
         }
 
         LineData lineData = new LineData(dataSets);
@@ -197,11 +197,11 @@ public class CLineChart extends LineChart {
         leftYAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return (value * 100) + "";
+                return (value) + "";
             }
         });
 
-        leftYAxis.setLabelCount(7);
+
     }
 
 
@@ -240,9 +240,9 @@ public class CLineChart extends LineChart {
 
         if (mode == null) {
             //设置曲线展示为圆滑曲线（如果不设置则默认折线）
-            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         } else {
-            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         }
     }
 
