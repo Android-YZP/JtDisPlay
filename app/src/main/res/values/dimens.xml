@@ -6,4 +6,6 @@
     <dimen name="font15">15sp</dimen>
     <dimen name="font20">20sp</dimen>
     <dimen name="dp20">20dp</dimen>
+    <dimen name="dp30">30dp</dimen>
+    <dimen name="font23">23sp</dimen>
 </resources>

@@ -114,7 +114,7 @@ public class H2BarChart extends HorizontalBarChart {
         setXAxis(xstrings);
         //不绘制图例
         Legend legend = getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setForm(Legend.LegendForm.LINE);
         legend.setTextSize(7f);
         legend.setTextColor(Color.WHITE);
         //显示位置

@@ -269,7 +269,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> XData = initXData(lastSevenDaysSalesBean);
         LinkedHashMap<String, List<Float>> YData = initYData(lastSevenDaysSalesBean);
         mLastSevenDaysChart.showBarChart(XData, YData,colors);
-        mLastSevenDaysChart.setDes("近七日销量", 230);
+        mLastSevenDaysChart.setDes("近七日销量", 150);
 
     }
 
@@ -321,7 +321,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initLineXData(lastSixMonthSalesBean);
         LinkedHashMap<String, List<Float>> Ystrings = initLineYData(lastSixMonthSalesBean);
         mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings,colors);
-        mLastSixMonthSalesChart.setDes("近六个月销量", 270);
+        mLastSixMonthSalesChart.setDes("近六个月销量", 180);
     }
 
     private List<String> initLineXData(LastSixMonthSalesBean lastSixMonthSalesBean) {
@@ -366,16 +366,16 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
         if (type == 1) {
-            mCustomerSalesSortChartWeek.setPieChartCircleRadius(180);
-            mCustomerSalesSortChartWeek.setTextSize(8f);
+            mCustomerSalesSortChartWeek.setPieChartCircleRadius(60);
+            mCustomerSalesSortChartWeek.setTextSize(6f);
             mCustomerSalesSortChartWeek.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 2) {
-            mCustomerSalesSortChartMonth.setPieChartCircleRadius(180);
-            mCustomerSalesSortChartMonth.setTextSize(8f);
+            mCustomerSalesSortChartMonth.setPieChartCircleRadius(60);
+            mCustomerSalesSortChartMonth.setTextSize(6f);
             mCustomerSalesSortChartMonth.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 3) {
-            mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(180);
-            mCustomerSalesSortChartQuarterly.setTextSize(8f);
+            mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(60);
+            mCustomerSalesSortChartQuarterly.setTextSize(6f);
             mCustomerSalesSortChartQuarterly.setData(getPieChartData(customerSalesSortBean));
 
         }
@@ -401,7 +401,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initCarLineXData(lastSevenCarCostBean);
         LinkedHashMap<String, List<Float>> Ystrings = initCarLineYData(lastSevenCarCostBean);
         mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings,colors);
-        mLastSevenCarCostChart.setDes("近七日车辆成本", 300);
+        mLastSevenCarCostChart.setDes("近七日车辆成本", 200);
     }
 
     private List<String> initCarLineXData(LastSevenCarCostBean lastSevenCarCostBean) {
@@ -430,7 +430,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
         LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(bean);
         mCurrentReceiveDeliveryChart.loadData(colors, Xstrings, Ystring);
-        mCurrentReceiveDeliveryChart.setDes("当日收发货", 230);
+        mCurrentReceiveDeliveryChart.setDes("当日收发货", 150);
     }
 
     private List<String> initReceiveBarXData(CurrentReceiveDeliveryBean bean) {
@@ -486,7 +486,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initLoadAndUnloadVolumeBarXData(currentDateLoadAndUnloadVolumeBean);
         LinkedHashMap<String, List<String>> Ystring = initLoadAndUnloadVolumeBarYData(currentDateLoadAndUnloadVolumeBean);
         mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring);
-        mCurrentDateLoadAndUnloadVolumeChart.setDes("当日装卸方数", 270);
+        mCurrentDateLoadAndUnloadVolumeChart.setDes("当日装卸方数", 180);
         mCurrentDateLoadAndUnloadVolumeChart.postInvalidate();
     }
 

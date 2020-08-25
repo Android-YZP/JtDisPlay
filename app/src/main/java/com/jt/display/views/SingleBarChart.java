@@ -107,7 +107,7 @@ public class SingleBarChart extends BarChart {
 
         /***折线图例 标签 设置***/
         legend = barChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setForm(Legend.LegendForm.LINE);
         legend.setTextSize(18f);
         legend.setTextColor(Color.BLACK);
         //显示位置

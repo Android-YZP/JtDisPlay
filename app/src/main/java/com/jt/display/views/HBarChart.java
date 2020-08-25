@@ -24,6 +24,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.jt.display.R;
 import com.orhanobut.logger.Logger;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -48,7 +49,7 @@ public class HBarChart extends HorizontalBarChart {
     public void setDes(String desc, int Xposition) {
         Description description = new Description();
         description.setText(desc);
-        description.setPosition(Xposition, 60);
+        description.setPosition(Xposition, 40);
         description.setTextSize(13f);
         description.setTextColor(Color.parseColor("#ffffff"));
         description.setEnabled(true);
@@ -59,25 +60,21 @@ public class HBarChart extends HorizontalBarChart {
     private void setYAxis() {
         setBackgroundColor(Color.parseColor("#0f1e3d"));
         //两边的y轴都要设置y轴的最小值才能在柱状图上面显示数值
-        //不然是看不到效果的
         setNoDataText("正在加载中....");
         YAxis tepAxis = getAxisLeft();
-//        tepAxis.setAxisMaximum(80f);
         tepAxis.setAxisMinimum(0f);
         tepAxis.setEnabled(false);
-
         YAxis yAxis = getAxisRight();
         yAxis.setTextColor(Color.parseColor("#8FC7CC"));
         yAxis.setTextSize(8f);
         yAxis.setAxisMinimum(0f);
         yAxis.enableGridDashedLine(10f, 5f, 0f);
-//        yAxis.setAxisMaximum(80f);
         setAutoScaleMinMaxEnabled(true);
         //自定义样式
         yAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return value + "";
+                return round((double) value, 2) + "";
             }
         });
     }
@@ -90,26 +87,18 @@ public class HBarChart extends HorizontalBarChart {
         xAxis.setAxisMaximum(2f);
         //把最小值设置为负数能够为下方留出点空白距离
         xAxis.setAxisMinimum(-0.5f);
-
         xAxis.setCenterAxisLabels(true);
         xAxis.setDrawGridLines(false);
         //将x轴显示在左侧
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xAxis.setLabelCount(0);
-        //自定义样式
-//        xAxis.setAxisLineColor(Color.GRAY);
-
-
         xAxis.setTextColor(Color.parseColor("#8FC7CC"));
-
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-//                return value == 0f ? xstrings.get((int) value) : "";
-                if (value == -0.4f || value == 0f|| value == 0.8f|| value == 1.2f|| value == 1.6f){
+                if (value == -0.4f || value == 0f || value == 0.8f || value == 1.2f || value == 1.6f) {
                     return "";
-                }else {
-                    return  xstrings.get(0) + "";
+                } else {
+                    return xstrings.get(0).substring(5) + "";
                 }
             }
         });
@@ -123,8 +112,8 @@ public class HBarChart extends HorizontalBarChart {
         setXAxis(xstrings);
         //不绘制图例
         Legend legend = getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setTextSize(10f);
+        legend.setForm(Legend.LegendForm.LINE);
+        legend.setTextSize(5f);
         legend.setTextColor(Color.WHITE);
         //显示位置
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -181,4 +170,14 @@ public class HBarChart extends HorizontalBarChart {
         invalidate();
     }
 
+    public double round(Double v, int scale) {
+        if (scale < 0) {
+            throw new IllegalArgumentException("The scale must be a positive integer or zero");
+        }
+        BigDecimal b = null == v ? new BigDecimal("0.0") : new BigDecimal(Double.toString(v));
+        BigDecimal one = new BigDecimal("1");
+        return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+
+    }
 }

@@ -11,24 +11,15 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.jt.display.R;
-import com.jt.display.bean.lineChartBean;
-import com.jt.display.utils.DateUtil;
-import com.jt.display.utils.GsonUtil;
-import com.orhanobut.logger.Logger;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -58,7 +49,7 @@ public class CLineChart extends LineChart {
     public void setDes(String desc,int Xposition) {
         Description description = new Description();
         description.setText(desc);
-        description.setPosition(Xposition, 60);
+        description.setPosition(Xposition, 40);
         description.setTextSize(13f);
         description.setTextColor(Color.parseColor("#ffffff"));
         description.setEnabled(true);
@@ -85,7 +76,7 @@ public class CLineChart extends LineChart {
         lineChart.animateY(1000);
         lineChart.animateX(1000);
         //右下角的刻度显示
-
+        setExtraOffsets(0, 20, 10, 0);
 
         /***XY轴的设置***/
         xAxis = lineChart.getXAxis();
@@ -114,19 +105,11 @@ public class CLineChart extends LineChart {
         xAxis.setTextColor(Color.parseColor("#8FC7CC"));
         xAxis.setAxisLineColor(Color.TRANSPARENT);
 
-//        //是否启用绘制零线:设置为true后才有后面的操作
-//        leftYAxis.setDrawZeroLine(false);
-//        //设置绘制零线宽度
-//        leftYAxis.setZeroLineWidth(1.2f);
-//        //绘制零线颜色
-//        leftYAxis.setZeroLineColor(Color.YELLOW);
-
-
         /***折线图例 标签 设置***/
         legend = lineChart.getLegend();
         //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setTextSize(10f);
+        legend.setForm(Legend.LegendForm.LINE);
+        legend.setTextSize(7f);
         legend.setTextColor(Color.WHITE);
         //显示位置 左下方
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -185,6 +168,7 @@ public class CLineChart extends LineChart {
 
         LineData lineData = new LineData(dataSets);
         setData(lineData);
+        xAxis.setTextSize(6f);
         //  X轴值的定义 在 showLineChart 方法中我们会传入X轴的值，所以自定义X轴的值可以 写在该方法内
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override

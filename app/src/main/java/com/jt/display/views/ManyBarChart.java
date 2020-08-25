@@ -68,7 +68,7 @@ public class ManyBarChart extends BarChart {
         //显示边框
         barChart.setDrawBorders(false);
         //不显示右下角类容
-        setExtraOffsets(0, 30, 0, 0);
+        setExtraOffsets(0, 20, 0, 0);
         //设置动画效果
         barChart.animateY(1000, Easing.EasingOption.Linear);
         barChart.animateX(1000, Easing.EasingOption.Linear);
@@ -99,9 +99,7 @@ public class ManyBarChart extends BarChart {
         xAxis.setDrawGridLines(false);
         //右侧Y轴网格线设置为虚线
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
-
         //保证Y轴从0开始，不然会上移一点
-
         xAxis.setAxisMinimum(-0.2f);
         //保证Y轴从0开始，不会显示不全
         leftAxis.setAxisMinimum(0f);
@@ -111,8 +109,8 @@ public class ManyBarChart extends BarChart {
 
         /***折线图例 标签 设置***/
         legend = barChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setTextSize(10f);
+        legend.setForm(Legend.LegendForm.LINE);
+        legend.setTextSize(7f);
         legend.setTextColor(Color.WHITE);
         //显示位置
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -128,7 +126,7 @@ public class ManyBarChart extends BarChart {
     public void setDes(String desc,int Xposition) {
         Description description = new Description();
         description.setText(desc);
-        description.setPosition(Xposition, 60);
+        description.setPosition(Xposition, 40);
         description.setTextSize(13f);
         description.setTextColor(Color.parseColor("#ffffff"));
         description.setEnabled(true);
@@ -142,16 +140,12 @@ public class ManyBarChart extends BarChart {
      */
     public void showBarChart(final List<String> xValues, LinkedHashMap<String, List<Float>> dataLists,List<Integer> colors) {
 
-
         List<IBarDataSet> dataSets = new ArrayList<>();
         int currentPosition = 0;//用于柱状图颜色集合的index
-
         for (LinkedHashMap.Entry<String, List<Float>> entry : dataLists.entrySet()) {
             String name = entry.getKey();
             List<Float> yValueList = entry.getValue();
-
             List<BarEntry> entries = new ArrayList<>();
-
             for (int i = 0; i < yValueList.size(); i++) {
                 entries.add(new BarEntry(i, yValueList.get(i)));
             }
@@ -160,7 +154,6 @@ public class ManyBarChart extends BarChart {
             initBarDataSet(barDataSet, colors.get(currentPosition));
             dataSets.add(barDataSet);
             xAxis.setAxisMaximum((float) yValueList.size() + 0.2f);
-
             currentPosition++;
         }
 
@@ -179,7 +172,7 @@ public class ManyBarChart extends BarChart {
                 return (int) (value) + "%";
             }
         });
-        xAxis.setTextSize(8f);
+        xAxis.setTextSize(6f);
         leftAxis.setTextSize(8f);
         BarData data = new BarData(dataSets);
         /**
@@ -214,10 +207,6 @@ public class ManyBarChart extends BarChart {
         barDataSet.setFormSize(15.f);
         //不显示柱状图顶部值
         barDataSet.setDrawValues(false);
-
-//        barDataSet.setValueTextSize(10f);
-//        barDataSet.setValueTextColor(color);
-
     }
 
     public LinkedHashMap<String, List<Float>> initYData(BarJsonBean barJsonBean) {
@@ -246,7 +235,6 @@ public class ManyBarChart extends BarChart {
         //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
         LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
         List<String> xValues = new ArrayList<>();
-
         List<BarJsonBean.StFinDateBean.VtDateValueBean> valueList = barJsonBean.getStFinDate().getVtDateValue();
         Collections.reverse(valueList);
         for (BarJsonBean.StFinDateBean.VtDateValueBean valueBean : valueList) {
