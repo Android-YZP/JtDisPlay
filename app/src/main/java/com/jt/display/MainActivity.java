@@ -54,6 +54,19 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private CLineChart mLastSevenCarCostChart;
     private HBarChart mCurrentReceiveDeliveryChart;
     private HBarChart mCurrentDateLoadAndUnloadVolumeChart;
+    final List<Integer> colors = Arrays.asList(
+            Color.BLUE,
+            Color.BLUE,
+            Color.GRAY,
+            Color.GRAY,
+            Color.GREEN,
+            Color.GREEN,
+            Color.RED,
+            Color.RED,
+            Color.LTGRAY,
+            Color.WHITE
+    );
+
 
     @Override
     public int getLayoutId() {
@@ -308,19 +321,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     public List<PieChartView.PieceDataHolder> getPieChartData(CustomerSalesSortBean customerSalesSortBean) {
         int currentPosition = 0;
-        List<Integer> colors = Arrays.asList(
-                Color.BLUE,
-                Color.BLUE,
-                Color.GRAY,
-                Color.GRAY,
-                Color.GREEN,
-                Color.GREEN,
-                Color.RED,
-                Color.RED,
-                Color.LTGRAY,
-                Color.WHITE
-        );
-
         List<CustomerSalesSortBean.DataBean> dataBeanList = customerSalesSortBean.getData();
         List<PieChartView.PieceDataHolder> pieceDataHolders = new ArrayList<>();
         for (CustomerSalesSortBean.DataBean data : dataBeanList) {
@@ -362,18 +362,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initReceiveBar(CurrentReceiveDeliveryBean bean) {
-        List<Integer> colors = Arrays.asList(
-                Color.BLUE,
-                Color.BLUE,
-                Color.GRAY,
-                Color.GRAY,
-                Color.GREEN,
-                Color.GREEN,
-                Color.RED,
-                Color.RED,
-                Color.LTGRAY,
-                Color.WHITE
-        );
+
         List<String> Xstrings = initReceiveBarXData(bean);
 
         LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(bean);
@@ -430,18 +419,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initLoadAndUnloadVolumeChart(CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean) {
-        final List<Integer> colors = Arrays.asList(
-                Color.BLUE,
-                Color.BLUE,
-                Color.GRAY,
-                Color.GRAY,
-                Color.GREEN,
-                Color.GREEN,
-                Color.RED,
-                Color.RED,
-                Color.LTGRAY,
-                Color.WHITE
-        );
 
         List<String> Xstrings = initLoadAndUnloadVolumeBarXData(currentDateLoadAndUnloadVolumeBean);
         LinkedHashMap<String, List<String>> Ystring = initLoadAndUnloadVolumeBarYData(currentDateLoadAndUnloadVolumeBean);

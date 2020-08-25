@@ -113,6 +113,7 @@ public class ManyBarChart extends BarChart {
         legend = barChart.getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setTextSize(10f);
+        legend.setTextColor(Color.WHITE);
         //显示位置
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);

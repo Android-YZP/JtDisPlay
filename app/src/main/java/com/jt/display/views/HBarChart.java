@@ -45,14 +45,14 @@ public class HBarChart extends HorizontalBarChart {
     }
 
     //设置标题
-    public void setDes(String desc,int Xposition) {
+    public void setDes(String desc, int Xposition) {
         Description description = new Description();
         description.setText(desc);
         description.setPosition(Xposition, 60);
         description.setTextSize(13f);
         description.setTextColor(Color.parseColor("#ffffff"));
         description.setEnabled(true);
-       setDescription(description);
+        setDescription(description);
     }
 
     //设置y轴
@@ -70,7 +70,7 @@ public class HBarChart extends HorizontalBarChart {
         yAxis.setTextColor(Color.parseColor("#8FC7CC"));
         yAxis.setTextSize(8f);
         yAxis.setAxisMinimum(0f);
-        yAxis.enableGridDashedLine(10f, 10f, 0f);
+        yAxis.enableGridDashedLine(10f, 5f, 0f);
 //        yAxis.setAxisMaximum(80f);
         setAutoScaleMinMaxEnabled(true);
         //自定义样式
@@ -95,9 +95,9 @@ public class HBarChart extends HorizontalBarChart {
         xAxis.setDrawGridLines(false);
         //将x轴显示在左侧
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setLabelCount(0);
+//        xAxis.setLabelCount(0);
         //自定义样式
-        xAxis.setAxisLineColor(Color.GRAY);
+//        xAxis.setAxisLineColor(Color.GRAY);
 
 
         xAxis.setTextColor(Color.parseColor("#8FC7CC"));
@@ -105,7 +105,12 @@ public class HBarChart extends HorizontalBarChart {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return value == 0f ? xstrings.get((int) value) : "";
+//                return value == 0f ? xstrings.get((int) value) : "";
+                if (value == -0.4f || value == 0f|| value == 0.8f|| value == 1.2f|| value == 1.6f){
+                    return "";
+                }else {
+                    return  xstrings.get(0) + "";
+                }
             }
         });
         //设置x轴的偏移量
@@ -119,7 +124,7 @@ public class HBarChart extends HorizontalBarChart {
         //不绘制图例
         Legend legend = getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setTextSize(7f);
+        legend.setTextSize(10f);
         legend.setTextColor(Color.WHITE);
         //显示位置
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -130,7 +135,7 @@ public class HBarChart extends HorizontalBarChart {
         legend.setDrawInside(false);
         //自动对齐
         setFitBars(true);
-        setExtraOffsets(0, 30, 0, 0);
+        setExtraOffsets(-30, 30, 10, 0);
         //将文本绘制在柱块上还是柱块里面
         setDrawValueAboveBar(true);
 
