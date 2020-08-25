@@ -140,14 +140,8 @@ public class ManyBarChart extends BarChart {
      * @param dataLists LinkedHashMap<String, List<Float>>
      *                  key对应柱状图名字  List<Float> 对应每类柱状图的Y值
      */
-    public void showBarChart(final List<String> xValues, LinkedHashMap<String, List<Float>> dataLists) {
+    public void showBarChart(final List<String> xValues, LinkedHashMap<String, List<Float>> dataLists,List<Integer> colors) {
 
-        List<Integer> colors = Arrays.asList(
-                getResources().getColor(R.color.them_colors),
-                getResources().getColor(R.color.bt_focus),
-                getResources().getColor(R.color.bt_focus),
-                getResources().getColor(R.color.bt_focus)
-        );
 
         List<IBarDataSet> dataSets = new ArrayList<>();
         int currentPosition = 0;//用于柱状图颜色集合的index

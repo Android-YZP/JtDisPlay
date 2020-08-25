@@ -58,18 +58,21 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private HBarChart mCurrentReceiveDeliveryChart;
     private HBarChart mCurrentDateLoadAndUnloadVolumeChart;
     private int type = 1;//1周2月3季度
+//    <!--    face7c   fa965b  fa985c  e03836  f77b51  6ed062  303425 c58dfe e06412  1300fe-->
+
     final List<Integer> colors = Arrays.asList(
-            Color.BLUE,
-            Color.GRAY,
-            Color.BLUE,
-            Color.GRAY,
-            Color.RED,
-            Color.GREEN,
-            Color.RED,
-            Color.GREEN,
-            Color.LTGRAY,
-            Color.WHITE
+            Color.parseColor("#face7c"),
+            Color.parseColor("#fa985c"),
+            Color.parseColor("#e03836"),
+            Color.parseColor("#fa965b"),
+            Color.parseColor("#303425"),
+            Color.parseColor("#f77b51"),
+            Color.parseColor("#c58dfe"),
+            Color.parseColor("#e06412"),
+            Color.parseColor("#6ed062"),
+            Color.parseColor("#1300fe")
     );
+
     private TextView mTvWeek;
     private TextView mTvMonth;
     private TextView mTvQuarterly;
@@ -173,7 +176,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     protected void onPageSelected(int pager) {
         type = pager + 1;
         mPresenter.customerSalesSort(type + "");//1周2月3季度
-
         mTvWeek.setBackgroundColor(Color.TRANSPARENT);
         mTvMonth.setBackgroundColor(Color.TRANSPARENT);
         mTvQuarterly.setBackgroundColor(Color.TRANSPARENT);
@@ -196,26 +198,24 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(Object jsonResult, int type) {
+        if (((JsonResult) jsonResult).getCode() != Constants.HTTP_SUCCESS) {
+            show(((JsonResult) jsonResult).getMsg());
+        }
+
         if (type == Constants.METHOD_ONE) {//登录
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
                 mPresenter.lastSevenDaysSales();
-
                 startAnim();
-            } else {
-                show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_TWO) {//近七日销量
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-
                 mPresenter.lastSixMonthSales();
                 mPresenter.lastSevenCarCost();
 
                 LastSevenDaysSalesBean lastSevenDaysSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenDaysSalesBean.class);
                 mTvTodaySales.setText("今日销售额\n" + lastSevenDaysSalesBean.getData().get(6).getSalesAmount());
                 initMBar(lastSevenDaysSalesBean);
-            } else {
-                show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_THREE) {//近六个月销量
             mPresenter.customerSalesSort(type + "");//1周2月3季度
@@ -223,31 +223,25 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSixMonthSalesBean lastSixMonthSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSixMonthSalesBean.class);
                 initLine(lastSixMonthSalesBean);
-            } else {
-                show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_FOUR) {//客户销量排名
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CustomerSalesSortBean customerSalesSortBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CustomerSalesSortBean.class);
                 initPieChart(customerSalesSortBean);
                 mTvloding.setVisibility(View.GONE);
-            } else {
-                show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_FIVE) {//近七日车辆成本
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-
                 mPresenter.currentReceiveDelivery();
-                mPresenter.currentDateLoadAndUnloadVolume();
 
                 LastSevenCarCostBean lastSevenCarCostBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenCarCostBean.class);
                 initCarLineChart(lastSevenCarCostBean);
 
-            } else {
-                show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_SIX) {//当日收发货
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+                mPresenter.currentDateLoadAndUnloadVolume();
+
                 CurrentReceiveDeliveryBean bean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceiveDeliveryBean.class);
                 initReceiveBar(bean);
                 mTvTodayReceiving.setText("今日收货\n" + bean.getData().get(0).getReceiveVolume() + "m³/" +
@@ -256,20 +250,12 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                         bean.getData().get(0).getDeliveryWeight() + "Kg");
                 mTvTodayInventory.setText("今日库存\n" + bean.getData().get(0).getCurrentVolumeStorageCapacity() + "m³/" +
                         bean.getData().get(0).getCurrentWeightStorageCapacity() + "Kg");
-            } else {
-                show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_SEVEN) {//当日装卸方数
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean =
                         GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentDateLoadAndUnloadVolumeBean.class);
-
-
                 initLoadAndUnloadVolumeChart(currentDateLoadAndUnloadVolumeBean);
-
-
-            } else {
-                show(((JsonResult) jsonResult).getMsg());
             }
         }
     }
@@ -282,7 +268,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mLastSevenDaysChart.clear();
         List<String> XData = initXData(lastSevenDaysSalesBean);
         LinkedHashMap<String, List<Float>> YData = initYData(lastSevenDaysSalesBean);
-        mLastSevenDaysChart.showBarChart(XData, YData);
+        mLastSevenDaysChart.showBarChart(XData, YData,colors);
         mLastSevenDaysChart.setDes("近七日销量", 230);
 
     }
@@ -334,7 +320,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mLastSixMonthSalesChart.animateX(1000);
         List<String> Xstrings = initLineXData(lastSixMonthSalesBean);
         LinkedHashMap<String, List<Float>> Ystrings = initLineYData(lastSixMonthSalesBean);
-        mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings);
+        mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings,colors);
         mLastSixMonthSalesChart.setDes("近六个月销量", 270);
     }
 
@@ -380,15 +366,15 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
         if (type == 1) {
-            mCustomerSalesSortChartWeek.setPieChartCircleRadius(210);
+            mCustomerSalesSortChartWeek.setPieChartCircleRadius(180);
             mCustomerSalesSortChartWeek.setTextSize(8f);
             mCustomerSalesSortChartWeek.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 2) {
-            mCustomerSalesSortChartMonth.setPieChartCircleRadius(210);
+            mCustomerSalesSortChartMonth.setPieChartCircleRadius(180);
             mCustomerSalesSortChartMonth.setTextSize(8f);
             mCustomerSalesSortChartMonth.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 3) {
-            mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(210);
+            mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(180);
             mCustomerSalesSortChartQuarterly.setTextSize(8f);
             mCustomerSalesSortChartQuarterly.setData(getPieChartData(customerSalesSortBean));
 
@@ -414,7 +400,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mLastSevenCarCostChart.animateX(1000);
         List<String> Xstrings = initCarLineXData(lastSevenCarCostBean);
         LinkedHashMap<String, List<Float>> Ystrings = initCarLineYData(lastSevenCarCostBean);
-        mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings);
+        mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings,colors);
         mLastSevenCarCostChart.setDes("近七日车辆成本", 300);
     }
 

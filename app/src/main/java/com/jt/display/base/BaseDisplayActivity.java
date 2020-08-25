@@ -30,12 +30,12 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     protected Context mContext;
 
 
-    Handler handler = new Handler();
+    public Handler handler = new Handler();
     private int widthPixels;
     int pager = 1;
     public AnimatorSet translationAnimatorSet;
     private List<View> viewList = new ArrayList<>();
-    Runnable runnable = new Runnable() {
+    private  Runnable runnable = new Runnable() {
         @Override
         public void run() {
             nextPager(pager, 10000);

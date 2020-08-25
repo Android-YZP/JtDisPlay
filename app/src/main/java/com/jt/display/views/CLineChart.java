@@ -158,15 +158,9 @@ public class CLineChart extends LineChart {
      * 展示曲线
      *
      */
-    public void showLineChart(final List<String> XValue, LinkedHashMap<String, List<Float>> YValue) {
+    public void showLineChart(final List<String> XValue, LinkedHashMap<String, List<Float>> YValue,List<Integer> colors) {
         List<ILineDataSet> dataSets = new ArrayList<>();
 
-        List<Integer> colors = Arrays.asList(
-                getResources().getColor(R.color.them_colors),
-                getResources().getColor(R.color.white),
-                getResources().getColor(R.color.bt_focus),
-                getResources().getColor(R.color.button_background)
-        );
         int currentPosition = 0;
         for (LinkedHashMap.Entry<String, List<Float>> entry : YValue.entrySet()) {
             String key = entry.getKey();

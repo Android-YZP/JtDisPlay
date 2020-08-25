@@ -94,7 +94,7 @@ public class SalesActivity extends BaseDisplayActivity {
         mManyBarChart.animateX(1000, Easing.EasingOption.Linear);
 
         mManyBarChart.clear();
-        mManyBarChart.showBarChart(mManyBarChart.initXData(barJsonBean), mManyBarChart.initYData(barJsonBean));
+//        mManyBarChart.showBarChart(mManyBarChart.initXData(barJsonBean), mManyBarChart.initYData(barJsonBean));
 
     }
 

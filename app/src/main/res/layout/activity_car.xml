@@ -111,7 +111,8 @@
             android:orientation="horizontal"
             tools:ignore="NestedWeights">
 
-            <android.support.v7.widget.RecyclerView
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_acceptance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
