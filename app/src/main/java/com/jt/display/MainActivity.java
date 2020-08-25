@@ -60,13 +60,13 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private int type = 1;//1周2月3季度
     final List<Integer> colors = Arrays.asList(
             Color.BLUE,
+            Color.GRAY,
             Color.BLUE,
             Color.GRAY,
-            Color.GRAY,
-            Color.GREEN,
+            Color.RED,
             Color.GREEN,
             Color.RED,
-            Color.RED,
+            Color.GREEN,
             Color.LTGRAY,
             Color.WHITE
     );
@@ -171,7 +171,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     protected void onPageSelected(int pager) {
-        Logger.e(pager + "当前页");
         type = pager + 1;
         mPresenter.customerSalesSort(type + "");//1周2月3季度
 
@@ -219,11 +218,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_THREE) {//近六个月销量
-
-            mPresenter.customerSalesSort(type + "");//1周2月3季度
-            type++;
-            mPresenter.customerSalesSort(type + "");//1周2月3季度
-            type++;
             mPresenter.customerSalesSort(type + "");//1周2月3季度
 
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
@@ -386,17 +380,14 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
         if (type == 1) {
-            Logger.e("mCustomerSalesSortChartWeek" + "当前页");
             mCustomerSalesSortChartWeek.setPieChartCircleRadius(210);
             mCustomerSalesSortChartWeek.setTextSize(8f);
             mCustomerSalesSortChartWeek.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 2) {
-            Logger.e("mCustomerSalesSortChartMonth" + "当前页");
             mCustomerSalesSortChartMonth.setPieChartCircleRadius(210);
             mCustomerSalesSortChartMonth.setTextSize(8f);
             mCustomerSalesSortChartMonth.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 3) {
-            Logger.e("mCustomerSalesSortChartQuarterly" + "当前页");
             mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(210);
             mCustomerSalesSortChartQuarterly.setTextSize(8f);
             mCustomerSalesSortChartQuarterly.setData(getPieChartData(customerSalesSortBean));

@@ -103,6 +103,24 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
         super.onDestroy();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (translationAnimatorSet != null) {
+            translationAnimatorSet.pause();
+            handler.removeCallbacks(runnable);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (translationAnimatorSet != null) {
+            translationAnimatorSet.resume();
+            handler.postDelayed(runnable, 10000);
+        }
+    }
+
     /**
      * 绑定生命周期 防止MVP内存泄漏
      *
