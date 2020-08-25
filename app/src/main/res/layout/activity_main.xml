@@ -25,13 +25,55 @@
             android:src="@mipmap/ic_launcher_round" />
 
         <TextView
+            android:id="@+id/tv_today_sale"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/bg_data"
             android:gravity="center_vertical"
             android:paddingStart="8dp"
-            android:text="今日销售额\n435548"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font25" />
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@color/bg_data"
+            android:paddingStart="10dp"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:id="@+id/tv_today_receiving_goods"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font25" />
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@color/bg_data"
+            android:paddingStart="10dp"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:id="@+id/tv_today_shipment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
             android:textColor="@color/white"
             android:textSize="@dimen/font25" />
 
@@ -45,46 +87,7 @@
             android:src="@mipmap/ic_launcher_round" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/bg_data"
-            android:gravity="center_vertical"
-            android:paddingStart="8dp"
-            android:text="今日销售额\n435548"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font25" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:background="@color/bg_data"
-            android:paddingStart="10dp"
-            android:src="@mipmap/ic_launcher_round" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/bg_data"
-            android:gravity="center_vertical"
-            android:paddingStart="8dp"
-            android:text="今额\n435548"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font25" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:background="@color/bg_data"
-            android:paddingStart="10dp"
-            android:src="@mipmap/ic_launcher_round" />
-
-        <TextView
+            android:id="@+id/tv_today_inventory"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
@@ -92,7 +95,6 @@
             android:background="@color/bg_data"
             android:gravity="center_vertical"
             android:paddingStart="8dp"
-            android:text="今额\n435548"
             android:textColor="@color/white"
             android:textSize="@dimen/font25" />
 

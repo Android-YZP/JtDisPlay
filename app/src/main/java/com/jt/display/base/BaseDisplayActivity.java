@@ -33,7 +33,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     Handler handler = new Handler();
     private int widthPixels;
     int pager = 1;
-    private AnimatorSet translationAnimatorSet;
+    public AnimatorSet translationAnimatorSet;
     private List<View> viewList = new ArrayList<>();
     Runnable runnable = new Runnable() {
         @Override

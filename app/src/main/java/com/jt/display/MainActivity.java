@@ -1,5 +1,6 @@
 package com.jt.display;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -73,6 +74,10 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private TextView mTvMonth;
     private TextView mTvQuarterly;
     private TextView mTvloding;
+    private TextView mTvTodaySales;
+    private TextView mTvTodayReceiving;
+    private TextView mTvTodayShipment;
+    private TextView mTvTodayInventory;
 
 
     @Override
@@ -82,6 +87,11 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     public void initView() {
+        mTvTodaySales = findViewById(R.id.tv_today_sale);
+        mTvTodayReceiving = findViewById(R.id.tv_today_receiving_goods);
+        mTvTodayShipment = findViewById(R.id.tv_today_shipment);
+        mTvTodayInventory = findViewById(R.id.tv_today_inventory);
+
         mTvSales = findViewById(R.id.tv_sales);
         mTvCar = findViewById(R.id.tv_car);
         mTvCost = findViewById(R.id.tv_cost);
@@ -113,7 +123,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         addView(mCustomerSalesSortChartWeek);
         addView(mCustomerSalesSortChartMonth);
         addView(mCustomerSalesSortChartQuarterly);
-        startAnim();
+
     }
 
     @Override
@@ -184,32 +194,38 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(Object jsonResult, int type) {
         if (type == Constants.METHOD_ONE) {//登录
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
                 mPresenter.lastSevenDaysSales();
-                mPresenter.lastSixMonthSales();
-                mPresenter.customerSalesSort(type+ "");//1周2月3季度
-                type++;
-                mPresenter.customerSalesSort(type + "");//1周2月3季度
-                type++;
-                mPresenter.customerSalesSort(type + "");//1周2月3季度
-                mPresenter.lastSevenCarCost();
-                mPresenter.currentReceiveDelivery();
-                mPresenter.currentDateLoadAndUnloadVolume();
+
+                startAnim();
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_TWO) {//近七日销量
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+
+                mPresenter.lastSixMonthSales();
+                mPresenter.lastSevenCarCost();
+
                 LastSevenDaysSalesBean lastSevenDaysSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenDaysSalesBean.class);
+                mTvTodaySales.setText("今日销售额\n" + lastSevenDaysSalesBean.getData().get(6).getSalesAmount());
                 initMBar(lastSevenDaysSalesBean);
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
         } else if (type == Constants.METHOD_THREE) {//近六个月销量
+
+            mPresenter.customerSalesSort(type + "");//1周2月3季度
+            type++;
+            mPresenter.customerSalesSort(type + "");//1周2月3季度
+            type++;
+            mPresenter.customerSalesSort(type + "");//1周2月3季度
+
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSixMonthSalesBean lastSixMonthSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSixMonthSalesBean.class);
                 initLine(lastSixMonthSalesBean);
@@ -226,6 +242,10 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             }
         } else if (type == Constants.METHOD_FIVE) {//近七日车辆成本
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+
+                mPresenter.currentReceiveDelivery();
+                mPresenter.currentDateLoadAndUnloadVolume();
+
                 LastSevenCarCostBean lastSevenCarCostBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenCarCostBean.class);
                 initCarLineChart(lastSevenCarCostBean);
 
@@ -236,6 +256,12 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentReceiveDeliveryBean bean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceiveDeliveryBean.class);
                 initReceiveBar(bean);
+                mTvTodayReceiving.setText("今日收货\n" + bean.getData().get(0).getReceiveVolume() + "m³/" +
+                        bean.getData().get(0).getReceiveVolume() + "Kg");
+                mTvTodayShipment.setText("今日发货\n" + bean.getData().get(0).getDeliveryVolume() + "m³/" +
+                        bean.getData().get(0).getDeliveryWeight() + "Kg");
+                mTvTodayInventory.setText("今日库存\n" + bean.getData().get(0).getCurrentVolumeStorageCapacity() + "m³/" +
+                        bean.getData().get(0).getCurrentWeightStorageCapacity() + "Kg");
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
@@ -374,6 +400,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(210);
             mCustomerSalesSortChartQuarterly.setTextSize(8f);
             mCustomerSalesSortChartQuarterly.setData(getPieChartData(customerSalesSortBean));
+
         }
     }
 
@@ -481,9 +508,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
         List<String> Xstrings = initLoadAndUnloadVolumeBarXData(currentDateLoadAndUnloadVolumeBean);
         LinkedHashMap<String, List<String>> Ystring = initLoadAndUnloadVolumeBarYData(currentDateLoadAndUnloadVolumeBean);
-
-        Logger.e(GsonUtil.GsonString(Xstrings));
-        Logger.e(GsonUtil.GsonString(Ystring));
         mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring);
         mCurrentDateLoadAndUnloadVolumeChart.setDes("当日装卸方数", 270);
         mCurrentDateLoadAndUnloadVolumeChart.postInvalidate();
