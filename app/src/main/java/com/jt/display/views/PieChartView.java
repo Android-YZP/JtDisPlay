@@ -76,7 +76,7 @@ public class PieChartView extends View {
                 R.styleable.PieChartView_circleRadius,
                 pieChartCircleRadius);
 
-        mTextSize = a.getDimension(R.styleable.PieChartView_textSize, mTextSize)/getResources().getDisplayMetrics().density;
+        mTextSize = a.getDimension(R.styleable.PieChartView_textSize, mTextSize) / getResources().getDisplayMetrics().density;
 
         a.recycle();
 
@@ -135,6 +135,18 @@ public class PieChartView extends View {
         for (PieceDataHolder pieceDataHolder : pieceDataHolders) {
             sum += pieceDataHolder.value;
         }
+
+        if (sum == 0f) {
+            for (int i = 0; i < pieceDataHolders.size(); i++) {
+                float startAngel = 360 / (float) pieceDataHolders.size() * (i + 1);
+                float sweepAngel = 360 / (float) pieceDataHolders.size();
+                drawSector(canvas, pieceDataHolders.get(i).color, startAngel, sweepAngel);
+                drawMarkerLineAndText(canvas, pieceDataHolders.get(i).color,
+                        startAngel + sweepAngel / 2, pieceDataHolders.get(i).marker);
+            }
+            return;
+        }
+
 
         float sum2 = 0f;
         for (PieceDataHolder pieceDataHolder : pieceDataHolders) {

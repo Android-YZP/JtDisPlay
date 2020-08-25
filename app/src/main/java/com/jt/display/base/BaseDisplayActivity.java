@@ -32,7 +32,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
     Handler handler = new Handler();
     private int widthPixels;
-    int pager = 0;
+    int pager = 1;
     private AnimatorSet translationAnimatorSet;
     private List<View> viewList = new ArrayList<>();
     Runnable runnable = new Runnable() {
@@ -120,9 +120,9 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
         translationAnimatorSet = new AnimatorSet();
         translationAnimatorSet.playTogether(
-                ObjectAnimator.ofFloat(view1, "translationX", -widthPixels, 0)
+                ObjectAnimator.ofFloat(view1, "translationX", -view1.getWidth(), 0)
                         .setDuration(2000),
-                ObjectAnimator.ofFloat(view2, "translationX", 0, widthPixels)
+                ObjectAnimator.ofFloat(view2, "translationX", 0, view1.getWidth())
                         .setDuration(2000),
 
                 ObjectAnimator.ofFloat(view1, "alpha", 0f, 1)
@@ -139,11 +139,11 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                pager++;
-                if (pager == viewList.size()) pager = 0;
                 handler.postDelayed(runnable, delayTime);
                 view2.setVisibility(View.GONE);
                 onPageSelected(pager);
+                pager++;
+                if (pager == viewList.size()) pager = 0;
             }
 
             @Override
@@ -162,7 +162,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
     public void zoomAnim(final View view) {
 
-        translationAnimatorSet = new AnimatorSet();
+        AnimatorSet translationAnimatorSet = new AnimatorSet();
         translationAnimatorSet.playTogether(
                 ObjectAnimator.ofFloat(view, "ScaleX", 1.0f, 1.1f, 1.05f)
                         .setDuration(400),
@@ -174,7 +174,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
     public void unZoomAnim(final View view) {
 
-        translationAnimatorSet = new AnimatorSet();
+        AnimatorSet translationAnimatorSet = new AnimatorSet();
         translationAnimatorSet.playTogether(
                 ObjectAnimator.ofFloat(view, "ScaleX", 1.05f, 1f)
                         .setDuration(300),

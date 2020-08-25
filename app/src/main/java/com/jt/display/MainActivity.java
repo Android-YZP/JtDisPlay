@@ -50,10 +50,13 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private ComPresenter mPresenter;
     private ManyBarChart mLastSevenDaysChart;
     private CLineChart mLastSixMonthSalesChart;
-    private PieChartView mCustomerSalesSortChart;
+    private PieChartView mCustomerSalesSortChartWeek;
+    private PieChartView mCustomerSalesSortChartMonth;
+    private PieChartView mCustomerSalesSortChartQuarterly;
     private CLineChart mLastSevenCarCostChart;
     private HBarChart mCurrentReceiveDeliveryChart;
     private HBarChart mCurrentDateLoadAndUnloadVolumeChart;
+    private int type = 1;//1周2月3季度
     final List<Integer> colors = Arrays.asList(
             Color.BLUE,
             Color.BLUE,
@@ -66,6 +69,10 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             Color.LTGRAY,
             Color.WHITE
     );
+    private TextView mTvWeek;
+    private TextView mTvMonth;
+    private TextView mTvQuarterly;
+    private TextView mTvloding;
 
 
     @Override
@@ -78,10 +85,20 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mTvSales = findViewById(R.id.tv_sales);
         mTvCar = findViewById(R.id.tv_car);
         mTvCost = findViewById(R.id.tv_cost);
+
+        mTvWeek = findViewById(R.id.tv_week);
+        mTvMonth = findViewById(R.id.tv_month);
+        mTvQuarterly = findViewById(R.id.tv_quarterly);
+        mTvloding = findViewById(R.id.tv_loding);
+
         mTvTransport = findViewById(R.id.tv_transport);
         mLastSevenDaysChart = findViewById(R.id.lastSevenDays_chart);
         mLastSixMonthSalesChart = findViewById(R.id.lastSixMonthSales_chart);
-        mCustomerSalesSortChart = findViewById(R.id.customerSalesSort_chart);
+
+        mCustomerSalesSortChartWeek = findViewById(R.id.customerSalesSort_chart_week);
+        mCustomerSalesSortChartMonth = findViewById(R.id.customerSalesSort_chart_month);
+        mCustomerSalesSortChartQuarterly = findViewById(R.id.customerSalesSort_chart_quarterly);
+
         mLastSevenCarCostChart = findViewById(R.id.lastSevenCarCost_chart);
         mCurrentReceiveDeliveryChart = findViewById(R.id.currentReceiveDelivery_chart);
         mCurrentDateLoadAndUnloadVolumeChart = findViewById(R.id.currentDateLoadAndUnloadVolume_chart);
@@ -92,6 +109,11 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mPresenter = new ComPresenter();
         mPresenter.attachView(this);
         mPresenter.login();
+
+        addView(mCustomerSalesSortChartWeek);
+        addView(mCustomerSalesSortChartMonth);
+        addView(mCustomerSalesSortChartQuarterly);
+        startAnim();
     }
 
     @Override
@@ -139,7 +161,27 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     protected void onPageSelected(int pager) {
+        Logger.e(pager + "当前页");
+        type = pager + 1;
+        mPresenter.customerSalesSort(type + "");//1周2月3季度
 
+        mTvWeek.setBackgroundColor(Color.TRANSPARENT);
+        mTvMonth.setBackgroundColor(Color.TRANSPARENT);
+        mTvQuarterly.setBackgroundColor(Color.TRANSPARENT);
+        mTvWeek.setTextColor(Color.GRAY);
+        mTvMonth.setTextColor(Color.GRAY);
+        mTvQuarterly.setTextColor(Color.GRAY);
+
+        if (type == 1) {
+            mTvWeek.setTextColor(Color.WHITE);
+            mTvWeek.setBackgroundResource(R.drawable.home_shape_left);
+        } else if (type == 2) {
+            mTvMonth.setTextColor(Color.WHITE);
+            mTvMonth.setBackgroundResource(R.drawable.home_shape_ceter);
+        } else if (type == 3) {
+            mTvQuarterly.setTextColor(Color.WHITE);
+            mTvQuarterly.setBackgroundResource(R.drawable.home_shape_right);
+        }
     }
 
     @Override
@@ -149,7 +191,11 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
                 mPresenter.lastSevenDaysSales();
                 mPresenter.lastSixMonthSales();
-                mPresenter.customerSalesSort("2");
+                mPresenter.customerSalesSort(type+ "");//1周2月3季度
+                type++;
+                mPresenter.customerSalesSort(type + "");//1周2月3季度
+                type++;
+                mPresenter.customerSalesSort(type + "");//1周2月3季度
                 mPresenter.lastSevenCarCost();
                 mPresenter.currentReceiveDelivery();
                 mPresenter.currentDateLoadAndUnloadVolume();
@@ -174,6 +220,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CustomerSalesSortBean customerSalesSortBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CustomerSalesSortBean.class);
                 initPieChart(customerSalesSortBean);
+                mTvloding.setVisibility(View.GONE);
             } else {
                 show(((JsonResult) jsonResult).getMsg());
             }
@@ -262,7 +309,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initLine(LastSixMonthSalesBean lastSixMonthSalesBean) {
-        Logger.e("initLine");
         //线形图
         mLastSixMonthSalesChart.animateY(1000);
         mLastSixMonthSalesChart.animateX(1000);
@@ -313,9 +359,22 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
-        mCustomerSalesSortChart.setPieChartCircleRadius(210);
-        mCustomerSalesSortChart.setTextSize(8f);
-        mCustomerSalesSortChart.setData(getPieChartData(customerSalesSortBean));
+        if (type == 1) {
+            Logger.e("mCustomerSalesSortChartWeek" + "当前页");
+            mCustomerSalesSortChartWeek.setPieChartCircleRadius(210);
+            mCustomerSalesSortChartWeek.setTextSize(8f);
+            mCustomerSalesSortChartWeek.setData(getPieChartData(customerSalesSortBean));
+        } else if (type == 2) {
+            Logger.e("mCustomerSalesSortChartMonth" + "当前页");
+            mCustomerSalesSortChartMonth.setPieChartCircleRadius(210);
+            mCustomerSalesSortChartMonth.setTextSize(8f);
+            mCustomerSalesSortChartMonth.setData(getPieChartData(customerSalesSortBean));
+        } else if (type == 3) {
+            Logger.e("mCustomerSalesSortChartQuarterly" + "当前页");
+            mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(210);
+            mCustomerSalesSortChartQuarterly.setTextSize(8f);
+            mCustomerSalesSortChartQuarterly.setData(getPieChartData(customerSalesSortBean));
+        }
     }
 
 

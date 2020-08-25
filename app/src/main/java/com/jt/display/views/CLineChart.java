@@ -171,7 +171,6 @@ public class CLineChart extends LineChart {
         for (LinkedHashMap.Entry<String, List<Float>> entry : YValue.entrySet()) {
             String key = entry.getKey();
             List<Float> yValueList = entry.getValue();
-            Logger.e(key + GsonUtil.GsonString(yValueList));
             List<Entry> entries = new ArrayList<>();
             for (int i = 0; i < yValueList.size(); i++) {
 
