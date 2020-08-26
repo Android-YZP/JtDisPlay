@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="@dimen/dp30">
 
     <TextView
         android:id="@+id/tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="非农是否能时间可否鹏飞发愁农发局送" />
+        android:textSize="@dimen/font15"
+        android:text="车牌        司机        体积        费用"/>
 
 </RelativeLayout>
