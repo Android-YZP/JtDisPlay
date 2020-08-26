@@ -10,7 +10,6 @@ import com.jt.display.base.BaseDisplayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 public class CarActivity extends BaseDisplayActivity {
     private LRecyclerViewAdapter mLuRecyclerViewAdapter;

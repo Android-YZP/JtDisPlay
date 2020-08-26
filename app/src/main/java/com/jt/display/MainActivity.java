@@ -206,19 +206,19 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
                 mPresenter.lastSevenDaysSales();
+                mPresenter.customerSalesSort(type + "");//1周2月3季度
                 startAnim();
             }
         } else if (type == Constants.METHOD_TWO) {//近七日销量
-            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-                mPresenter.lastSixMonthSales();
-                mPresenter.lastSevenCarCost();
+            mPresenter.lastSixMonthSales();
 
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSevenDaysSalesBean lastSevenDaysSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenDaysSalesBean.class);
                 mTvTodaySales.setText("今日销售额\n" + lastSevenDaysSalesBean.getData().get(6).getSalesAmount());
                 initMBar(lastSevenDaysSalesBean);
             }
         } else if (type == Constants.METHOD_THREE) {//近六个月销量
-            mPresenter.customerSalesSort(type + "");//1周2月3季度
+            mPresenter.lastSevenCarCost();
 
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSixMonthSalesBean lastSixMonthSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSixMonthSalesBean.class);
@@ -231,25 +231,25 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 mTvloding.setVisibility(View.GONE);
             }
         } else if (type == Constants.METHOD_FIVE) {//近七日车辆成本
-            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-                mPresenter.currentReceiveDelivery();
+            mPresenter.currentReceiveDelivery();
 
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSevenCarCostBean lastSevenCarCostBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSevenCarCostBean.class);
                 initCarLineChart(lastSevenCarCostBean);
 
             }
         } else if (type == Constants.METHOD_SIX) {//当日收发货
-            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-                mPresenter.currentDateLoadAndUnloadVolume();
+            mPresenter.currentDateLoadAndUnloadVolume();
 
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentReceiveDeliveryBean bean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceiveDeliveryBean.class);
                 initReceiveBar(bean);
-                mTvTodayReceiving.setText("今日收货\n" + bean.getData().get(0).getReceiveVolume() + "m³/" +
-                        bean.getData().get(0).getReceiveVolume() + "Kg");
-                mTvTodayShipment.setText("今日发货\n" + bean.getData().get(0).getDeliveryVolume() + "m³/" +
-                        bean.getData().get(0).getDeliveryWeight() + "Kg");
-                mTvTodayInventory.setText("今日库存\n" + bean.getData().get(0).getCurrentVolumeStorageCapacity() + "m³/" +
-                        bean.getData().get(0).getCurrentWeightStorageCapacity() + "Kg");
+                mTvTodayReceiving.setText("今日收货\n" + bean.getData().get(0).getReceiveVolume() + " m³\n" +
+                        bean.getData().get(0).getReceiveVolume() + " Kg");
+                mTvTodayShipment.setText("今日发货\n" + bean.getData().get(0).getDeliveryVolume() + " m³\n" +
+                        bean.getData().get(0).getDeliveryWeight() + " Kg");
+                mTvTodayInventory.setText("今日库存\n" + bean.getData().get(0).getCurrentVolumeStorageCapacity() + " m³\n" +
+                        bean.getData().get(0).getCurrentWeightStorageCapacity() + " Kg");
             }
         } else if (type == Constants.METHOD_SEVEN) {//当日装卸方数
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
@@ -268,7 +268,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mLastSevenDaysChart.clear();
         List<String> XData = initXData(lastSevenDaysSalesBean);
         LinkedHashMap<String, List<Float>> YData = initYData(lastSevenDaysSalesBean);
-        mLastSevenDaysChart.showBarChart(XData, YData,colors);
+        mLastSevenDaysChart.showBarChart(XData, YData, colors);
         mLastSevenDaysChart.setDes("近七日销量", 150);
 
     }
@@ -320,7 +320,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mLastSixMonthSalesChart.animateX(1000);
         List<String> Xstrings = initLineXData(lastSixMonthSalesBean);
         LinkedHashMap<String, List<Float>> Ystrings = initLineYData(lastSixMonthSalesBean);
-        mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings,colors);
+        mLastSixMonthSalesChart.showLineChart(Xstrings, Ystrings, colors);
         mLastSixMonthSalesChart.setDes("近六个月销量", 180);
     }
 
@@ -400,7 +400,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mLastSevenCarCostChart.animateX(1000);
         List<String> Xstrings = initCarLineXData(lastSevenCarCostBean);
         LinkedHashMap<String, List<Float>> Ystrings = initCarLineYData(lastSevenCarCostBean);
-        mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings,colors);
+        mLastSevenCarCostChart.showLineChart(Xstrings, Ystrings, colors);
         mLastSevenCarCostChart.setDes("近七日车辆成本", 200);
     }
 
