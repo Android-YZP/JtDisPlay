@@ -126,7 +126,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         addView(mCustomerSalesSortChartWeek);
         addView(mCustomerSalesSortChartMonth);
         addView(mCustomerSalesSortChartQuarterly);
-
     }
 
     @Override

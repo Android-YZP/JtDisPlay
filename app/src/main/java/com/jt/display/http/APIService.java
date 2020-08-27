@@ -13,7 +13,7 @@ import retrofit2.http.Url;
 
 public interface APIService {
 
-//    @GET
+//    @GET https://gitee.com/wx_5d65dfcf88/my-kotlin/raw/dev/data.json
 //    Flowable<JsonResult> weather(@Url String url);
 
 
