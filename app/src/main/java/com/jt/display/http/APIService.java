@@ -3,13 +3,20 @@ package com.jt.display.http;
 import com.jt.display.base.JsonResult;
 
 import io.reactivex.Flowable;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface APIService {
+
+//    @GET
+//    Flowable<JsonResult> weather(@Url String url);
+
+
     //
 //    //用户登录
     @POST("/jtms-auth/token")
