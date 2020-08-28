@@ -2,7 +2,6 @@ package com.jt.display.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.View;
 import android.widget.TextView;
 
 import com.jt.display.R;
@@ -10,10 +9,10 @@ import com.jt.display.base.ListBaseAdapter;
 import com.jt.display.base.SuperViewHolder;
 
 
-public class AcceptanceDetailAdapter extends ListBaseAdapter<String> {
+public class OtherCostAdapter extends ListBaseAdapter<String> {
 
 
-    public AcceptanceDetailAdapter(Context context) {
+    public OtherCostAdapter(Context context) {
         super(context);
     }
 

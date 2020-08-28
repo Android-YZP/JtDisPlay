@@ -13,22 +13,20 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="@color/bg_data"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bg_data"
             android:gravity="center"
             android:text="提货汇总"
             android:textSize="@dimen/font25" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/bg_color"
+            android:background="@color/bg_data"
             android:orientation="horizontal"
             android:padding="10dp">
 
@@ -57,21 +55,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp_10"
                 android:text="提货直发车辆"
                 android:textSize="@dimen/font15" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp_10"
                 android:text="提货回仓车辆"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -79,27 +84,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
-
-            <View
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:background="@color/bg_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -107,30 +112,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:paddingStart="@dimen/dp5"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp5"
                 android:text="车牌        司机        体积        费用        单方成本"
-                android:textSize="@dimen/font15" />
-
-            <View
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:background="@color/bg_color" />
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:paddingStart="@dimen/dp5"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp5"
                 android:text="车牌        司机        体积        费用        单方成本"
-
-                android:textSize="@dimen/font15" />
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -143,19 +151,17 @@
             <com.github.jdsjlzx.recyclerview.LRecyclerView
                 android:id="@+id/lrv_acceptance"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <View
-                android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="25dp"
-                android:background="@color/bg_color" />
+                android:layout_marginEnd="@dimen/dp5"
+                android:layout_weight="1"
+                android:background="@color/bg_data" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp5"
+                android:layout_weight="1"
+                android:background="@color/bg_data" />
 
         </LinearLayout>
 
@@ -165,22 +171,20 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="@color/bg_data"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bg_data"
             android:gravity="center"
             android:text="提货汇总"
             android:textSize="@dimen/font25" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/bg_color"
+            android:background="@color/bg_data"
             android:orientation="horizontal"
             android:padding="10dp">
 
@@ -209,21 +213,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp_10"
                 android:text="提货直发车辆"
                 android:textSize="@dimen/font15" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp_10"
                 android:text="提货回仓车辆"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -231,27 +242,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
-
-            <View
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:background="@color/bg_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
+                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -259,29 +270,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
-                android:text="车牌        司机        体积        费用"
-                android:textSize="@dimen/font15" />
-
-            <View
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:background="@color/bg_color" />
+                android:paddingStart="@dimen/dp5"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp5"
+                android:text="车牌        司机        体积        费用        单方成本"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
+                android:background="@color/bg_data"
                 android:gravity="center"
-                android:text="车牌        司机        体积        费用"
-                android:textSize="@dimen/font15" />
+                android:paddingStart="@dimen/dp5"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp5"
+                android:text="车牌        司机        体积        费用        单方成本"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -293,21 +308,23 @@
 
             <com.github.jdsjlzx.recyclerview.LRecyclerView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <View
-                android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="25dp"
-                android:background="@color/bg_color" />
+                android:layout_marginEnd="@dimen/dp5"
+                android:layout_weight="1"
+                android:background="@color/bg_data" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp5"
+                android:layout_weight="1"
+                android:background="@color/bg_data" />
+
         </LinearLayout>
 
     </LinearLayout>
+
+
+
 
 </LinearLayout>

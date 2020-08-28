@@ -2,7 +2,6 @@ package com.jt.display.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.View;
 import android.widget.TextView;
 
 import com.jt.display.R;
@@ -10,17 +9,17 @@ import com.jt.display.base.ListBaseAdapter;
 import com.jt.display.base.SuperViewHolder;
 
 
-public class AcceptanceDetailAdapter extends ListBaseAdapter<String> {
+public class LanTongCostAdapter extends ListBaseAdapter<String> {
 
 
-    public AcceptanceDetailAdapter(Context context) {
+    public LanTongCostAdapter(Context context) {
         super(context);
     }
 
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_acceptance_detail;
+        return R.layout.item_lantong_cost;
     }
 
     @SuppressLint("SetTextI18n")
