@@ -54,6 +54,25 @@ public interface APIService {
                                                         @Header("blade-auth") String blade_auth);
 
 
+    //销售主题
+    @GET("/jtms-order/reportForm/getSalesCurrentAndLastMonth")
+    Flowable<JsonResult> getSalesCurrentAndLastMonth(@Header("Authorization") String authorization,
+                                                     @Header("Blade-Auth") String blade_auth);
+
+    @GET("/jtms-order/reportForm/getTopAndDownCustomerList")
+    Flowable<JsonResult> getTopAndDownCustomerList(@Header("Authorization") String authorization,
+                                                   @Header("Blade-Auth") String blade_auth);
+
+    @GET("/jtms-order/reportForm/getOrderAmountByCustomerName")
+    Flowable<JsonResult> getOrderAmountByCustomerName(@Header("Authorization") String authorization,
+                                                      @Header("Blade-Auth") String blade_auth,
+                                                      @Query("customerName") String customerName);
+
+    @GET("/jtms-order/reportForm/lastSixMonthSales")
+    Flowable<JsonResult> lastSixMonthSale(@Header("Authorization") String authorization,
+                                          @Header("Blade-Auth") String blade_auth);
+
+
 //
 //    //查询容器内库存数据  blade-auth就是token
 //    @GET("/jwms-inventory/realtime_inventory/container_inventory")

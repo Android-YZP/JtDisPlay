@@ -37,7 +37,7 @@
                 android:layout_marginEnd="100dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:lineSpacingExtra="15dp"
+                android:lineSpacingExtra="7dp"
                 android:text="提货计划体积 \n 333m³"
                 android:textSize="@dimen/font20" />
 
@@ -47,7 +47,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:lineSpacingExtra="15dp"
+                android:lineSpacingExtra="7dp"
                 android:text="已提货计划体积 \n 233m³"
                 android:textSize="@dimen/font20" />
         </LinearLayout>
@@ -65,7 +65,7 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp5"
                 android:text="提货直发车辆"
                 android:textSize="@dimen/font15" />
 
@@ -76,7 +76,7 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp5"
                 android:text="提货回仓车辆"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -93,7 +93,6 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
 
@@ -104,7 +103,6 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -122,10 +120,10 @@
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp_10"
+                android:paddingTop="@dimen/dp5"
                 android:paddingEnd="@dimen/dp5"
-                android:text="车牌        司机        体积        费用        单方成本"
-                android:textSize="13sp" />
+                android:text="车牌    司机    体积    费用    单方成本"
+                android:textSize="11sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -135,10 +133,10 @@
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp_10"
+                android:paddingTop="@dimen/dp5"
                 android:paddingEnd="@dimen/dp5"
-                android:text="车牌        司机        体积        费用        单方成本"
-                android:textSize="13sp" />
+                android:text="车牌    司机    体积    费用    单方成本"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -166,6 +164,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -195,7 +194,7 @@
                 android:layout_marginEnd="100dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:lineSpacingExtra="15dp"
+                android:lineSpacingExtra="7dp"
                 android:text="提货计划体积 \n 333m³"
                 android:textSize="@dimen/font20" />
 
@@ -205,7 +204,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:lineSpacingExtra="15dp"
+                android:lineSpacingExtra="7dp"
                 android:text="已提货计划体积 \n 233m³"
                 android:textSize="@dimen/font20" />
         </LinearLayout>
@@ -223,7 +222,7 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp5"
                 android:text="提货直发车辆"
                 android:textSize="@dimen/font15" />
 
@@ -234,7 +233,7 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp5"
                 android:text="提货回仓车辆"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -251,7 +250,6 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
 
@@ -262,7 +260,6 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:padding="@dimen/dp5"
                 android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
@@ -280,10 +277,10 @@
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp_10"
+                android:paddingTop="@dimen/dp5"
                 android:paddingEnd="@dimen/dp5"
-                android:text="车牌        司机        体积        费用        单方成本"
-                android:textSize="13sp" />
+                android:text="车牌    司机    体积    费用    单方成本"
+                android:textSize="11sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -293,10 +290,10 @@
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp_10"
+                android:paddingTop="@dimen/dp5"
                 android:paddingEnd="@dimen/dp5"
-                android:text="车牌        司机        体积        费用        单方成本"
-                android:textSize="13sp" />
+                android:text="车牌    司机    体积    费用    单方成本"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout

@@ -18,6 +18,8 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.jt.display.bean.BarJsonBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class SingleBarChart extends BarChart {
@@ -52,8 +54,9 @@ public class SingleBarChart extends BarChart {
      */
     private void initBarChart(BarChart barChart) {
         /***图表设置***/
+        setNoDataText("正在加载中....");
         //背景颜色
-        barChart.setBackgroundColor(Color.parseColor("#ffffff"));
+        barChart.setBackgroundColor(Color.parseColor("#0f1e3d"));
         //不显示图表网格
         barChart.setDrawGridBackground(false);
         //背景阴影
@@ -62,10 +65,7 @@ public class SingleBarChart extends BarChart {
         //显示边框
         barChart.setDrawBorders(false);
         //不显示右下角类容
-        Description description = new Description();
-        description.setEnabled(false);
-        barChart.setDescription(description);
-
+        setExtraOffsets(0, 20, 0, 0);
         //设置动画效果
         barChart.animateY(1000, Easing.EasingOption.Linear);
         barChart.animateX(1000, Easing.EasingOption.Linear);
@@ -78,35 +78,34 @@ public class SingleBarChart extends BarChart {
         xAxis = barChart.getXAxis();
         leftAxis = barChart.getAxisLeft();
         rightAxis = barChart.getAxisRight();
-
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
-
         //不显示X轴 Y轴线条
         xAxis.setDrawAxisLine(false);
         leftAxis.setDrawAxisLine(true);
         rightAxis.setDrawAxisLine(false);
+
+        xAxis.setTextColor(Color.parseColor("#8FC7CC"));
+        leftAxis.setTextColor(Color.parseColor("#8FC7CC"));
+        leftAxis.setAxisLineColor(Color.TRANSPARENT);
         //不显示左侧Y轴
         leftAxis.setEnabled(true);
         rightAxis.setEnabled(false);
-
         //不显示X轴网格线
         xAxis.setDrawGridLines(false);
         //右侧Y轴网格线设置为虚线
-        rightAxis.enableGridDashedLine(0f, 10f, 0f);
-
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
         //保证Y轴从0开始，不然会上移一点
-
 //        xAxis.setAxisMinimum(0f);
         //保证Y轴从0开始，不会显示不全
         leftAxis.setAxisMinimum(0f);
 //        rightAxis.setAxisMinimum(0f);
 //        xAxis.setAxisMaximum(5);
-
 //        xAxis.setCenterAxisLabels(true);
 
         /***折线图例 标签 设置***/
         legend = barChart.getLegend();
+        legend.setEnabled(false);
         legend.setForm(Legend.LegendForm.LINE);
         legend.setTextSize(18f);
         legend.setTextColor(Color.BLACK);
@@ -116,19 +115,28 @@ public class SingleBarChart extends BarChart {
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         //是否绘制在图表里面
         legend.setDrawInside(false);
+    }
 
-
+    //设置标题
+    public void setDes(String desc, int Xposition) {
+        Description description = new Description();
+        description.setText(desc);
+        description.setPosition(Xposition, 40);
+        description.setTextSize(13f);
+        description.setTextColor(Color.parseColor("#ffffff"));
+        description.setEnabled(true);
+        setDescription(description);
     }
 
 
-    public void showBarChart(final List<BarJsonBean.StFinDateBean.VtDateValueBean> dateValueList, String name, int color) {
+    public void showBarChart(final List<String> XData, final List<String> yData, String name, int color) {
         ArrayList<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < dateValueList.size(); i++) {
+        for (int i = 0; i < yData.size(); i++) {
             /**
              * 此处还可传入Drawable对象 BarEntry(float x, float y, Drawable icon)
              * 即可设置柱状图顶部的 icon展示
              */
-            BarEntry barEntry = new BarEntry(i, (float) dateValueList.get(i).getFValue());
+            BarEntry barEntry = new BarEntry(i, Float.parseFloat(yData.get(i)));
             entries.add(barEntry);
         }
 
@@ -144,17 +152,12 @@ public class SingleBarChart extends BarChart {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return dateValueList.get((int) Math.abs(value) % dateValueList.size()).getSYearMonth();
+                return value == -1 ? "" : XData.get((int) Math.abs(value) % XData.size());
             }
         });
-        //右侧Y轴自定义值
-        rightAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return ((int) (value * 100)) + "%";
-            }
-        });
+
     }
+
 
     /**
      * 柱状图始化设置 一个BarDataSet 代表一列柱状图
@@ -168,7 +171,6 @@ public class SingleBarChart extends BarChart {
         barDataSet.setFormSize(15.f);
         //不显示柱状图顶部值
         barDataSet.setDrawValues(false);
-
 //        barDataSet.setValueTextSize(10f);
 //        barDataSet.setValueTextColor(color);
 

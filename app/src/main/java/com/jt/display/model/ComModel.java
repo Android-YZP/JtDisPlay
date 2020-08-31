@@ -6,7 +6,7 @@ import com.jt.display.http.RetrofitClient;
 
 import io.reactivex.Flowable;
 
-    public class ComModel {
+public class ComModel {
 
     public Flowable<JsonResult> login() {
         return RetrofitClient.getInstance().getApi().login(Authorization.getInstance().getAuthorization(),
@@ -40,6 +40,27 @@ import io.reactivex.Flowable;
 
     public Flowable<JsonResult> currentDateLoadAndUnloadVolume(String token) {
         return RetrofitClient.getInstance().getApi().currentDateLoadAndUnloadVolume(Authorization.getInstance().getAuthorization(),
+                token);
+    }
+
+    //销售主题
+    public Flowable<JsonResult> getSalesCurrentAndLastMonth(String token) {
+        return RetrofitClient.getInstance().getApi().getSalesCurrentAndLastMonth(Authorization.getInstance().getAuthorization(),
+                token);
+    }
+
+    public Flowable<JsonResult> getTopAndDownCustomerList(String token) {
+        return RetrofitClient.getInstance().getApi().getTopAndDownCustomerList(Authorization.getInstance().getAuthorization(),
+                token);
+    }
+
+    public Flowable<JsonResult> getOrderAmountByCustomerName(String token, String customerName) {
+        return RetrofitClient.getInstance().getApi().getOrderAmountByCustomerName(Authorization.getInstance().getAuthorization(),
+                token, customerName);
+    }
+
+    public Flowable<JsonResult> lastSixMonthSale(String token) {
+        return RetrofitClient.getInstance().getApi().lastSixMonthSale(Authorization.getInstance().getAuthorization(),
                 token);
     }
 

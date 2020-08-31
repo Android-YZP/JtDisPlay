@@ -32,13 +32,14 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
     public Handler handler = new Handler();
     private int widthPixels;
-    int pager = 1;
+    private int pager = 1;
+    private int mDelayTime = 10000;
     public AnimatorSet translationAnimatorSet;
     private List<View> viewList = new ArrayList<>();
-    private  Runnable runnable = new Runnable() {
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            nextPager(pager, 10000);
+            nextPager(pager, mDelayTime);
         }
     };
 
@@ -88,7 +89,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     }
 
     public void startAnim() {
-        nextPager(pager, 10000);
+        nextPager(pager, mDelayTime);
     }
 
 
@@ -117,7 +118,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
         super.onStart();
         if (translationAnimatorSet != null) {
             translationAnimatorSet.resume();
-            handler.postDelayed(runnable, 10000);
+            handler.postDelayed(runnable, mDelayTime);
         }
     }
 

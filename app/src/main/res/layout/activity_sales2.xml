@@ -3,42 +3,175 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color"
     android:orientation="vertical"
     tools:context=".activitys.SalesActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp5"
         android:layout_weight="1"
         android:orientation="horizontal">
 
         <com.jt.display.views.CLineChart
+            android:id="@+id/salesCurrentAndLastMonth_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dp5"
             android:layout_weight="1" />
 
-        <com.jt.display.views.CLineChart
+        <com.jt.display.views.SingleBarChart
+            android:id="@+id/lastSixMonthSales_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp5"
             android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
         android:layout_weight="1"
         android:orientation="horizontal">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
 
-        <com.jt.display.views.CLineChart
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_marginEnd="@dimen/dp5"
+            android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:paddingStart="@dimen/dp_10">
+
+            <LinearLayout
+                android:id="@+id/ll_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TOP10"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font20" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="BOTTOM10"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font20" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_top_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_top"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="客户"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font15" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="销量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font15" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="客户"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font15" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="销量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font15" />
+
+
+            </LinearLayout>
+
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_top_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ll_top_title"
+                android:background="@color/bg_data" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp5"
+            android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/orderAmount_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_data"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingTop="7dp"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/sp_12" />
+
+
+            <com.jt.display.views.CLineChart
+                android:id="@+id/orderAmount_chart_two"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/orderAmount_desc" />
+
+
+            <com.jt.display.views.CLineChart
+                android:id="@+id/orderAmount_chart_one"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/orderAmount_desc" />
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
-
 
 </LinearLayout>

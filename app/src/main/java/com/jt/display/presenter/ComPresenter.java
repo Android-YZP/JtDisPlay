@@ -188,8 +188,104 @@ public class ComPresenter extends BasePresenter {
 
     }
 
+    public void getSalesCurrentAndLastMonth() {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.getSalesCurrentAndLastMonth(getToken())
+                .compose(RxScheduler.<JsonResult>flowableIoMain())
+                .as(mView.<JsonResult>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult>() {
+                    @Override
+                    public void accept(JsonResult bean) throws Exception {
+                        Logger.e(GsonUtil.GsonString(bean));
+                        mView.onSuccess(bean, Constants.METHOD_ONE);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+
+    }
+
+    public void getTopAndDownCustomerList() {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.getTopAndDownCustomerList(getToken())
+                .compose(RxScheduler.<JsonResult>flowableIoMain())
+                .as(mView.<JsonResult>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult>() {
+                    @Override
+                    public void accept(JsonResult bean) throws Exception {
+                        Logger.e(GsonUtil.GsonString(bean));
+                        mView.onSuccess(bean, Constants.METHOD_TWO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+
+    }
+
+    public void getOrderAmountByCustomerName(String customerName) {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.getOrderAmountByCustomerName(getToken(), customerName)
+                .compose(RxScheduler.<JsonResult>flowableIoMain())
+                .as(mView.<JsonResult>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult>() {
+                    @Override
+                    public void accept(JsonResult bean) throws Exception {
+                        Logger.e(GsonUtil.GsonString(bean));
+                        mView.onSuccess(bean, Constants.METHOD_THREE);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+
+    }
+
+    public void lastSixMonthSale() {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.lastSixMonthSale(getToken())
+                .compose(RxScheduler.<JsonResult>flowableIoMain())
+                .as(mView.<JsonResult>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult>() {
+                    @Override
+                    public void accept(JsonResult bean) throws Exception {
+                        Logger.e(GsonUtil.GsonString(bean));
+                        mView.onSuccess(bean, Constants.METHOD_FOUR);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+
+    }
+
     private String getToken() {
-        return "bearer "+SharePreferenceUtils.getLoginData((Context) mView).getData().getAccessToken();
+        return "bearer " + SharePreferenceUtils.getLoginData((Context) mView).getData().getAccessToken();
 
     }
 
