@@ -254,6 +254,7 @@ public class SalesActivity extends BaseDisplayActivity {
             List<String> Xstrings = initOrderAmountLineXData(orderAmountByCustomerBean);
             LinkedHashMap<String, List<Float>> Ystrings = initOrderAmountLineYData(orderAmountByCustomerBean);
             mOrderAmountChartOne.showLineChart(Xstrings, Ystrings, colors);
+            mOrderAmountChartOne.setDes("1", -100);//去除标签
             mOrderAmountChartOne.postInvalidate();
         } else {
             //线形图
@@ -262,6 +263,7 @@ public class SalesActivity extends BaseDisplayActivity {
             List<String> Xstrings = initOrderAmountLineXData(orderAmountByCustomerBean);
             LinkedHashMap<String, List<Float>> Ystrings = initOrderAmountLineYData(orderAmountByCustomerBean);
             mOrderAmountChartTwo.showLineChart(Xstrings, Ystrings, colors);
+            mOrderAmountChartOne.setDes("1", -100);//去除标签
             mOrderAmountChartTwo.postInvalidate();
         }
 
