@@ -42,8 +42,5 @@ public class AcceptanceDetailAdapter extends ListBaseAdapter<String> {
             tvCode.setText("上月" + (position / 3 - 1));
         }
 
-
-//        tvCode.setText(mDataList.get(position));
     }
-
 }

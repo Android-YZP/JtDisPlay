@@ -31,6 +31,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_deliveryPlanVolum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -38,17 +39,16 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:lineSpacingExtra="7dp"
-                android:text="提货计划体积 \n 333m³"
                 android:textSize="@dimen/font20" />
 
             <TextView
+                android:id="@+id/tv_deliveryVolum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:lineSpacingExtra="7dp"
-                android:text="已提货计划体积 \n 233m³"
                 android:textSize="@dimen/font20" />
         </LinearLayout>
 
@@ -66,7 +66,7 @@
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:padding="@dimen/dp5"
-                android:text="提货直发车辆"
+                android:text="提货直发车辆列表"
                 android:textSize="@dimen/font15" />
 
             <TextView
@@ -77,7 +77,7 @@
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:padding="@dimen/dp5"
-                android:text="提货回仓车辆"
+                android:text="提货回仓车辆列表"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
 
@@ -87,7 +87,8 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_directDelivery"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
@@ -97,7 +98,8 @@
                 android:textSize="@dimen/font15" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_rtwDelivery"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
@@ -112,31 +114,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <include
+                layout="@layout/car_list_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
-                android:gravity="center"
-                android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp5"
-                android:paddingEnd="@dimen/dp5"
-                android:text="车牌    司机    体积    费用    单方成本"
-                android:textSize="11sp" />
+                android:gravity="center" />
 
-            <TextView
+            <include
+                layout="@layout/car_list_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
-                android:gravity="center"
-                android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp5"
-                android:paddingEnd="@dimen/dp5"
-                android:text="车牌    司机    体积    费用    单方成本"
-                android:textSize="11sp" />
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,14 +141,15 @@
             tools:ignore="NestedWeights">
 
             <com.github.jdsjlzx.recyclerview.LRecyclerView
-                android:id="@+id/lrv_acceptance"
+                android:id="@+id/lrv_directDelivery"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data" />
 
-            <android.support.v7.widget.RecyclerView
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_rtwDelivery"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp5"
@@ -177,7 +172,7 @@
             android:layout_height="wrap_content"
             android:background="@color/bg_data"
             android:gravity="center"
-            android:text="提货汇总"
+            android:text="出货汇总"
             android:textSize="@dimen/font25" />
 
         <LinearLayout
@@ -188,6 +183,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_shipmentPlanVolum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -195,17 +191,16 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:lineSpacingExtra="7dp"
-                android:text="提货计划体积 \n 333m³"
                 android:textSize="@dimen/font20" />
 
             <TextView
+                android:id="@+id/tv_shipmentVolum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:lineSpacingExtra="7dp"
-                android:text="已提货计划体积 \n 233m³"
                 android:textSize="@dimen/font20" />
         </LinearLayout>
 
@@ -216,25 +211,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:padding="@dimen/dp5"
-                android:text="提货直发车辆"
+                android:text="目的仓车辆列表"
                 android:textSize="@dimen/font15" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
                 android:padding="@dimen/dp5"
-                android:text="提货回仓车辆"
+                android:text="货站车辆列表"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
 
@@ -244,23 +239,23 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_hzShipment"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_mdcShipmen"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
 
@@ -269,31 +264,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <include
+                layout="@layout/car_list_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
-                android:gravity="center"
-                android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp5"
-                android:paddingEnd="@dimen/dp5"
-                android:text="车牌    司机    体积    费用    单方成本"
-                android:textSize="11sp" />
+                android:gravity="center" />
 
-            <TextView
+            <include
+                layout="@layout/car_list_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data"
-                android:gravity="center"
-                android:paddingStart="@dimen/dp5"
-                android:paddingTop="@dimen/dp5"
-                android:paddingEnd="@dimen/dp5"
-                android:text="车牌    司机    体积    费用    单方成本"
-                android:textSize="11sp" />
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -304,13 +291,15 @@
             tools:ignore="NestedWeights">
 
             <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_mdcShipment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_weight="1"
                 android:background="@color/bg_data" />
 
-            <android.support.v7.widget.RecyclerView
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_hzShipment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp5"
@@ -320,8 +309,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

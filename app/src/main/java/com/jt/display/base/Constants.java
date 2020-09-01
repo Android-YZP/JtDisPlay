@@ -8,6 +8,7 @@ public class Constants {
     public static final String TENANTID = "000000";
 
     public static final int HTTP_RETRY_COUNT = 3;
+    public static final int PAGER_SIZE = 4;
     public static final String KEY_AUTO_FOCUS = "preferences_auto_focus";
     public static final String KEY_INVERT_SCAN = "preferences_invert_scan";
 

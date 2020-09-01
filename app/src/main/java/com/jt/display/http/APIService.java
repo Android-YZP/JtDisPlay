@@ -72,6 +72,28 @@ public interface APIService {
     Flowable<JsonResult> lastSixMonthSale(@Header("Authorization") String authorization,
                                           @Header("Blade-Auth") String blade_auth);
 
+    /**
+     * http://40.73.59.226:9102/vsp/shipmentSum?page1=1&pageSize1=10&page2=1&pageSize2=10     出货汇总接口
+     * http://40.73.59.226:9102/vsp/deliverySum?page1=1&pageSize1=10&page2=1&pageSize2=10        体会汇总接口
+     */
+    @GET
+    Flowable<JsonResult> shipmentSum(@Url String url,
+                                     @Header("Authorization") String authorization,
+                                     @Header("Blade-Auth") String blade_auth,
+                                     @Query("page1") String page1,
+                                     @Query("pageSize1") String pageSize1,
+                                     @Query("page2") String page2,
+                                     @Query("pageSize2") String pageSize2);
+
+    @GET
+    Flowable<JsonResult> deliverySum(@Url String url,
+                                     @Header("Authorization") String authorization,
+                                     @Header("Blade-Auth") String blade_auth,
+                                     @Query("page1") String page1,
+                                     @Query("pageSize1") String pageSize1,
+                                     @Query("page2") String page2,
+                                     @Query("pageSize2") String pageSize2);
+
 
 //
 //    //查询容器内库存数据  blade-auth就是token

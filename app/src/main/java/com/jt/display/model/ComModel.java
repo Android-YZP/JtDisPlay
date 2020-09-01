@@ -64,5 +64,17 @@ public class ComModel {
                 token);
     }
 
+    public Flowable<JsonResult> shipmentSum(String token, String page1, String pageSize1, String page2, String pageSize2) {
+        return RetrofitClient.getInstance().getApi().shipmentSum("http://40.73.59.226:9102/vsp/shipmentSum",
+                Authorization.getInstance().getAuthorization(),
+                token, page1, pageSize1, page2, pageSize2);
+    }
+
+    public Flowable<JsonResult> deliverySum(String token, String page1, String pageSize1, String page2, String pageSize2) {
+        return RetrofitClient.getInstance().getApi().deliverySum("http://40.73.59.226:9102/vsp/deliverySum",
+                Authorization.getInstance().getAuthorization(),
+                token, page1, pageSize1, page2, pageSize2);
+    }
+
 
 }

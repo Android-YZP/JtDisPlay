@@ -102,7 +102,7 @@ public class SalesActivity extends BaseDisplayActivity {
     @Override
     protected void onPageSelected(int pager) {
         mTopPager++;
-        if (mTopPager == 10) {
+        if (mTopPager == mTopCustomerList.size()) {
             mTopPager = 0;
         }
         type = mTopPager % 2;
@@ -134,10 +134,13 @@ public class SalesActivity extends BaseDisplayActivity {
         } else if (type == Constants.METHOD_TWO) {//前十和后十客户
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 TopAndDownCustomerBean topAndDownCustomerBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), TopAndDownCustomerBean.class);
-                initTopAndDown(topAndDownCustomerBean);
-                mTopCustomerList.clear();
-                mTopCustomerList.addAll(topAndDownCustomerBean.getData().getTopCustomerList());
-                startAnim();
+                if (topAndDownCustomerBean.getData().getTopCustomerList() != null
+                        && topAndDownCustomerBean.getData().getTopCustomerList().size() > 0) {
+                    initTopAndDown(topAndDownCustomerBean);
+                    mTopCustomerList.clear();
+                    mTopCustomerList.addAll(topAndDownCustomerBean.getData().getTopCustomerList());
+                    startAnim();
+                }
             }
         } else if (type == Constants.METHOD_THREE) {//Top10客户轮播
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
@@ -180,14 +183,15 @@ public class SalesActivity extends BaseDisplayActivity {
         List<String> Xstrings = initLineXData(salesCurrentAndLastMonthBean);
         LinkedHashMap<String, List<Float>> Ystrings = initLineYData(salesCurrentAndLastMonthBean);
         mSalesCurrentAndLastMonthChart.showLineChart(Xstrings, Ystrings, colors);
-        mSalesCurrentAndLastMonthChart.setDes("当月每日销售额", 180);
+        mSalesCurrentAndLastMonthChart.setDes("当月每日销售额", 200);
         mSalesCurrentAndLastMonthChart.postInvalidate();
     }
 
     private List<String> initLineXData(SalesCurrentAndLastMonthBean lastSixMonthSalesBean) {
         List<String> xValues = new ArrayList<>();
         for (int i = 0; i < lastSixMonthSalesBean.getData().getLastMonth().size(); i++) {
-            xValues.add(lastSixMonthSalesBean.getData().getCurrentMonth().get(i).getOrderDay());
+
+            xValues.add(lastSixMonthSalesBean.getData().getLastMonth().get(i).getOrderDay());
         }
         return xValues;
     }
@@ -247,7 +251,7 @@ public class SalesActivity extends BaseDisplayActivity {
 
     //Top10客户轮播
     private void initOrderAmountLine(OrderAmountByCustomerBean orderAmountByCustomerBean) {
-        if (type == 1) {
+        if (type == 1 || mTopCustomerList.size() == 1) {
             //线形图
             mOrderAmountChartOne.animateY(1000);
             mOrderAmountChartOne.animateX(1000);
@@ -256,14 +260,15 @@ public class SalesActivity extends BaseDisplayActivity {
             mOrderAmountChartOne.showLineChart(Xstrings, Ystrings, colors);
             mOrderAmountChartOne.setDes("1", -100);//去除标签
             mOrderAmountChartOne.postInvalidate();
-        } else {
+        }
+        if (type == 0 || mTopCustomerList.size() == 1) {
             //线形图
             mOrderAmountChartTwo.animateY(1000);
             mOrderAmountChartTwo.animateX(1000);
             List<String> Xstrings = initOrderAmountLineXData(orderAmountByCustomerBean);
             LinkedHashMap<String, List<Float>> Ystrings = initOrderAmountLineYData(orderAmountByCustomerBean);
             mOrderAmountChartTwo.showLineChart(Xstrings, Ystrings, colors);
-            mOrderAmountChartOne.setDes("1", -100);//去除标签
+            mOrderAmountChartTwo.setDes("1", -100);//去除标签
             mOrderAmountChartTwo.postInvalidate();
         }
 
