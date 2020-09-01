@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -163,6 +164,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     public void onFocusChange(View view, boolean b) {
+        mSecretCode = 0;
         if (b) {
             zoomAnim(view);
         } else {
@@ -548,4 +550,33 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         if (mPresenter != null)
             mPresenter.detachView();
     }
+
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        int action = event.getAction();
+        return handleKeyEvent(action, keyCode) || super.dispatchKeyEvent(event);
+    }
+
+    private boolean handleKeyEvent(int action, int keyCode) {
+        if (action != KeyEvent.ACTION_DOWN)
+            return false;
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+                mSecretCode = mSecretCode + 3;
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                mSecretCode = mSecretCode + 5;
+                if (mSecretCode == 17 && mTvTransport.hasFocus()) {
+                    show("进入成本主题");
+                }
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+
 }

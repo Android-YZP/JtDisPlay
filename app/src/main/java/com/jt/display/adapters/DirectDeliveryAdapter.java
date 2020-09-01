@@ -43,7 +43,7 @@ public class DirectDeliveryAdapter extends ListBaseAdapter<DirectDeliveryCarList
         tvDriver.setText(mDataList.get(position).getLinkMan());
         tvVolume.setText(mDataList.get(position).getVolume());
         tvCost.setText(charge + "");
-        tvSCost.setText(charge / Float.parseFloat(mDataList.get(position).getVolume()) + "");
+        tvSCost.setText(mDataList.get(position).getCost()+ "");
 
     }
 

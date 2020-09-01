@@ -8,17 +8,13 @@ public class Constants {
     public static final String TENANTID = "000000";
 
     public static final int HTTP_RETRY_COUNT = 3;
-    public static final int PAGER_SIZE = 4;
+    public static final int PAGER_SIZE = 11;
     public static final String KEY_AUTO_FOCUS = "preferences_auto_focus";
     public static final String KEY_INVERT_SCAN = "preferences_invert_scan";
-
-
-
     public static final String HOME_PICK_UP_THE_GOODS = "PICK_UP_THE_GOODS";
     public static final String HOME_ACCEPTANCE = "ACCEPTANCE";
     public static final String HOME_PICK_GOODS = "Pickgoods";
     public static final String HOME_PICK_OUT = "HOME_PICK_OUT";
-
     public static final int JSON_RESULT_SUCCESS = 0;
 
     public static final int SCAN_CODE= 100;

@@ -3,11 +3,9 @@ package com.jt.display.activitys;
 import android.annotation.SuppressLint;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.TextView;
-
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.jt.display.R;
-import com.jt.display.adapters.AcceptanceDetailAdapter;
 import com.jt.display.adapters.DirectDeliveryAdapter;
 import com.jt.display.adapters.HzShipmentAdapter;
 import com.jt.display.adapters.MdcShipmentAdapter;
@@ -19,8 +17,6 @@ import com.jt.display.bean.DeliveryBean;
 import com.jt.display.bean.ShipmentBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
-import com.orhanobut.logger.Logger;
-
 import java.util.List;
 
 public class CarActivity extends BaseDisplayActivity {
@@ -52,6 +48,7 @@ public class CarActivity extends BaseDisplayActivity {
         super.onDestroy();
         if (mPresenter != null)
             mPresenter.detachView();
+        handler.removeCallbacks(runnable);
     }
 
     @Override
@@ -137,7 +134,7 @@ public class CarActivity extends BaseDisplayActivity {
     @Override
     public void onSuccess(Object jsonResult, int type) {
         if (type == Constants.METHOD_ONE) {//出货
-            handler.postDelayed(runnable, 5000);
+            handler.postDelayed(runnable, mDelayTime);
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 ShipmentBean shipmentBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), ShipmentBean.class);
                 initShipment(shipmentBean);

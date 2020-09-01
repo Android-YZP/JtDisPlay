@@ -26,14 +26,14 @@ import java.util.List;
 
 public abstract class BaseDisplayActivity extends AppCompatActivity implements IBaseView {
 
-
+    protected int mSecretCode = 0;
     protected Context mContext;
 
 
     public Handler handler = new Handler();
     private int widthPixels;
     private int pager = 1;
-    private int mDelayTime = 10000;
+    public int mDelayTime = 10000;
     public AnimatorSet translationAnimatorSet;
     private List<View> viewList = new ArrayList<>();
     private Runnable runnable = new Runnable() {

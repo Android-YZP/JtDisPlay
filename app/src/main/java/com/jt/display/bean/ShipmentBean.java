@@ -177,6 +177,15 @@ public class ShipmentBean {
                 private String hasDiff;
                 private String status;
                 private String volume;
+                private String cost;
+
+                public String getCost() {
+                    return cost;
+                }
+
+                public void setCost(String cost) {
+                    this.cost = cost;
+                }
                 public String getVolume() {
                     return volume;
                 }
@@ -455,6 +464,15 @@ public class ShipmentBean {
                 private String hasDiff;
                 private String status;
                 private String volume;
+                private String cost;
+
+                public String getCost() {
+                    return cost;
+                }
+
+                public void setCost(String cost) {
+                    this.cost = cost;
+                }
                 public String getVolume() {
                     return volume;
                 }
