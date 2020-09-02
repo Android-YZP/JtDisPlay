@@ -33,7 +33,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     public Handler handler = new Handler();
     private int widthPixels;
     private int pager = 1;
-    public int mDelayTime = 10000;
+    public int mDelayTime = 5000;
     public AnimatorSet translationAnimatorSet;
     private List<View> viewList = new ArrayList<>();
     private Runnable runnable = new Runnable() {

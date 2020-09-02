@@ -247,12 +247,18 @@ public class ComPresenter extends BasePresenter {
                 .subscribe(new Consumer<JsonResult>() {
                     @Override
                     public void accept(JsonResult bean) throws Exception {
+                        if (!isViewAttached()) {
+                            return;
+                        }
                         Logger.e(GsonUtil.GsonString(bean));
                         mView.onSuccess(bean, Constants.METHOD_THREE);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        if (!isViewAttached()) {
+                            return;
+                        }
                         mView.onError(throwable);
                         mView.hideLoading();
                     }

@@ -430,7 +430,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<String> Xstrings = initReceiveBarXData(bean);
 
         LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(bean);
-        mCurrentReceiveDeliveryChart.loadData(colors, Xstrings, Ystring);
+        mCurrentReceiveDeliveryChart.loadData(colors, Xstrings, Ystring, 2f);
         mCurrentReceiveDeliveryChart.setDes("当日收发货", 150);
     }
 
@@ -486,7 +486,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
         List<String> Xstrings = initLoadAndUnloadVolumeBarXData(currentDateLoadAndUnloadVolumeBean);
         LinkedHashMap<String, List<String>> Ystring = initLoadAndUnloadVolumeBarYData(currentDateLoadAndUnloadVolumeBean);
-        mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring);
+        mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring, 1f);
         mCurrentDateLoadAndUnloadVolumeChart.setDes("当日装卸方数", 180);
         mCurrentDateLoadAndUnloadVolumeChart.postInvalidate();
     }

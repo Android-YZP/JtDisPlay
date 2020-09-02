@@ -81,10 +81,11 @@ public class HBarChart extends HorizontalBarChart {
 
 
     //设置x轴
-    private void setXAxis(final List<String> xstrings) {
+    private void setXAxis(final List<String> xstrings, final float AxisMaximum) {
+
         XAxis xAxis = getXAxis();
         xAxis.setTextSize(10f);
-        xAxis.setAxisMaximum(2f);
+        xAxis.setAxisMaximum(AxisMaximum);
         //把最小值设置为负数能够为下方留出点空白距离
         xAxis.setAxisMinimum(-0.5f);
         xAxis.setCenterAxisLabels(true);
@@ -95,10 +96,10 @@ public class HBarChart extends HorizontalBarChart {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                if (value == -0.4f || value == 0f || value == 0.8f || value == 1.2f || value == 1.6f) {
-                    return "";
-                } else {
+                if (value == 0f && AxisMaximum == 1f || value == 0.8f && AxisMaximum == 2f) {
                     return xstrings.get(0).substring(5) + "";
+                } else {
+                    return "";
                 }
             }
         });
@@ -108,8 +109,8 @@ public class HBarChart extends HorizontalBarChart {
 
 
     //加载数据
-    public void loadData(List<Integer> colors, List<String> xstrings, LinkedHashMap<String, List<String>> ystring) {
-        setXAxis(xstrings);
+    public void loadData(List<Integer> colors, List<String> xstrings, LinkedHashMap<String, List<String>> ystring, float AxisMaximum) {
+        setXAxis(xstrings, AxisMaximum);
         //不绘制图例
         Legend legend = getLegend();
         legend.setForm(Legend.LegendForm.LINE);

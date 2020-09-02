@@ -41,7 +41,8 @@ public class CostActivity extends BaseDisplayActivity {
     private ComPresenter mPresenter;
     private LanTongCostAdapter mLanTongCostAdapter;
     private OtherCostAdapter mOtherCostAdapter;
-    private int page = 0;
+    private List<ChannelCityOrderCostReportBean.DataBean.NanTongOrderCostListBean> nanTongOrderCostList;
+    private List<ChannelCityOrderCostReportBean.DataBean.OtherOrderCostListBean> otherOrderCostList;
 
     @Override
     public int getLayoutId() {
@@ -52,6 +53,8 @@ public class CostActivity extends BaseDisplayActivity {
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
+        handler.removeCallbacks(runnable);
+        handler.removeCallbacks(loopRunnable);
     }
 
     @Override
@@ -92,19 +95,44 @@ public class CostActivity extends BaseDisplayActivity {
         mLrvTop.setLoadMoreEnabled(false);
         mLrvTop.setPullRefreshEnabled(false);
         topCostAdapter.setDataList(mData);
+
     }
 
     @Override
     public void initListener() {
-
     }
 
     @Override
     protected void onPageSelected(int pager) {
-
     }
 
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            for (int i = 0; i < 14; i++) {
+                mLanTongCostAdapter.getDataList().remove(0);
+                mOtherCostAdapter.getDataList().remove(0);
+                if (mLanTongCostAdapter.getDataList().size() == 0) {
+                    mLanTongCostAdapter.setDataList(nanTongOrderCostList);
+                    mOtherCostAdapter.setDataList(otherOrderCostList);
+                    handler.postDelayed(runnable, mDelayTime);
+                    return;
+                }
+            }
+            mLanTongCostAdapter.notifyDataSetChanged();
+            mOtherCostAdapter.notifyDataSetChanged();
+            handler.postDelayed(runnable, mDelayTime);
+        }
+    };
 
+    Runnable loopRunnable = new Runnable() {
+        @Override
+        public void run() {
+            handler.removeCallbacks(runnable);
+            mPresenter.getChannelCityOrderCostReportForm();
+            handler.postDelayed(loopRunnable, mDelayTime * 6);
+        }
+    };
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
@@ -128,36 +156,15 @@ public class CostActivity extends BaseDisplayActivity {
     }
 
     private void initChannelCityOrderCostReport(ChannelCityOrderCostReportBean channelCityOrderCostReportBean) {
-        List<ChannelCityOrderCostReportBean.DataBean.NanTongOrderCostListBean> nanTongOrderCostList = channelCityOrderCostReportBean.getData().getNanTongOrderCostList();
-        List<ChannelCityOrderCostReportBean.DataBean.OtherOrderCostListBean> otherOrderCostList = channelCityOrderCostReportBean.getData().getOtherOrderCostList();
-
-////        for (int i = 9; i < nanTongSize; i++) {
-////            nanTongOrderCostList.remove(i);
-////        }
-//        int nanTongTotalPage = 0;
-//        int OtherTotalPage = 0;
-//        if (nanTongOrderCostList.size() % 10 == 0) {
-//            nanTongTotalPage = nanTongOrderCostList.size() / 10;
-//        } else {
-//            nanTongTotalPage = nanTongOrderCostList.size() / 10 + 1;
-//        }
-//
-//        if (page == nanTongTotalPage) {
-//            page = 1;
-//        } else {
-//            page++;
-//        }
+        nanTongOrderCostList = channelCityOrderCostReportBean.getData().getNanTongOrderCostList();
+        otherOrderCostList = channelCityOrderCostReportBean.getData().getOtherOrderCostList();
 
         mLanTongCostAdapter.setDataList(nanTongOrderCostList);
         mOtherCostAdapter.setDataList(otherOrderCostList);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mLanTongCostAdapter.getDataList().remove(1);
-                mLanTongCostAdapter.notifyDataSetChanged();
-            }
-        }, 2000);
 
+        handler.postDelayed(runnable, mDelayTime);
+        handler.removeCallbacks(loopRunnable);
+        handler.postDelayed(loopRunnable, mDelayTime * 6);
     }
 
 

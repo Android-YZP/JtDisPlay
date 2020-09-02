@@ -143,7 +143,6 @@ public class SalesActivity extends BaseDisplayActivity {
             }
         } else if (type == Constants.METHOD_FOUR) {//月销售额
             mPresenter.getTopAndDownCustomerList();
-
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 lastSixMonthSaleBean lastSixMonthSaleBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), lastSixMonthSaleBean.class);
                 initMBar(lastSixMonthSaleBean);
