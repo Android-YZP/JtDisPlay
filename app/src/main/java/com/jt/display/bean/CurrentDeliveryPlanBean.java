@@ -50,6 +50,15 @@ public class CurrentDeliveryPlanBean {
         private String deliveryOrderVolume;
         private String deliveryVolume;
         private List<DeliveryPlanListBean> deliveryPlanList;
+        private int total;
+
+        public int getTotal() {
+            return total;
+        }
+
+        public void setTotal(int total) {
+            this.total = total;
+        }
 
         public CurrentVolumeAndWeightStorageCapacityBean getCurrentVolumeAndWeightStorageCapacity() {
             return currentVolumeAndWeightStorageCapacity;

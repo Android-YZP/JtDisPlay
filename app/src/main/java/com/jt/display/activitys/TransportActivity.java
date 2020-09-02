@@ -49,6 +49,7 @@ public class TransportActivity extends BaseDisplayActivity {
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
+        handler.removeCallbacks(runnable);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class TransportActivity extends BaseDisplayActivity {
     @Override
     public void initData() {
         mPresenter.getCurrentReceivePlan(mReceivePlanPage);
-        mPresenter.getCurrentDeliveryPlan(mDeliveryPlanPage);
+        handler.postDelayed(runnable, mDelayTime);
 //        mPresenter.getChannelCityOrderCostReportForm();
 //        mPresenter.getCustomerChannelCityOrderCostReportForm();
 
@@ -104,13 +105,18 @@ public class TransportActivity extends BaseDisplayActivity {
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
-        if (type == Constants.METHOD_ONE) {//当月每日销售额
+        if (type == Constants.METHOD_ONE) {
+
+            mPresenter.getCurrentDeliveryPlan(mDeliveryPlanPage);
+
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentReceivePlanBean currentReceivePlanBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceivePlanBean.class);
                 initCurrentReceivePlan(currentReceivePlanBean);
             }
 
-        } else if (type == Constants.METHOD_TWO) {//前十和后十客户
+        } else if (type == Constants.METHOD_TWO) {
+
+
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentDeliveryPlanBean currentDeliveryPlanBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentDeliveryPlanBean.class);
                 initCurrentDeliveryPlan(currentDeliveryPlanBean);
@@ -119,24 +125,60 @@ public class TransportActivity extends BaseDisplayActivity {
         }
     }
 
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            mPresenter.getCurrentReceivePlan(mReceivePlanPage);
+            handler.postDelayed(runnable, mDelayTime);
+        }
+    };
+
+
     @SuppressLint("SetTextI18n")
     private void initCurrentDeliveryPlan(CurrentDeliveryPlanBean currentDeliveryPlanBean) {
+        int mCurrentDeliveryPlanPage = 0;
         mCurrentDeliveryPlanAdapter.setDataList(currentDeliveryPlanBean.getData().getDeliveryPlanList());
         mTvDeliverySumVolume.setText("计划出货体积\n" + currentDeliveryPlanBean.getData().getDeliveryOrderVolume() + " m³");
         mTvDeliveryHasStoredVolume.setText("已出货体积\n" + currentDeliveryPlanBean.getData().getDeliveryVolume() + " m³");
         mTvWarehouseNum.setText("实时库容\n" + currentDeliveryPlanBean.getData().getCurrentVolumeAndWeightStorageCapacity().
                 getCurrentVolumeStorageCapacity() + " m³ \n" + currentDeliveryPlanBean.getData().getCurrentVolumeAndWeightStorageCapacity().
                 getCurrentWeightStorageCapacity() + " Kg");
+
+        if (currentDeliveryPlanBean.getData().getTotal() % Constants.TRANSPORT_PAGER_SIZE == 0) {
+            mCurrentDeliveryPlanPage = currentDeliveryPlanBean.getData().getTotal() / Constants.TRANSPORT_PAGER_SIZE;
+        } else {
+            mCurrentDeliveryPlanPage = currentDeliveryPlanBean.getData().getTotal() / Constants.TRANSPORT_PAGER_SIZE + 1;
+        }
+
+        if (mDeliveryPlanPage == mCurrentDeliveryPlanPage) {
+            mDeliveryPlanPage = 1;
+        } else {
+            mDeliveryPlanPage++;
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private void initCurrentReceivePlan(CurrentReceivePlanBean currentReceivePlanBean) {
+        int mCurrentReceivePlanPage = 0;
         mCurrentReceivePlanAdapter.setDataList(currentReceivePlanBean.getData().getReceiveWarePlanList());
         mTvSumVolume.setText("计划出货体积\n" + currentReceivePlanBean.getData().getSumVolume() + " m³");
         mTvHasStoredVolume.setText("已出货体积\n" + currentReceivePlanBean.getData().getHasStoredVolume() + " m³");
         mTvWarehouseNum.setText("实时库容\n" + currentReceivePlanBean.getData().getCurrentVolumeAndWeightStorageCapacity().
                 getCurrentVolumeStorageCapacity() + " m³ \n" + currentReceivePlanBean.getData().getCurrentVolumeAndWeightStorageCapacity().
                 getCurrentWeightStorageCapacity() + " Kg");
+
+        if (currentReceivePlanBean.getData().getTotal() % Constants.TRANSPORT_PAGER_SIZE == 0) {
+            mCurrentReceivePlanPage = currentReceivePlanBean.getData().getTotal() / Constants.TRANSPORT_PAGER_SIZE;
+        } else {
+            mCurrentReceivePlanPage = currentReceivePlanBean.getData().getTotal() / Constants.TRANSPORT_PAGER_SIZE + 1;
+        }
+        if (mReceivePlanPage == mCurrentReceivePlanPage) {
+            mReceivePlanPage = 1;
+        } else {
+            mReceivePlanPage++;
+        }
+
     }
 
 

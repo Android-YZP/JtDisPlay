@@ -26,7 +26,7 @@ public class CurrentDeliveryPlanAdapter extends ListBaseAdapter<DeliveryPlanList
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_current_delivery;
+        return R.layout.item_transport;
     }
 
     @SuppressLint("SetTextI18n")
@@ -46,7 +46,7 @@ public class CurrentDeliveryPlanAdapter extends ListBaseAdapter<DeliveryPlanList
         tvDriver.setVisibility(View.GONE);
         tvLicence.setText(mDataList.get(position).getLicense());
         tvVolume.setText(mDataList.get(position).getVolume());
-        tvCost.setText(mDataList.get(position).getCartonNum());
+        tvCost.setText(((int) Float.parseFloat(mDataList.get(position).getCartonNum())) + "");
         tvSCost.setText(TextUtils.isEmpty(mDataList.get(position).getCarReadyTime()) ? "无" :
                 mDataList.get(position).getCarReadyTime());
 

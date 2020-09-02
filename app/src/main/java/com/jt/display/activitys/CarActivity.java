@@ -83,6 +83,8 @@ public class CarActivity extends BaseDisplayActivity {
         mPresenter.deliverySum(mRtwDeliveryPage + "", +mDirectDeliveryPage + "");//提货
         mPresenter.shipmentSum(mHzShipmentPage + "", +mMdcShipmentPage + "");//出货
 
+        handler.postDelayed(runnable, mDelayTime);
+
         LinearLayoutManager directDeliveryManager = new LinearLayoutManager(mContext);
         mLrvDirectDelivery.setLayoutManager(directDeliveryManager);
         mDirectDeliveryAdapter = new DirectDeliveryAdapter(mContext);
@@ -133,7 +135,6 @@ public class CarActivity extends BaseDisplayActivity {
     @Override
     public void onSuccess(Object jsonResult, int type) {
         if (type == Constants.METHOD_ONE) {//出货
-            handler.postDelayed(runnable, mDelayTime);
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 ShipmentBean shipmentBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), ShipmentBean.class);
                 initShipment(shipmentBean);
@@ -149,8 +150,10 @@ public class CarActivity extends BaseDisplayActivity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            handler.postDelayed(runnable, mDelayTime);
             mPresenter.shipmentSum(mMdcShipmentPage + "", +mHzShipmentPage + "");//出货
             mPresenter.deliverySum(mRtwDeliveryPage + "", mDirectDeliveryPage + "");//提货
+
         }
     };
 

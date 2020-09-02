@@ -9,7 +9,8 @@ public class Constants {
 
     public static final int HTTP_RETRY_COUNT = 3;
     public static final int PAGER_SIZE = 11;
-    public static final int TRANSPORT_PAGER_SIZE = 10;
+    public static final int TRANSPORT_PAGER_SIZE = 9;
+//    public static final int TRANSPORT_PAGER_SIZE = 2;
     public static final String KEY_AUTO_FOCUS = "preferences_auto_focus";
     public static final String KEY_INVERT_SCAN = "preferences_invert_scan";
     public static final String HOME_PICK_UP_THE_GOODS = "PICK_UP_THE_GOODS";

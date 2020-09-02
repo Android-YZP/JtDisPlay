@@ -13,15 +13,13 @@ import com.jt.display.bean.CurrentReceivePlanBean.DataBean.ReceiveWarePlanListBe
 
 public class CurrentReceivePlanAdapter extends ListBaseAdapter<ReceiveWarePlanListBean> {
 
-
     public CurrentReceivePlanAdapter(Context context) {
         super(context);
     }
 
-
     @Override
     public int getLayoutId() {
-        return R.layout.item_current_delivery;
+        return R.layout.item_transport;
     }
 
     @SuppressLint("SetTextI18n")
@@ -42,7 +40,7 @@ public class CurrentReceivePlanAdapter extends ListBaseAdapter<ReceiveWarePlanLi
         tvLicence.setText(mDataList.get(position).getLicense());
         tvDriver.setText(mDataList.get(position).getCustomerName());
         tvVolume.setText(mDataList.get(position).getVolume());
-        tvCost.setText(mDataList.get(position).getCartonNum());
+        tvCost.setText(((int) Float.parseFloat(mDataList.get(position).getCartonNum())) + "");
         tvSCost.setText(TextUtils.isEmpty(mDataList.get(position).getCarReadyTime()) ? "无" :
                 mDataList.get(position).getCarReadyTime());
 

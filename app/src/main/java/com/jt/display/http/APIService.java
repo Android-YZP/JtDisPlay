@@ -107,14 +107,14 @@ public interface APIService {
     @GET("/jtms-warehouse/reportForm/getCurrentReceivePlan")
     Flowable<JsonResult> getCurrentReceivePlan(@Header("Authorization") String authorization,
                                                @Header("Blade-Auth") String blade_auth,
-                                               @Query("currentPage") String currentPage,
-                                               @Query("pageSize") String pageSize);
+                                               @Query("current") String currentPage,
+                                               @Query("size") String pageSize);
 
     @GET("/jtms-warehouse/reportForm/getCurrentDeliveryPlan")
     Flowable<JsonResult> getCurrentDeliveryPlan(@Header("Authorization") String authorization,
                                                 @Header("Blade-Auth") String blade_auth,
-                                                @Query("currentPage") String currentPage,
-                                                @Query("pageSize") String pageSize);
+                                                @Query("current") String currentPage,
+                                                @Query("size") String pageSize);
 
     @GET("/jtms-order/reportForm/getChannelCityOrderCostReportForm")
     Flowable<JsonResult> getChannelCityOrderCostReportForm(@Header("Authorization") String authorization,

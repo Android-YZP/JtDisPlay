@@ -27,15 +27,49 @@
             android:id="@+id/tv_lantong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="南通转运城市单方成本"
-            android:textColor="@color/grey_2"
+            android:textColor="@color/grey"
             android:textSize="@dimen/font15" />
+
+        <LinearLayout
+            android:id="@+id/ll_lantong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_lantong"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/font15" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="本月"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font15" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="上月"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font15" />
+        </LinearLayout>
 
         <com.github.jdsjlzx.recyclerview.LRecyclerView
             android:id="@+id/lrv_lantong"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tv_lantong"
+            android:layout_below="@+id/ll_lantong"
             android:background="@color/bg_data" />
 
     </RelativeLayout>
@@ -59,15 +93,50 @@
             android:id="@+id/tv_other"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="其他转运城市单方成本"
-            android:textColor="@color/grey_2"
+            android:textColor="@color/grey"
             android:textSize="@dimen/font15" />
+
+        <LinearLayout
+            android:id="@+id/ll_other"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_other"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/font15" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="本月"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font15" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="上月"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font15" />
+        </LinearLayout>
+
 
         <com.github.jdsjlzx.recyclerview.LRecyclerView
             android:id="@+id/lrv_other"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tv_other"
+            android:layout_below="@+id/ll_other"
             android:background="@color/bg_data" />
 
     </RelativeLayout>
@@ -92,8 +161,9 @@
             android:id="@+id/tv_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Top10客户成本"
-            android:textColor="@color/grey_2"
+            android:textColor="@color/grey"
             android:textSize="@dimen/font15" />
 
         <com.github.jdsjlzx.recyclerview.LRecyclerView

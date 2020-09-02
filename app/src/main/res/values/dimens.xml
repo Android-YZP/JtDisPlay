@@ -11,4 +11,11 @@
     <dimen name="dp5">5dp</dimen>
     <dimen name="dp15">15dp</dimen>
     <dimen name="car_list_fount">8sp</dimen>
+    <dimen name="transport_fount">12sp</dimen>
+    <dimen name="dp35">35dp</dimen>
+    <dimen name="dp37">37dp</dimen>
+    <dimen name="dp39">39dp</dimen>
+    <dimen name="dp38">38dp</dimen>
+    <dimen name="SP22">22sp</dimen>
+    <dimen name="dp32">32dp</dimen>
 </resources>

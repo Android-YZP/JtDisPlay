@@ -8,7 +8,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp5"
-        android:layout_weight="1"
+        android:layout_weight="0.9"
         android:background="@color/bg_data"
         android:gravity="center"
         android:paddingStart="@dimen/dp5"
@@ -16,13 +16,13 @@
         android:paddingEnd="@dimen/dp5"
         android:text="车牌"
         android:textColor="@color/grey"
-        android:textSize="@dimen/car_list_fount" />
+        android:textSize="@dimen/transport_fount" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp5"
-        android:layout_weight="0.9"
+        android:layout_weight="0.8"
         android:background="@color/bg_data"
         android:gravity="center"
         android:paddingStart="@dimen/dp5"
@@ -30,13 +30,13 @@
         android:paddingEnd="@dimen/dp5"
         android:text="体积"
         android:textColor="@color/grey"
-        android:textSize="@dimen/car_list_fount" />
+        android:textSize="@dimen/transport_fount" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp5"
-        android:layout_weight="0.9"
+        android:layout_weight="0.7"
         android:background="@color/bg_data"
         android:gravity="center"
         android:paddingStart="@dimen/dp5"
@@ -44,13 +44,13 @@
         android:paddingEnd="@dimen/dp5"
         android:text="箱数"
         android:textColor="@color/grey"
-        android:textSize="@dimen/car_list_fount" />
+        android:textSize="@dimen/transport_fount" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp5"
-        android:layout_weight="1.2"
+        android:layout_weight="1"
         android:background="@color/bg_data"
         android:gravity="center"
         android:paddingStart="@dimen/dp5"
@@ -58,7 +58,7 @@
         android:paddingEnd="@dimen/dp5"
         android:text="车辆就绪时间"
         android:textColor="@color/grey"
-        android:textSize="@dimen/car_list_fount" />
+        android:textSize="@dimen/transport_fount" />
 
 
 </LinearLayout>

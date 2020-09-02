@@ -7,9 +7,11 @@ import android.widget.TextView;
 import com.jt.display.R;
 import com.jt.display.base.ListBaseAdapter;
 import com.jt.display.base.SuperViewHolder;
+import com.jt.display.bean.ChannelCityOrderCostReportBean;
+import com.jt.display.bean.ChannelCityOrderCostReportBean.DataBean.OtherOrderCostListBean;
 
 
-public class OtherCostAdapter extends ListBaseAdapter<String> {
+public class OtherCostAdapter extends ListBaseAdapter<OtherOrderCostListBean> {
 
 
     public OtherCostAdapter(Context context) {
@@ -19,30 +21,26 @@ public class OtherCostAdapter extends ListBaseAdapter<String> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_acceptance_detail;
+        return R.layout.item_cost;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindItemHolder(SuperViewHolder holder, final int position) {
-//        View rootView = holder.getView(R.id.ll_root_view);
-        TextView tvCode = holder.getView(R.id.tv);
-        if (position == 0) {
-            tvCode.setText("");
-        } else if (position == 1) {
-            tvCode.setText("本月");
-        } else if (position == 2) {
-            tvCode.setText("上月");
-        } else if (position % 3 == 0) {
-            tvCode.setText("城市" + (position / 3 - 1));
+    public void onBindItemHolder(SuperViewHolder holder, int position) {
+        TextView tvCity = holder.getView(R.id.tv_city);
+        position = position + 3;
+
+        if (position % 3 == 0) {
+            tvCity.setText(mDataList.get((position / 3 - 1)).getCityName());
         } else if (position % 3 == 1) {
-            tvCode.setText("本月" + (position / 3 - 1));
-        }else if (position % 3 == 2) {
-            tvCode.setText("上月" + (position / 3 - 1));
+            tvCity.setText(mDataList.get((position / 3 - 1)).getCurrentMonthOrderCost());
+        } else if (position % 3 == 2) {
+            tvCity.setText(mDataList.get((position / 3 - 1)).getLastMonthOrderCost());
         }
-
-
-//        tvCode.setText(mDataList.get(position));
     }
 
+    @Override
+    public int getItemCount() {
+        return mDataList.size() > 0 ? mDataList.size() * 3 : 0;
+    }
 }

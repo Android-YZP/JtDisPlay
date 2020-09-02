@@ -76,7 +76,7 @@ public class CLineChart extends LineChart {
         lineChart.animateY(1000);
         lineChart.animateX(1000);
         //右下角的刻度显示
-        setExtraOffsets(0, 20, 10, 0);
+        setExtraOffsets(0, 30, 10, 0);
 
         /***XY轴的设置***/
         xAxis = lineChart.getXAxis();

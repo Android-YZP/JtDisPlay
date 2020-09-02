@@ -51,6 +51,15 @@ public class CurrentReceivePlanBean {
         private String sumVolume;
         private String hasStoredVolume;
         private List<ReceiveWarePlanListBean> receiveWarePlanList;
+        private int total;
+
+        public int getTotal() {
+            return total;
+        }
+
+        public void setTotal(int total) {
+            this.total = total;
+        }
 
         public CurrentVolumeAndWeightStorageCapacityBean getCurrentVolumeAndWeightStorageCapacity() {
             return currentVolumeAndWeightStorageCapacity;
