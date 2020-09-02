@@ -76,5 +76,24 @@ public class ComModel {
                 token, page1, pageSize1, page2, pageSize2);
     }
 
+    public Flowable<JsonResult> getCurrentReceivePlan(String token,String currentPage,String pageSize) {
+        return RetrofitClient.getInstance().getApi().getCurrentReceivePlan(Authorization.getInstance().getAuthorization(),
+                token,currentPage,pageSize);
+    }
+
+    public Flowable<JsonResult> getCurrentDeliveryPlan(String token,String currentPage,String pageSize) {
+        return RetrofitClient.getInstance().getApi().getCurrentDeliveryPlan(Authorization.getInstance().getAuthorization(),
+                token,currentPage,pageSize);
+    }
+
+    public Flowable<JsonResult> getChannelCityOrderCostReportForm(String token) {
+        return RetrofitClient.getInstance().getApi().getChannelCityOrderCostReportForm(Authorization.getInstance().getAuthorization(),
+                token);
+    }
+
+    public Flowable<JsonResult> getCustomerChannelCityOrderCostReportForm(String token) {
+        return RetrofitClient.getInstance().getApi().getCustomerChannelCityOrderCostReportForm(Authorization.getInstance().getAuthorization(),
+                token);
+    }
 
 }

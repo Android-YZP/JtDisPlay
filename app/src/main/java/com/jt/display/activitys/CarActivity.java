@@ -81,7 +81,6 @@ public class CarActivity extends BaseDisplayActivity {
     @Override
     public void initData() {
         mPresenter.deliverySum(mRtwDeliveryPage + "", +mDirectDeliveryPage + "");//提货
-
         mPresenter.shipmentSum(mHzShipmentPage + "", +mMdcShipmentPage + "");//出货
 
         LinearLayoutManager directDeliveryManager = new LinearLayoutManager(mContext);

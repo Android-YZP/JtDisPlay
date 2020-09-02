@@ -94,6 +94,36 @@ public interface APIService {
                                      @Query("page2") String page2,
                                      @Query("pageSize2") String pageSize2);
 
+    /**
+     * 转运主题
+     * 提货计划：/jtms-warehouse/reportForm/getCurrentReceivePlan
+     * 出货计划：/jtms-warehouse/reportForm/getCurrentDeliveryPlan
+     * 成本主题当前页 currentPage
+     * 每页数量 pageSize
+     * 城市成本：/jtms-order/reportForm/getChannelCityOrderCostReportForm
+     * 客户城市成本：/jtms-order/reportForm/getCustomerChannelCityOrderCostReportForm
+     */
+
+    @GET("/jtms-warehouse/reportForm/getCurrentReceivePlan")
+    Flowable<JsonResult> getCurrentReceivePlan(@Header("Authorization") String authorization,
+                                               @Header("Blade-Auth") String blade_auth,
+                                               @Query("currentPage") String currentPage,
+                                               @Query("pageSize") String pageSize);
+
+    @GET("/jtms-warehouse/reportForm/getCurrentDeliveryPlan")
+    Flowable<JsonResult> getCurrentDeliveryPlan(@Header("Authorization") String authorization,
+                                                @Header("Blade-Auth") String blade_auth,
+                                                @Query("currentPage") String currentPage,
+                                                @Query("pageSize") String pageSize);
+
+    @GET("/jtms-order/reportForm/getChannelCityOrderCostReportForm")
+    Flowable<JsonResult> getChannelCityOrderCostReportForm(@Header("Authorization") String authorization,
+                                                           @Header("Blade-Auth") String blade_auth);
+
+    @GET("/jtms-order/reportForm/getCustomerChannelCityOrderCostReportForm")
+    Flowable<JsonResult> getCustomerChannelCityOrderCostReportForm(@Header("Authorization") String authorization,
+                                                                   @Header("Blade-Auth") String blade_auth);
+
 
 //
 //    //查询容器内库存数据  blade-auth就是token

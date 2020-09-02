@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.TextView;
-
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.mikephil.charting.animation.Easing;
@@ -23,7 +22,6 @@ import com.jt.display.utils.GsonUtil;
 import com.jt.display.views.CLineChart;
 import com.jt.display.views.SingleBarChart;
 import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -113,10 +111,6 @@ public class SalesActivity extends BaseDisplayActivity {
     /**
      * 前缀：http://40.73.59.226:9000/jtms-order/
      * 销售主题：
-     * GET 每日销售环比：/reportForm/getSalesCurrentAndLastMonth
-     * GET 前十和后十客户：/reportForm/getTopAndDownCustomerList
-     * GET 客户轮播：/reportForm/getOrderAmountByCustomerName?customerName=***
-     * GET 月销售额环比：/lastSixMonthSales
      */
     @Override
     public void onSuccess(Object jsonResult, int type) {

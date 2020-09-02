@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="提货汇总"
+                android:text="收货计划汇总"
                 android:textSize="@dimen/font25" />
 
 
@@ -39,6 +39,7 @@
                 android:paddingTop="@dimen/dp_10">
 
                 <TextView
+                    android:id="@+id/tv_sumVolume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -46,17 +47,18 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:lineSpacingExtra="10dp"
-                    android:text="提货计划体积 \n 333m³"
+                    android:text="计划体积 \n 333m³"
                     android:textSize="@dimen/font15" />
 
                 <TextView
+                    android:id="@+id/tv_hasStoredVolume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:lineSpacingExtra="10dp"
-                    android:text="已提货计划体积 \n 233m³"
+                    android:text="已出货体积 \n 233m³"
                     android:textSize="@dimen/font15" />
             </LinearLayout>
 
@@ -64,6 +66,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_warehouse_num"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dp_10"
@@ -87,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="提货汇总"
+                android:text="出货计划汇总"
                 android:textSize="@dimen/font25" />
 
 
@@ -100,6 +103,7 @@
                 android:paddingTop="@dimen/dp_10">
 
                 <TextView
+                    android:id="@+id/tv_DeliverySumVolume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -107,17 +111,18 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:lineSpacingExtra="10dp"
-                    android:text="提货计划体积 \n 333m³"
+                    android:text="计划体积 \n 333m³"
                     android:textSize="@dimen/font15" />
 
                 <TextView
+                    android:id="@+id/tv_DeliveryHasStoredVolume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:lineSpacingExtra="10dp"
-                    android:text="已提货计划体积 \n 233m³"
+                    android:text="已出货体积 \n 233m³"
                     android:textSize="@dimen/font15" />
             </LinearLayout>
 
@@ -148,18 +153,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:text="提货直发车辆"
+                android:text="收货计划列表"
                 android:textSize="@dimen/font15" />
 
-
-            <TextView
+            <include
+                layout="@layout/car_receive_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="车牌        司机        体积        费用"
-                android:textSize="@dimen/font15" />
+                android:layout_marginStart="@dimen/dp5"
+                android:background="@color/bg_data"
+                android:gravity="center" />
 
             <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_CurrentReceivePlan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -181,18 +187,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:text="提货直发车辆"
+                android:text="出货计划列表"
                 android:textSize="@dimen/font15" />
 
-
-            <TextView
+            <include
+                layout="@layout/car_delivery_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="车牌        司机        体积        费用"
-                android:textSize="@dimen/font15" />
+                android:layout_marginStart="@dimen/dp5"
+                android:background="@color/bg_data"
+                android:gravity="center" />
 
             <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_CurrentDeliveryPlan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
