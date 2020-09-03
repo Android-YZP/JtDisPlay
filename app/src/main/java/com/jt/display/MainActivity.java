@@ -51,19 +51,21 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private HBarChart mCurrentReceiveDeliveryChart;
     private HBarChart mCurrentDateLoadAndUnloadVolumeChart;
     private int type = 1;//1周2月3季度
-//    <!--    face7c   fa965b  fa985c  e03836  f77b51  6ed062  303425 c58dfe e06412  1300fe-->
-
+    //    <!--    face7c   fa965b  fa985c  e03836  f77b51  6ed062  303425 c58dfe e06412  1300fe-->
+//        fbf506   ac9e0e      3d9c06   346207     10f5c3
+//        1b9979   109bf0     196595   3f0af2   a80d02
     final List<Integer> colors = Arrays.asList(
-            Color.parseColor("#face7c"),
-            Color.parseColor("#fa985c"),
-            Color.parseColor("#e03836"),
-            Color.parseColor("#fa965b"),
-            Color.parseColor("#303425"),
-            Color.parseColor("#f77b51"),
+            Color.parseColor("#10f5c3"),
             Color.parseColor("#c58dfe"),
+            Color.parseColor("#fa985c"),
+            Color.parseColor("#3f0af2"),
+
+            Color.parseColor("#fa965b"),
+            Color.parseColor("#f77b51"),
+            Color.parseColor("#fb4751"),
             Color.parseColor("#e06412"),
             Color.parseColor("#6ed062"),
-            Color.parseColor("#1300fe")
+            Color.parseColor("#5afe01")
     );
 
     private TextView mTvWeek;
