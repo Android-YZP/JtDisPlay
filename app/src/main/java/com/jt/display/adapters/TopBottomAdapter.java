@@ -66,6 +66,6 @@ public class TopBottomAdapter extends ListBaseAdapter<TopAndDownCustomerBean.Dat
 
     @Override
     public int getItemCount() {
-        return mDataList.size() > 0 ? 19 * 4 : 0;
+        return mDataList.size() > 0 ? 10 * 4 : 0;
     }
 }
