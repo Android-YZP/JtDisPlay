@@ -1,12 +1,14 @@
 package com.jt.display.activitys;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.jt.display.MainActivity;
 import com.jt.display.R;
 import com.jt.display.adapters.CurrentDeliveryPlanAdapter;
 import com.jt.display.adapters.CurrentReceivePlanAdapter;
@@ -39,6 +41,17 @@ public class TransportActivity extends BaseDisplayActivity {
 
     private int mReceivePlanPage = 1;
     private int mDeliveryPlanPage = 1;
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(mContext, MainActivity.class));
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 500);
+    }
+
 
     @Override
     public int getLayoutId() {
@@ -48,8 +61,9 @@ public class TransportActivity extends BaseDisplayActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.detachView();
-        handler.removeCallbacks(runnable);
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
     }
 
     @Override
@@ -72,9 +86,6 @@ public class TransportActivity extends BaseDisplayActivity {
     @Override
     public void initData() {
         mPresenter.getCurrentReceivePlan(mReceivePlanPage);
-        handler.postDelayed(runnable, mDelayTime);
-//        mPresenter.getChannelCityOrderCostReportForm();
-//        mPresenter.getCustomerChannelCityOrderCostReportForm();
 
         LinearLayoutManager directDeliveryManager = new LinearLayoutManager(mContext);
         mLrvCurrentDeliveryPlan.setLayoutManager(directDeliveryManager);
@@ -104,6 +115,11 @@ public class TransportActivity extends BaseDisplayActivity {
     }
 
     @Override
+    protected void loopTimesListener(long loopTimes) {
+        mPresenter.getCurrentReceivePlan(mReceivePlanPage);
+    }
+
+    @Override
     public void onSuccess(Object jsonResult, int type) {
         if (type == Constants.METHOD_ONE) {
 
@@ -116,7 +132,6 @@ public class TransportActivity extends BaseDisplayActivity {
 
         } else if (type == Constants.METHOD_TWO) {
 
-
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentDeliveryPlanBean currentDeliveryPlanBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentDeliveryPlanBean.class);
                 initCurrentDeliveryPlan(currentDeliveryPlanBean);
@@ -124,16 +139,6 @@ public class TransportActivity extends BaseDisplayActivity {
             }
         }
     }
-
-
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            mPresenter.getCurrentReceivePlan(mReceivePlanPage);
-            handler.postDelayed(runnable, mDelayTime);
-        }
-    };
-
 
     @SuppressLint("SetTextI18n")
     private void initCurrentDeliveryPlan(CurrentDeliveryPlanBean currentDeliveryPlanBean) {

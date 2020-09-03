@@ -2,12 +2,15 @@ package com.jt.display.activitys;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.TextView;
+
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.mikephil.charting.animation.Easing;
+import com.jt.display.MainActivity;
 import com.jt.display.R;
 import com.jt.display.adapters.TopBottomAdapter;
 import com.jt.display.base.BaseDisplayActivity;
@@ -22,6 +25,7 @@ import com.jt.display.utils.GsonUtil;
 import com.jt.display.views.CLineChart;
 import com.jt.display.views.SingleBarChart;
 import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -85,8 +89,8 @@ public class SalesActivity extends BaseDisplayActivity {
         mLrvTopBottom.setLoadMoreEnabled(false);
         mLrvTopBottom.setPullRefreshEnabled(false);
 
-        addView(mOrderAmountChartOne);
-        addView(mOrderAmountChartTwo);
+        addAnimView(mOrderAmountChartOne);
+        addAnimView(mOrderAmountChartTwo);
 
         mPresenter.getSalesCurrentAndLastMonth();
     }
@@ -106,6 +110,11 @@ public class SalesActivity extends BaseDisplayActivity {
         type = mTopPager % 2;
         startTopChart(mTopPager);
         Logger.e(type + "," + mTopPager);
+    }
+
+    @Override
+    protected void loopTimesListener(long loopTimes) {
+
     }
 
     /**
@@ -315,10 +324,23 @@ public class SalesActivity extends BaseDisplayActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(mContext, MainActivity.class));
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 500);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
+        if (mPresenter != null) {
             mPresenter.detachView();
+        }
+
     }
 
 }

@@ -3,15 +3,11 @@ package com.jt.display;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieEntry;
 import com.jt.display.activitys.CarActivity;
 import com.jt.display.activitys.CostActivity;
 import com.jt.display.activitys.SalesActivity;
@@ -19,19 +15,16 @@ import com.jt.display.activitys.TransportActivity;
 import com.jt.display.base.BaseDisplayActivity;
 import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
-import com.jt.display.bean.BarJsonBean;
 import com.jt.display.bean.CurrentDateLoadAndUnloadVolumeBean;
 import com.jt.display.bean.CurrentReceiveDeliveryBean;
 import com.jt.display.bean.CustomerSalesSortBean;
 import com.jt.display.bean.LastSevenCarCostBean;
 import com.jt.display.bean.LastSevenDaysSalesBean;
 import com.jt.display.bean.LastSixMonthSalesBean;
-import com.jt.display.bean.lineChartBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.utils.SharePreferenceUtils;
 import com.jt.display.views.CLineChart;
-import com.jt.display.views.CustomPieChart;
 import com.jt.display.views.HBarChart;
 import com.jt.display.views.ManyBarChart;
 import com.jt.display.views.PieChartView;
@@ -39,7 +32,6 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -122,11 +114,14 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     public void initData() {
         mPresenter = new ComPresenter();
         mPresenter.attachView(this);
-        mPresenter.login();
 
-        addView(mCustomerSalesSortChartWeek);
-        addView(mCustomerSalesSortChartMonth);
-        addView(mCustomerSalesSortChartQuarterly);
+        mPresenter.login();
+        mPresenter.customerSalesSort(type + "");//1周2月3季度
+
+        addAnimView(mCustomerSalesSortChartWeek);
+        addAnimView(mCustomerSalesSortChartMonth);
+        addAnimView(mCustomerSalesSortChartQuarterly);
+        startAnim();
     }
 
     @Override
@@ -134,24 +129,28 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         mTvSales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(mContext, SalesActivity.class));
             }
         });
         mTvCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(mContext, CarActivity.class));
             }
         });
         mTvCost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(mContext, CostActivity.class));
             }
         });
         mTvTransport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(mContext, TransportActivity.class));
             }
         });
@@ -196,6 +195,13 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         }
     }
 
+    @Override
+    protected void loopTimesListener(long loopTimes) {
+        if (loopTimes % 3 == 0) {
+            mPresenter.login();
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(Object jsonResult, int type) {
@@ -207,8 +213,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
                 mPresenter.lastSevenDaysSales();
-                mPresenter.customerSalesSort(type + "");//1周2月3季度
-                startAnim();
+
             }
         } else if (type == Constants.METHOD_TWO) {//近七日销量
             mPresenter.lastSixMonthSales();
@@ -367,14 +372,23 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
         if (type == 1) {
+            mCustomerSalesSortChartMonth.setVisibility(View.GONE);
+            mCustomerSalesSortChartQuarterly.setVisibility(View.GONE);
+
             mCustomerSalesSortChartWeek.setPieChartCircleRadius(60);
             mCustomerSalesSortChartWeek.setTextSize(6f);
             mCustomerSalesSortChartWeek.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 2) {
+            mCustomerSalesSortChartWeek.setVisibility(View.GONE);
+            mCustomerSalesSortChartQuarterly.setVisibility(View.GONE);
+
             mCustomerSalesSortChartMonth.setPieChartCircleRadius(60);
             mCustomerSalesSortChartMonth.setTextSize(6f);
             mCustomerSalesSortChartMonth.setData(getPieChartData(customerSalesSortBean));
         } else if (type == 3) {
+            mCustomerSalesSortChartWeek.setVisibility(View.GONE);
+            mCustomerSalesSortChartMonth.setVisibility(View.GONE);
+
             mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(60);
             mCustomerSalesSortChartQuarterly.setTextSize(6f);
             mCustomerSalesSortChartQuarterly.setData(getPieChartData(customerSalesSortBean));
@@ -426,7 +440,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initReceiveBar(CurrentReceiveDeliveryBean bean) {
-
+        mCurrentReceiveDeliveryChart.animateY(1000);
+        mCurrentReceiveDeliveryChart.animateX(1000);
         List<String> Xstrings = initReceiveBarXData(bean);
 
         LinkedHashMap<String, List<String>> Ystring = initReceiveBarYData(bean);
@@ -483,7 +498,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initLoadAndUnloadVolumeChart(CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean) {
-
+        mCurrentDateLoadAndUnloadVolumeChart.animateY(1000);
+        mCurrentDateLoadAndUnloadVolumeChart.animateX(1000);
         List<String> Xstrings = initLoadAndUnloadVolumeBarXData(currentDateLoadAndUnloadVolumeBean);
         LinkedHashMap<String, List<String>> Ystring = initLoadAndUnloadVolumeBarYData(currentDateLoadAndUnloadVolumeBean);
         mCurrentDateLoadAndUnloadVolumeChart.loadData(colors, Xstrings, Ystring, 1f);
@@ -541,7 +557,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     @Override
     public void onError(Throwable throwable) {
         throwable.printStackTrace();
-        show(throwable.getMessage());
     }
 
     @Override

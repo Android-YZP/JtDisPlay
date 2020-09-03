@@ -1,10 +1,12 @@
 package com.jt.display.activitys;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.TextView;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.jt.display.MainActivity;
 import com.jt.display.R;
 import com.jt.display.adapters.DirectDeliveryAdapter;
 import com.jt.display.adapters.HzShipmentAdapter;
@@ -42,13 +44,24 @@ public class CarActivity extends BaseDisplayActivity {
     private TextView mTvHzShipment;
     private TextView mTvMdcShipmen;
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(mContext, MainActivity.class));
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 500);
+    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
+        if (mPresenter != null) {
             mPresenter.detachView();
-        handler.removeCallbacks(runnable);
+        }
     }
 
     @Override
@@ -82,8 +95,6 @@ public class CarActivity extends BaseDisplayActivity {
     public void initData() {
         mPresenter.deliverySum(mRtwDeliveryPage + "", +mDirectDeliveryPage + "");//提货
         mPresenter.shipmentSum(mHzShipmentPage + "", +mMdcShipmentPage + "");//出货
-
-        handler.postDelayed(runnable, mDelayTime);
 
         LinearLayoutManager directDeliveryManager = new LinearLayoutManager(mContext);
         mLrvDirectDelivery.setLayoutManager(directDeliveryManager);
@@ -133,6 +144,12 @@ public class CarActivity extends BaseDisplayActivity {
     }
 
     @Override
+    protected void loopTimesListener(long loopTimes) {
+        mPresenter.shipmentSum(mMdcShipmentPage + "", +mHzShipmentPage + "");//出货
+        mPresenter.deliverySum(mRtwDeliveryPage + "", mDirectDeliveryPage + "");//提货
+    }
+
+    @Override
     public void onSuccess(Object jsonResult, int type) {
         if (type == Constants.METHOD_ONE) {//出货
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
@@ -147,15 +164,7 @@ public class CarActivity extends BaseDisplayActivity {
         }
     }
 
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            handler.postDelayed(runnable, mDelayTime);
-            mPresenter.shipmentSum(mMdcShipmentPage + "", +mHzShipmentPage + "");//出货
-            mPresenter.deliverySum(mRtwDeliveryPage + "", mDirectDeliveryPage + "");//提货
 
-        }
-    };
 
 
     @SuppressLint("SetTextI18n")

@@ -2,6 +2,7 @@ package com.jt.display.activitys;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.jt.display.MainActivity;
 import com.jt.display.R;
 import com.jt.display.adapters.LanTongCostAdapter;
 import com.jt.display.adapters.OtherCostAdapter;
@@ -50,6 +52,7 @@ public class CostActivity extends BaseDisplayActivity {
 
     private int mTop10Page = 0;
     private boolean isTopFive = true;
+    private boolean isLoading = true;
 
     @Override
     public int getLayoutId() {
@@ -57,11 +60,22 @@ public class CostActivity extends BaseDisplayActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(mContext, MainActivity.class));
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 500);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.detachView();
-        handler.removeCallbacks(runnable);
-        handler.removeCallbacks(loopRunnable);
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
     }
 
     @Override
@@ -76,8 +90,9 @@ public class CostActivity extends BaseDisplayActivity {
     @Override
     public void initData() {
 
+        isLoading = true;
         mPresenter.getChannelCityOrderCostReportForm();
-        mPresenter.getCustomerChannelCityOrderCostReportForm();
+
 
         mLrvLanTong.setLayoutManager(new GridLayoutManager(mContext, 3));
         mLanTongCostAdapter = new LanTongCostAdapter(mContext);
@@ -100,7 +115,6 @@ public class CostActivity extends BaseDisplayActivity {
         mLrvTop.setAdapter(mLuRecyclerViewAdapter);
         mLrvTop.setLoadMoreEnabled(false);
         mLrvTop.setPullRefreshEnabled(false);
-
     }
 
     @Override
@@ -111,11 +125,12 @@ public class CostActivity extends BaseDisplayActivity {
     protected void onPageSelected(int pager) {
     }
 
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
+    @Override
+    protected void loopTimesListener(long loopTimes) {
+        Logger.e(loopTimes + "------");
+        if (!isLoading) {//是否在加载中
             mTop10Page++;
-            mTopCostAdapter.setDataList(changeData(mCostReportBean));
+            mTopCostAdapter.setDataList(changeCostReportData(mCostReportBean));
 
             for (int i = 0; i < 14; i++) {
                 mLanTongCostAdapter.getDataList().remove(0);
@@ -123,31 +138,25 @@ public class CostActivity extends BaseDisplayActivity {
                 if (mLanTongCostAdapter.getDataList().size() == 0) {
                     mLanTongCostAdapter.setDataList(nanTongOrderCostList);
                     mOtherCostAdapter.setDataList(otherOrderCostList);
-                    handler.postDelayed(runnable, mDelayTime);
                     return;
                 }
             }
             mLanTongCostAdapter.notifyDataSetChanged();
             mOtherCostAdapter.notifyDataSetChanged();
-            handler.postDelayed(runnable, mDelayTime);
-
-
-
         }
-    };
 
-    Runnable loopRunnable = new Runnable() {
-        @Override
-        public void run() {
-            handler.removeCallbacks(runnable);
+        if (loopTimes % 16 == 0) {//每循环16次加载一次数据
+            isLoading = true;
             mPresenter.getChannelCityOrderCostReportForm();
-            handler.postDelayed(loopRunnable, mDelayTime * 6);
         }
-    };
+    }
+
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
         if (type == Constants.METHOD_THREE) {
+            mPresenter.getCustomerChannelCityOrderCostReportForm();
+
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 ChannelCityOrderCostReportBean channelCityOrderCostReportBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), ChannelCityOrderCostReportBean.class);
                 initChannelCityOrderCostReport(channelCityOrderCostReportBean);
@@ -157,7 +166,7 @@ public class CostActivity extends BaseDisplayActivity {
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 mCostReportBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CustomerChannelCityOrderCostReportBean.class);
                 initCustomerChannelCityOrderCostReport(mCostReportBean);
-
+                isLoading = false;
             }
         }
     }
@@ -171,7 +180,7 @@ public class CostActivity extends BaseDisplayActivity {
     }
 
 
-    private List<CustomerChannelCityOrderCostReportBean.DataBean> changeData(CustomerChannelCityOrderCostReportBean customerChannelCityOrderCostReportBean) {
+    private List<CustomerChannelCityOrderCostReportBean.DataBean> changeCostReportData(CustomerChannelCityOrderCostReportBean customerChannelCityOrderCostReportBean) {
 
         List<CustomerChannelCityOrderCostReportBean.DataBean> mCustomerChannelCityOrderCostReportBeanList = new ArrayList<>();
         CustomerChannelCityOrderCostReportBean data = GsonUtil.GsonToBean(GsonUtil.GsonString(customerChannelCityOrderCostReportBean), CustomerChannelCityOrderCostReportBean.class);
@@ -205,10 +214,6 @@ public class CostActivity extends BaseDisplayActivity {
 
         mLanTongCostAdapter.setDataList(nanTongOrderCostList);
         mOtherCostAdapter.setDataList(otherOrderCostList);
-
-        handler.postDelayed(runnable, mDelayTime);
-        handler.removeCallbacks(loopRunnable);
-        handler.postDelayed(loopRunnable, mDelayTime * 6);
     }
 
 

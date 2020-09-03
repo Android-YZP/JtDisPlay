@@ -5,12 +5,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,28 +26,36 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
     protected int mSecretCode = 0;
     protected Context mContext;
-
-
     public Handler handler = new Handler();
-    private int widthPixels;
-    private int pager = 1;
+    private int mAnimPager = 1;
     public int mDelayTime = 5000;
-    public AnimatorSet translationAnimatorSet;
-    private List<View> viewList = new ArrayList<>();
-    private Runnable runnable = new Runnable() {
+    public AnimatorSet mTranslationAnimatorSet;
+    private List<View> mViewList = new ArrayList<>();
+    private long mLoopTimes = 0;
+
+
+    private Runnable mLoopRunnable = new Runnable() {
         @Override
         public void run() {
-            nextPager(pager, mDelayTime);
+            mLoopTimes++;
+            if (mLoopTimes == 5000000000L) {
+                mLoopTimes = 0;
+            }
+            loopTimesListener(mLoopTimes);
+            handler.postDelayed(mLoopRunnable, 5000);//10秒一次循环
+        }
+    };
+
+    private Runnable mAnimRunnable = new Runnable() {
+        @Override
+        public void run() {
+            nextPager(mAnimPager, mDelayTime);
         }
     };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Resources resources = getResources();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        widthPixels = displayMetrics.widthPixels;
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //去除title
@@ -59,6 +65,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(this.getLayoutId());
         mContext = BaseDisplayActivity.this;
+
         initView();
         initData();
         initListener();
@@ -80,46 +87,60 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     public abstract void initData();
 
     /**
+     * 轮播动画回调
+     */
+    protected abstract void onPageSelected(int pager);
+
+    /**
+     * 轮播动画回调
+     */
+    protected abstract void loopTimesListener(long loopTimes);
+
+
+    /**
      * 初始化监听
      */
     public abstract void initListener();
 
-    public void addView(View view) {
-        viewList.add(view);
+    public void addAnimView(View view) {
+        mViewList.add(view);
     }
 
     public void startAnim() {
-        nextPager(pager, mDelayTime);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        if (translationAnimatorSet != null) {
-            translationAnimatorSet.cancel();
-            translationAnimatorSet = null;
-            handler.removeCallbacks(runnable);
-            pager = 0;
-        }
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (translationAnimatorSet != null) {
-            translationAnimatorSet.pause();
-            handler.removeCallbacks(runnable);
+        if (mTranslationAnimatorSet == null) {
+            nextPager(mAnimPager, mDelayTime);
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (translationAnimatorSet != null) {
-            translationAnimatorSet.resume();
-            handler.postDelayed(runnable, mDelayTime);
+        handler.postDelayed(mLoopRunnable, 5000);//10秒一次循环
+        if (mTranslationAnimatorSet != null) {
+            mTranslationAnimatorSet.start();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mTranslationAnimatorSet != null) {
+            mTranslationAnimatorSet.pause();
+        }
+        if (handler != null) {
+            handler.removeCallbacks(mAnimRunnable);
+            handler.removeCallbacks(mLoopRunnable);
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler = null;
+        mTranslationAnimatorSet = null;
+        mAnimPager = 0;
+        mLoopTimes = 0;
     }
 
     /**
@@ -135,10 +156,14 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     }
 
 
+    private void nextPager(int p, int delayTime) {
+        nextPager(mViewList.get(p), mViewList.get(p == 0 ? mViewList.size() - 1 : p - 1), delayTime);
+    }
+
     private void nextPager(final View view1, final View view2, final int delayTime) {
 
-        translationAnimatorSet = new AnimatorSet();
-        translationAnimatorSet.playTogether(
+        mTranslationAnimatorSet = new AnimatorSet();
+        mTranslationAnimatorSet.playTogether(
                 ObjectAnimator.ofFloat(view1, "translationX", -view1.getWidth(), 0)
                         .setDuration(2000),
                 ObjectAnimator.ofFloat(view2, "translationX", 0, view1.getWidth())
@@ -149,7 +174,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
                 ObjectAnimator.ofFloat(view2, "alpha", 1, 0f)
                         .setDuration(2000)
         );
-        translationAnimatorSet.addListener(new Animator.AnimatorListener() {
+        mTranslationAnimatorSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
                 view1.setVisibility(View.VISIBLE);
@@ -158,16 +183,17 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                handler.postDelayed(runnable, delayTime);
+                handler.postDelayed(mAnimRunnable, delayTime);
                 view2.setVisibility(View.GONE);
-                onPageSelected(pager);
-                pager++;
-                if (pager == viewList.size()) pager = 0;
+                onPageSelected(mAnimPager);
+                mAnimPager++;
+                if (mAnimPager == mViewList.size()) mAnimPager = 0;
             }
 
             @Override
             public void onAnimationCancel(Animator animator) {
-
+                view1.clearAnimation();
+                view2.clearAnimation();
             }
 
             @Override
@@ -175,7 +201,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
             }
         });
-        translationAnimatorSet.start();
+        mTranslationAnimatorSet.start();
     }
 
 
@@ -201,14 +227,6 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
                         .setDuration(300)
         );
         translationAnimatorSet.start();
-    }
-
-
-    protected abstract void onPageSelected(int pager);
-
-
-    private void nextPager(int postion, int delayTime) {
-        nextPager(viewList.get(postion), viewList.get(postion == 0 ? viewList.size() - 1 : postion - 1), delayTime);
     }
 
     public void show(String msg) {
