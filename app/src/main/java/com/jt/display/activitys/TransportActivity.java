@@ -122,9 +122,7 @@ public class TransportActivity extends BaseDisplayActivity {
     @Override
     public void onSuccess(Object jsonResult, int type) {
         if (type == Constants.METHOD_ONE) {
-
             mPresenter.getCurrentDeliveryPlan(mDeliveryPlanPage);
-
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentReceivePlanBean currentReceivePlanBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceivePlanBean.class);
                 initCurrentReceivePlan(currentReceivePlanBean);
