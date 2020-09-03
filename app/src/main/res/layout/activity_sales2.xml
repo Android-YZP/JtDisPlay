@@ -66,7 +66,7 @@
                     android:gravity="center"
                     android:text="TOP10"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/font20" />
+                    android:textSize="@dimen/font15" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -75,7 +75,7 @@
                     android:gravity="center"
                     android:text="BOTTOM10"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/font20" />
+                    android:textSize="@dimen/font15" />
 
             </LinearLayout>
 
@@ -95,7 +95,7 @@
                     android:gravity="center"
                     android:text="客户"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/font15" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -104,7 +104,7 @@
                     android:gravity="center"
                     android:text="销量"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/font15" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -113,7 +113,7 @@
                     android:gravity="center"
                     android:text="客户"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/font15" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -122,9 +122,7 @@
                     android:gravity="center"
                     android:text="销量"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/font15" />
-
-
+                    android:textSize="@dimen/sp_12" />
             </LinearLayout>
 
             <com.github.jdsjlzx.recyclerview.LRecyclerView

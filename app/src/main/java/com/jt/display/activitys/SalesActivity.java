@@ -58,6 +58,7 @@ public class SalesActivity extends BaseDisplayActivity {
     private TextView mTvOrderAmountDesc;
     private int type = 0;
     private int mTopPager = -1;//轮播10张的第几页
+    private TopAndDownCustomerBean topAndDownCustomerBean;
 
 
     @Override
@@ -114,7 +115,17 @@ public class SalesActivity extends BaseDisplayActivity {
 
     @Override
     protected void loopTimesListener(long loopTimes) {
-
+        if (loopTimes % 3 == 0) {
+            mPresenter.getSalesCurrentAndLastMonth();
+        }
+        if (topAndDownCustomerBean == null) return;
+        if (topAndDownCustomerBean.getData().getTopCustomerList().size() > 5 || topAndDownCustomerBean.getData().getDownCustomerList().size() > 5) {
+            if (loopTimes % 2 == 0) {
+                mLrvTopBottom.scrollToPosition(40);
+            } else {
+                mLrvTopBottom.scrollToPosition(0);
+            }
+        }
     }
 
     /**
@@ -136,12 +147,13 @@ public class SalesActivity extends BaseDisplayActivity {
             }
         } else if (type == Constants.METHOD_TWO) {//前十和后十客户
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-                TopAndDownCustomerBean topAndDownCustomerBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), TopAndDownCustomerBean.class);
+                topAndDownCustomerBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), TopAndDownCustomerBean.class);
                 if (topAndDownCustomerBean.getData().getTopCustomerList() != null
                         && topAndDownCustomerBean.getData().getTopCustomerList().size() > 0) {
                     initTopAndDown(topAndDownCustomerBean);
                     mTopCustomerList.clear();
                     mTopCustomerList.addAll(topAndDownCustomerBean.getData().getTopCustomerList());
+                    mTopPager = -1;
                     startAnim();
                 }
             }
@@ -253,26 +265,22 @@ public class SalesActivity extends BaseDisplayActivity {
 
     //Top10客户轮播
     private void initOrderAmountLine(OrderAmountByCustomerBean orderAmountByCustomerBean) {
-        if (type == 1 || mTopCustomerList.size() == 1) {
-            //线形图
-            mOrderAmountChartOne.animateY(1000);
-            mOrderAmountChartOne.animateX(1000);
-            List<String> Xstrings = initOrderAmountLineXData(orderAmountByCustomerBean);
-            LinkedHashMap<String, List<Float>> Ystrings = initOrderAmountLineYData(orderAmountByCustomerBean);
-            mOrderAmountChartOne.showLineChart(Xstrings, Ystrings, colors);
-            mOrderAmountChartOne.setDes("1", -100);//去除标签
-            mOrderAmountChartOne.postInvalidate();
-        }
-        if (type == 0 || mTopCustomerList.size() == 1) {
-            //线形图
-            mOrderAmountChartTwo.animateY(1000);
-            mOrderAmountChartTwo.animateX(1000);
-            List<String> Xstrings = initOrderAmountLineXData(orderAmountByCustomerBean);
-            LinkedHashMap<String, List<Float>> Ystrings = initOrderAmountLineYData(orderAmountByCustomerBean);
-            mOrderAmountChartTwo.showLineChart(Xstrings, Ystrings, colors);
-            mOrderAmountChartTwo.setDes("1", -100);//去除标签
-            mOrderAmountChartTwo.postInvalidate();
-        }
+        //线形图
+        mOrderAmountChartOne.animateY(1000);
+        mOrderAmountChartOne.animateX(1000);
+        List<String> Xstrings = initOrderAmountLineXData(orderAmountByCustomerBean);
+        LinkedHashMap<String, List<Float>> Ystrings = initOrderAmountLineYData(orderAmountByCustomerBean);
+        mOrderAmountChartOne.showLineChart(Xstrings, Ystrings, colors);
+        mOrderAmountChartOne.setDes("1", -100);//去除标签
+        mOrderAmountChartOne.postInvalidate();
+        //线形图
+        mOrderAmountChartTwo.animateY(1000);
+        mOrderAmountChartTwo.animateX(1000);
+        List<String> Xstrings2 = initOrderAmountLineXData(orderAmountByCustomerBean);
+        LinkedHashMap<String, List<Float>> Ystrings2 = initOrderAmountLineYData(orderAmountByCustomerBean);
+        mOrderAmountChartTwo.showLineChart(Xstrings2, Ystrings2, colors);
+        mOrderAmountChartTwo.setDes("1", -100);//去除标签
+        mOrderAmountChartTwo.postInvalidate();
 
     }
 
