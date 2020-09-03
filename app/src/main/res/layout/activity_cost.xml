@@ -166,6 +166,7 @@
             android:textColor="@color/grey"
             android:textSize="@dimen/font15" />
 
+
         <com.github.jdsjlzx.recyclerview.LRecyclerView
             android:id="@+id/lrv_top"
             android:layout_width="match_parent"

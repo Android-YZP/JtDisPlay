@@ -160,6 +160,8 @@ public class CLineChart extends LineChart {
             }
             // 每一个LineDataSet代表一条线
             LineDataSet lineDataSet = new LineDataSet(entries, key);
+
+
             initLineDataSet(lineDataSet, colors.get(currentPosition), LineDataSet.Mode.LINEAR);
             dataSets.add(lineDataSet);
             currentPosition++;

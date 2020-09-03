@@ -24,6 +24,8 @@ public class TopBottomAdapter extends ListBaseAdapter<TopAndDownCustomerBean.Dat
         return R.layout.item_top_bottom;
     }
 
+
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindItemHolder(SuperViewHolder holder, final int position) {
@@ -47,6 +49,6 @@ public class TopBottomAdapter extends ListBaseAdapter<TopAndDownCustomerBean.Dat
 
     @Override
     public int getItemCount() {
-        return mDataList.size() > 0 ? mDataList.size() * 4 : 0;
+        return mDataList.size() > 0 ? 10* 4 : 0;
     }
 }

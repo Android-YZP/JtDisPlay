@@ -10,7 +10,10 @@ import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -37,12 +40,16 @@ public class CostActivity extends BaseDisplayActivity {
     private LRecyclerView mLrvLanTong;
     private LRecyclerView mLrvOther;
     private LRecyclerView mLrvTop;
-    List<String> mData = new ArrayList<>();
     private ComPresenter mPresenter;
     private LanTongCostAdapter mLanTongCostAdapter;
     private OtherCostAdapter mOtherCostAdapter;
     private List<ChannelCityOrderCostReportBean.DataBean.NanTongOrderCostListBean> nanTongOrderCostList;
     private List<ChannelCityOrderCostReportBean.DataBean.OtherOrderCostListBean> otherOrderCostList;
+    private TopCostAdapter mTopCostAdapter;
+    private CustomerChannelCityOrderCostReportBean mCostReportBean;
+
+    private int mTop10Page = 0;
+    private boolean isTopFive = true;
 
     @Override
     public int getLayoutId() {
@@ -70,7 +77,7 @@ public class CostActivity extends BaseDisplayActivity {
     public void initData() {
 
         mPresenter.getChannelCityOrderCostReportForm();
-//        mPresenter.getCustomerChannelCityOrderCostReportForm();
+        mPresenter.getCustomerChannelCityOrderCostReportForm();
 
         mLrvLanTong.setLayoutManager(new GridLayoutManager(mContext, 3));
         mLanTongCostAdapter = new LanTongCostAdapter(mContext);
@@ -87,14 +94,12 @@ public class CostActivity extends BaseDisplayActivity {
         mLrvOther.setLoadMoreEnabled(false);
         mLrvOther.setPullRefreshEnabled(false);
 
-
-        mLrvTop.setLayoutManager(new GridLayoutManager(mContext, 11));
-        TopCostAdapter topCostAdapter = new TopCostAdapter(mContext);
-        mLuRecyclerViewAdapter = new LRecyclerViewAdapter(topCostAdapter);
+        mLrvTop.setLayoutManager(new GridLayoutManager(mContext, 6));
+        mTopCostAdapter = new TopCostAdapter(mContext);
+        mLuRecyclerViewAdapter = new LRecyclerViewAdapter(mTopCostAdapter);
         mLrvTop.setAdapter(mLuRecyclerViewAdapter);
         mLrvTop.setLoadMoreEnabled(false);
         mLrvTop.setPullRefreshEnabled(false);
-        topCostAdapter.setDataList(mData);
 
     }
 
@@ -109,6 +114,9 @@ public class CostActivity extends BaseDisplayActivity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            mTop10Page++;
+            mTopCostAdapter.setDataList(changeData(mCostReportBean));
+
             for (int i = 0; i < 14; i++) {
                 mLanTongCostAdapter.getDataList().remove(0);
                 mOtherCostAdapter.getDataList().remove(0);
@@ -122,6 +130,9 @@ public class CostActivity extends BaseDisplayActivity {
             mLanTongCostAdapter.notifyDataSetChanged();
             mOtherCostAdapter.notifyDataSetChanged();
             handler.postDelayed(runnable, mDelayTime);
+
+
+
         }
     };
 
@@ -144,16 +155,49 @@ public class CostActivity extends BaseDisplayActivity {
 
         } else if (type == Constants.METHOD_FOUR) {
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-                CustomerChannelCityOrderCostReportBean customerChannelCityOrderCostReportBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CustomerChannelCityOrderCostReportBean.class);
-                initCustomerChannelCityOrderCostReport(customerChannelCityOrderCostReportBean);
+                mCostReportBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CustomerChannelCityOrderCostReportBean.class);
+                initCustomerChannelCityOrderCostReport(mCostReportBean);
 
             }
         }
     }
 
     private void initCustomerChannelCityOrderCostReport(CustomerChannelCityOrderCostReportBean customerChannelCityOrderCostReportBean) {
-
+        List<CustomerChannelCityOrderCostReportBean.DataBean> mCustomerChannelCityOrderCostReportBeanList = new ArrayList<>();
+        mCustomerChannelCityOrderCostReportBeanList.add(customerChannelCityOrderCostReportBean.getData());
+        if (mCustomerChannelCityOrderCostReportBeanList.size() > 0) {
+            mTopCostAdapter.setDataList(mCustomerChannelCityOrderCostReportBeanList);
+        }
     }
+
+
+    private List<CustomerChannelCityOrderCostReportBean.DataBean> changeData(CustomerChannelCityOrderCostReportBean customerChannelCityOrderCostReportBean) {
+
+        List<CustomerChannelCityOrderCostReportBean.DataBean> mCustomerChannelCityOrderCostReportBeanList = new ArrayList<>();
+        CustomerChannelCityOrderCostReportBean data = GsonUtil.GsonToBean(GsonUtil.GsonString(customerChannelCityOrderCostReportBean), CustomerChannelCityOrderCostReportBean.class);
+
+        if ((10 * mTop10Page) > customerChannelCityOrderCostReportBean.getData().getChannelList().size()) {
+            mTop10Page = 0;
+            isTopFive = !isTopFive;
+        }
+
+        if (!isTopFive) {
+            for (int i = 0; i < 5; i++) {
+                data.getData().getCustomerCityOrderCostList().remove(0);
+                data.getData().getCustomerList().remove(0);
+            }
+        }
+
+        for (int i = 0; i < ((10 * mTop10Page) > customerChannelCityOrderCostReportBean.getData().getChannelList().size() ? 0 : (10 * mTop10Page)); i++) {
+            data.getData().getChannelList().remove(0);
+            for (int j = 0; j < data.getData().getCustomerCityOrderCostList().size(); j++) {
+                data.getData().getCustomerCityOrderCostList().get(j).getCustomerCityOrderCostList().remove(0);
+            }
+        }
+        mCustomerChannelCityOrderCostReportBeanList.add(data.getData());
+        return mCustomerChannelCityOrderCostReportBeanList;
+    }
+
 
     private void initChannelCityOrderCostReport(ChannelCityOrderCostReportBean channelCityOrderCostReportBean) {
         nanTongOrderCostList = channelCityOrderCostReportBean.getData().getNanTongOrderCostList();
