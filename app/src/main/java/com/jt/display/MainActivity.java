@@ -142,13 +142,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 startActivity(new Intent(mContext, CarActivity.class));
             }
         });
-        mTvCost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(mContext, CostActivity.class));
-            }
-        });
         mTvTransport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -587,6 +580,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 mSecretCode = mSecretCode + 5;
                 if (mSecretCode == 17 && mTvTransport.hasFocus()) {
                     show("进入成本主题");
+                    finish();
+                    startActivity(new Intent(mContext, CostActivity.class));
                 }
                 break;
             default:
