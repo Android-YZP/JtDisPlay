@@ -120,7 +120,7 @@ public class SalesActivity extends BaseDisplayActivity {
             mPresenter.getSalesCurrentAndLastMonth();
         }
 
-        if (loopTimes% 1441 == 0){//10000*6*60*4   4小时刷新token
+        if (loopTimes% 360 == 0){//10000*6*60  360 一小时刷新token
             mPresenter.login();
         }
 
