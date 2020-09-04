@@ -76,6 +76,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     private TextView mTvTodayReceiving;
     private TextView mTvTodayShipment;
     private TextView mTvTodayInventory;
+    private boolean isLoading = true;
 
 
     @Override
@@ -169,8 +170,12 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     protected void onPageSelected(int pager) {
+
         type = pager + 1;
         mPresenter.customerSalesSort(type + "");//1周2月3季度
+        mAnimDataLoading = true;
+        isLoading = true;
+
         mTvWeek.setBackgroundColor(Color.TRANSPARENT);
         mTvMonth.setBackgroundColor(Color.TRANSPARENT);
         mTvQuarterly.setBackgroundColor(Color.TRANSPARENT);
@@ -192,6 +197,10 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     protected void loopTimesListener(long loopTimes) {
+        if (loopTimes % 6 == 0 && isLoading) {//检测轮播是否被卡住
+            mPresenter.customerSalesSort(type + "");//1周2月3季度
+        }
+
         if (loopTimes % 180 == 0) {//30分钟刷新
             mPresenter.login();
         }
@@ -221,7 +230,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             }
         } else if (type == Constants.METHOD_THREE) {//近六个月销量
             mPresenter.lastSevenCarCost();
-
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 LastSixMonthSalesBean lastSixMonthSalesBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), LastSixMonthSalesBean.class);
                 initLine(lastSixMonthSalesBean);
@@ -231,7 +239,15 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 CustomerSalesSortBean customerSalesSortBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CustomerSalesSortBean.class);
                 initPieChart(customerSalesSortBean);
                 mTvloding.setVisibility(View.GONE);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAnimDataLoading = false;
+                    }
+                }, mDelayTime - 4000);
+                isLoading = false;
             }
+
         } else if (type == Constants.METHOD_FIVE) {//近七日车辆成本
             mPresenter.currentReceiveDelivery();
 
@@ -367,9 +383,12 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
 
     private void initPieChart(CustomerSalesSortBean customerSalesSortBean) {
+
+
         if (type == 1) {
             mCustomerSalesSortChartMonth.setVisibility(View.GONE);
             mCustomerSalesSortChartQuarterly.setVisibility(View.GONE);
+            mCustomerSalesSortChartWeek.setVisibility(View.VISIBLE);
 
             mCustomerSalesSortChartWeek.setPieChartCircleRadius(60);
             mCustomerSalesSortChartWeek.setTextSize(6f);
@@ -377,6 +396,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         } else if (type == 2) {
             mCustomerSalesSortChartWeek.setVisibility(View.GONE);
             mCustomerSalesSortChartQuarterly.setVisibility(View.GONE);
+            mCustomerSalesSortChartMonth.setVisibility(View.VISIBLE);
 
             mCustomerSalesSortChartMonth.setPieChartCircleRadius(60);
             mCustomerSalesSortChartMonth.setTextSize(6f);
@@ -384,6 +404,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         } else if (type == 3) {
             mCustomerSalesSortChartWeek.setVisibility(View.GONE);
             mCustomerSalesSortChartMonth.setVisibility(View.GONE);
+            mCustomerSalesSortChartQuarterly.setVisibility(View.VISIBLE);
 
             mCustomerSalesSortChartQuarterly.setPieChartCircleRadius(60);
             mCustomerSalesSortChartQuarterly.setTextSize(6f);

@@ -153,8 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp30"
-                android:background="#0f1e3d"
-                android:visibility="invisible" />
+                android:background="#0f1e3d" />
 
             <com.jt.display.views.PieChartView
                 android:id="@+id/customerSalesSort_chart_quarterly"

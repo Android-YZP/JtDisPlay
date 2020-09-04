@@ -50,7 +50,6 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     private Runnable mAnimRunnable = new Runnable() {
         @Override
         public void run() {
-            show("===" + mAnimDataLoading);
             if (!mAnimDataLoading)
                 nextPager(mAnimPager, mDelayTime);
             handler.postDelayed(mAnimRunnable, mDelayTime);

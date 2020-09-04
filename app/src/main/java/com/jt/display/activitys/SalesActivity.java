@@ -117,7 +117,7 @@ public class SalesActivity extends BaseDisplayActivity {
     protected void loopTimesListener(long loopTimes) {
         //重置动画循环
 
-        if (loopTimes % 6 == 0 && isLoading && mTopCustomerList.size() > 0) {//半小时刷新界面数据
+        if (loopTimes % 6 == 0 && isLoading && mTopCustomerList.size() > 0) {//检测轮播是否被卡住
             startTopChart(mTopPager);
         }
 
@@ -183,7 +183,7 @@ public class SalesActivity extends BaseDisplayActivity {
                     public void run() {
                         mAnimDataLoading = false;
                     }
-                }, mDelayTime - 3000);
+                }, mDelayTime - 4000);
             }
         } else if (type == Constants.METHOD_FOUR) {//月销售额
             mPresenter.getTopAndDownCustomerList();
