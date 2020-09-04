@@ -166,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Top10客户月度成本成本统计"
+            android:text="Top10客户月度成本统计"
             android:textColor="@color/grey"
             android:textSize="@dimen/font15" />
 

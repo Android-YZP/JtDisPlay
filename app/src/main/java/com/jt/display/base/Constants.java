@@ -2,8 +2,8 @@ package com.jt.display.base;
 
 
 public class Constants {
-    public static final String WMS_URL_BASE = "http://40.73.59.226:9000";
-//    public static final String WMS_URL_BASE = "http://47.114.120.136:9102";
+//    public static final String WMS_URL_BASE = "http://40.73.59.226:9000";
+    public static final String WMS_URL_BASE = "http://47.114.120.136:9000";
     public static final String AES_PASSWORD = "16b9c7e8695438dc";
     public static final String TENANTID = "000000";
 

@@ -128,8 +128,6 @@ public class CostActivity extends BaseDisplayActivity {
 
     @Override
     protected void loopTimesListener(long loopTimes) {
-        Logger.e(loopTimes + "------");
-
         if (loopTimes% 720 == 0){//10000*6*60*4   2小时刷新token
             mPresenter.login();
         }

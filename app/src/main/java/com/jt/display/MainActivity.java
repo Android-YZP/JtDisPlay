@@ -59,7 +59,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             Color.parseColor("#c58dfe"),
             Color.parseColor("#fa985c"),
             Color.parseColor("#3f0af2"),
-
             Color.parseColor("#fa965b"),
             Color.parseColor("#f77b51"),
             Color.parseColor("#fb4751"),
