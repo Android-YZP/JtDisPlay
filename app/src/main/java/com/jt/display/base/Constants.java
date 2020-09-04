@@ -27,6 +27,7 @@ public class Constants {
     public static final int MSG_UPDATE_WAREHOUSE = 1004;
 
 
+    public static final int METHOD_LOGIN= 10000;
     public static final int METHOD_ONE= 10002;
     public static final int METHOD_TWO = 10003;
     public static final int METHOD_THREE = 10004;

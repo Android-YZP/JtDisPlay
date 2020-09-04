@@ -32,6 +32,7 @@ import com.jt.display.bean.CurrentReceivePlanBean;
 import com.jt.display.bean.CustomerChannelCityOrderCostReportBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
+import com.jt.display.utils.SharePreferenceUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -128,6 +129,11 @@ public class CostActivity extends BaseDisplayActivity {
     @Override
     protected void loopTimesListener(long loopTimes) {
         Logger.e(loopTimes + "------");
+
+        if (loopTimes% 1441 == 0){//10000*6*60*4   4小时刷新token
+            mPresenter.login();
+        }
+
         if (!isLoading) {//是否在加载中
             mTop10Page++;
             mTopCostAdapter.setDataList(changeCostReportData(mCostReportBean));
@@ -154,6 +160,13 @@ public class CostActivity extends BaseDisplayActivity {
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
+
+        if (type == Constants.METHOD_LOGIN) {//登录
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+                SharePreferenceUtils.putLoginData(mContext, GsonUtil.GsonString(jsonResult));
+            }
+        }
+
         if (type == Constants.METHOD_THREE) {
             mPresenter.getCustomerChannelCityOrderCostReportForm();
 

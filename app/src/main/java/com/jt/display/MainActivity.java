@@ -195,6 +195,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         if (loopTimes % 3 == 0) {
             mPresenter.login();
         }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -204,7 +205,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             show(((JsonResult) jsonResult).getMsg());
         }
 
-        if (type == Constants.METHOD_ONE) {//登录
+        if (type == Constants.METHOD_LOGIN) {//登录
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 SharePreferenceUtils.putLoginData(MainActivity.this, GsonUtil.GsonString(jsonResult));
                 mPresenter.lastSevenDaysSales();

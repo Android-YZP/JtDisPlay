@@ -32,7 +32,7 @@ public class ComPresenter extends BasePresenter {
                     @Override
                     public void accept(JsonResult bean) throws Exception {
                         Logger.e(GsonUtil.GsonString(bean));
-                        mView.onSuccess(bean, Constants.METHOD_ONE);
+                        mView.onSuccess(bean, Constants.METHOD_LOGIN);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

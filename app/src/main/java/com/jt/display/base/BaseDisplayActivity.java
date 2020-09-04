@@ -28,7 +28,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     protected Context mContext;
     public Handler handler = new Handler();
     private int mAnimPager = 1;
-    public int mDelayTime = 5000;
+    public int mDelayTime = 10000;
     public AnimatorSet mTranslationAnimatorSet;
     private List<View> mViewList = new ArrayList<>();
     private long mLoopTimes = 0;
@@ -38,11 +38,11 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
         @Override
         public void run() {
             mLoopTimes++;
-            if (mLoopTimes == 5000000000L) {
+            if (mLoopTimes == 50000000000L) {
                 mLoopTimes = 0;
             }
             loopTimesListener(mLoopTimes);
-            handler.postDelayed(mLoopRunnable, 5000);//10秒一次循环
+            handler.postDelayed(mLoopRunnable, mDelayTime);//10秒一次循环
         }
     };
 
@@ -115,7 +115,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     @Override
     protected void onStart() {
         super.onStart();
-        handler.postDelayed(mLoopRunnable, 5000);//10秒一次循环
+        handler.postDelayed(mLoopRunnable, mDelayTime);//10秒一次循环
         if (mTranslationAnimatorSet != null) {
             mTranslationAnimatorSet.start();
         }

@@ -22,6 +22,7 @@ import com.jt.display.bean.SalesCurrentAndLastMonthBean;
 import com.jt.display.bean.TopAndDownCustomerBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
+import com.jt.display.utils.SharePreferenceUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class TransportActivity extends BaseDisplayActivity {
 
     private int mReceivePlanPage = 1;
     private int mDeliveryPlanPage = 1;
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(mContext, MainActivity.class));
@@ -117,10 +119,20 @@ public class TransportActivity extends BaseDisplayActivity {
     @Override
     protected void loopTimesListener(long loopTimes) {
         mPresenter.getCurrentReceivePlan(mReceivePlanPage);
+        if (loopTimes % 1441 == 0) {//10000*6*60*4   4小时刷新token
+            mPresenter.login();
+        }
     }
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
+
+        if (type == Constants.METHOD_LOGIN) {//登录
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+                SharePreferenceUtils.putLoginData(mContext, GsonUtil.GsonString(jsonResult));
+            }
+        }
+
         if (type == Constants.METHOD_ONE) {
             mPresenter.getCurrentDeliveryPlan(mDeliveryPlanPage);
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {

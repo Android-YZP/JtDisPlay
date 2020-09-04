@@ -22,6 +22,7 @@ import com.jt.display.bean.TopAndDownCustomerBean;
 import com.jt.display.bean.lastSixMonthSaleBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
+import com.jt.display.utils.SharePreferenceUtils;
 import com.jt.display.views.CLineChart;
 import com.jt.display.views.SingleBarChart;
 import com.orhanobut.logger.Logger;
@@ -118,6 +119,11 @@ public class SalesActivity extends BaseDisplayActivity {
         if (loopTimes % 3 == 0) {
             mPresenter.getSalesCurrentAndLastMonth();
         }
+
+        if (loopTimes% 1441 == 0){//10000*6*60*4   4小时刷新token
+            mPresenter.login();
+        }
+
         if (topAndDownCustomerBean == null) return;
         if (topAndDownCustomerBean.getData().getTopCustomerList().size() > 5 || topAndDownCustomerBean.getData().getDownCustomerList().size() > 5) {
             if (loopTimes % 2 == 0) {
@@ -134,9 +140,13 @@ public class SalesActivity extends BaseDisplayActivity {
      */
     @Override
     public void onSuccess(Object jsonResult, int type) {
-        if (((JsonResult) jsonResult).getCode() != Constants.HTTP_SUCCESS) {
-            show(((JsonResult) jsonResult).getMsg());
+
+        if (type == Constants.METHOD_LOGIN) {//登录
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+                SharePreferenceUtils.putLoginData(mContext, GsonUtil.GsonString(jsonResult));
+            }
         }
+
 
         if (type == Constants.METHOD_ONE) {//当月每日销售额
             mPresenter.lastSixMonthSale();

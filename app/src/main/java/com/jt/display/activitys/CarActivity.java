@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.TextView;
+
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.jt.display.MainActivity;
@@ -19,6 +20,8 @@ import com.jt.display.bean.DeliveryBean;
 import com.jt.display.bean.ShipmentBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
+import com.jt.display.utils.SharePreferenceUtils;
+
 import java.util.List;
 
 public class CarActivity extends BaseDisplayActivity {
@@ -147,10 +150,21 @@ public class CarActivity extends BaseDisplayActivity {
     protected void loopTimesListener(long loopTimes) {
         mPresenter.shipmentSum(mMdcShipmentPage + "", +mHzShipmentPage + "");//出货
         mPresenter.deliverySum(mRtwDeliveryPage + "", mDirectDeliveryPage + "");//提货
+
+        if (loopTimes% 1441 == 0){//10000*6*60*4   4小时刷新token
+            mPresenter.login();
+        }
     }
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
+
+        if (type == Constants.METHOD_LOGIN) {//登录
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+                SharePreferenceUtils.putLoginData(mContext, GsonUtil.GsonString(jsonResult));
+            }
+        }
+
         if (type == Constants.METHOD_ONE) {//出货
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 ShipmentBean shipmentBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), ShipmentBean.class);
@@ -163,8 +177,6 @@ public class CarActivity extends BaseDisplayActivity {
             }
         }
     }
-
-
 
 
     @SuppressLint("SetTextI18n")
