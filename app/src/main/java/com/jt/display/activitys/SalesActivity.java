@@ -116,7 +116,6 @@ public class SalesActivity extends BaseDisplayActivity {
     @Override
     protected void loopTimesListener(long loopTimes) {
         //重置动画循环
-
         if (loopTimes % 6 == 0 && isLoading && mTopCustomerList.size() > 0) {//检测轮播是否被卡住
             startTopChart(mTopPager);
         }
