@@ -20,6 +20,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public abstract class BaseDisplayActivity extends AppCompatActivity implements IBaseView {
@@ -32,7 +33,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     public AnimatorSet mTranslationAnimatorSet;
     private List<View> mViewList = new ArrayList<>();
     private long mLoopTimes = 0;
-
+    protected boolean mAnimDataLoading = false;
 
     private Runnable mLoopRunnable = new Runnable() {
         @Override
@@ -49,13 +50,16 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     private Runnable mAnimRunnable = new Runnable() {
         @Override
         public void run() {
-            nextPager(mAnimPager, mDelayTime);
+            show("===" + mAnimDataLoading);
+            if (!mAnimDataLoading)
+                nextPager(mAnimPager, mDelayTime);
+            handler.postDelayed(mAnimRunnable, mDelayTime);
         }
     };
 
     @Override
-        protected void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //去除title
@@ -96,7 +100,6 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
      */
     protected abstract void loopTimesListener(long loopTimes);
 
-
     /**
      * 初始化监听
      */
@@ -109,6 +112,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     public void startAnim() {
         if (mTranslationAnimatorSet == null) {
             nextPager(mAnimPager, mDelayTime);
+            handler.postDelayed(mAnimRunnable, mDelayTime);
         }
     }
 
@@ -183,7 +187,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                handler.postDelayed(mAnimRunnable, delayTime);
+
                 view2.setVisibility(View.GONE);
                 onPageSelected(mAnimPager);
                 mAnimPager++;

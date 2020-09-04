@@ -44,6 +44,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="城市"
+                android:textColor="@color/grey"
                 android:textSize="@dimen/font15" />
 
             <TextView
@@ -110,6 +112,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="城市"
+                android:textColor="@color/grey"
                 android:textSize="@dimen/font15" />
 
             <TextView
@@ -162,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Top10客户成本"
+            android:text="Top10客户月度成本成本统计"
             android:textColor="@color/grey"
             android:textSize="@dimen/font15" />
 

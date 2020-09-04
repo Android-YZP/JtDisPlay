@@ -57,9 +57,10 @@ public class SalesActivity extends BaseDisplayActivity {
     private TopBottomAdapter mTopBottomAdapter;
     List<TopAndDownCustomerBean.DataBean.TopCustomerListBean> mTopCustomerList = new ArrayList<>();
     private TextView mTvOrderAmountDesc;
-    private int type = 0;
     private int mTopPager = -1;//轮播10张的第几页
     private TopAndDownCustomerBean topAndDownCustomerBean;
+
+    private boolean isLoading = true;
 
 
     @Override
@@ -109,13 +110,17 @@ public class SalesActivity extends BaseDisplayActivity {
         if (mTopPager == mTopCustomerList.size()) {
             mTopPager = 0;
         }
-        type = mTopPager % 2;
         startTopChart(mTopPager);
-        Logger.e(type + "," + mTopPager);
     }
 
     @Override
     protected void loopTimesListener(long loopTimes) {
+        //重置动画循环
+
+        if (loopTimes % 6 == 0 && isLoading && mTopCustomerList.size() > 0) {//半小时刷新界面数据
+            startTopChart(mTopPager);
+        }
+
         if (loopTimes % 180 == 0) {//半小时刷新界面数据
             mPresenter.getSalesCurrentAndLastMonth();
         }
@@ -168,9 +173,17 @@ public class SalesActivity extends BaseDisplayActivity {
                 }
             }
         } else if (type == Constants.METHOD_THREE) {//Top10客户轮播
+
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 OrderAmountByCustomerBean orderAmountByCustomerBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), OrderAmountByCustomerBean.class);
                 initOrderAmountLine(orderAmountByCustomerBean);
+                isLoading = false;
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAnimDataLoading = false;
+                    }
+                }, mDelayTime - 3000);
             }
         } else if (type == Constants.METHOD_FOUR) {//月销售额
             mPresenter.getTopAndDownCustomerList();
@@ -193,8 +206,10 @@ public class SalesActivity extends BaseDisplayActivity {
         mOrderAmountChartOne.clear();
         mOrderAmountChartTwo.clear();
         String customerName = mTopCustomerList.get(page).getCustomerName();
-        mTvOrderAmountDesc.setText("月销售环比(" + customerName + ")");
+        mTvOrderAmountDesc.setText("Top10客户月销售环比(" + customerName + ")");
         mPresenter.getOrderAmountByCustomerName(customerName);
+        mAnimDataLoading = true;
+        isLoading = true;
     }
 
 
