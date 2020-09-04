@@ -192,7 +192,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     @Override
     protected void loopTimesListener(long loopTimes) {
-        if (loopTimes % 3 == 0) {
+        if (loopTimes % 180 == 0) {//30分钟刷新
             mPresenter.login();
         }
 

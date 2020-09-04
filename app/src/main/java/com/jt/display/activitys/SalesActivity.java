@@ -116,11 +116,11 @@ public class SalesActivity extends BaseDisplayActivity {
 
     @Override
     protected void loopTimesListener(long loopTimes) {
-        if (loopTimes % 3 == 0) {
+        if (loopTimes % 180 == 0) {//半小时刷新界面数据
             mPresenter.getSalesCurrentAndLastMonth();
         }
 
-        if (loopTimes% 360 == 0){//10000*6*60  360 一小时刷新token
+        if (loopTimes % 720 == 0) {//10000*6*60*2   二小时刷新token
             mPresenter.login();
         }
 

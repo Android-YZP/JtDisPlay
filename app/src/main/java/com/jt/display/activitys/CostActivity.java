@@ -130,7 +130,7 @@ public class CostActivity extends BaseDisplayActivity {
     protected void loopTimesListener(long loopTimes) {
         Logger.e(loopTimes + "------");
 
-        if (loopTimes% 360 == 0){//10000*6*60*4   4小时刷新token
+        if (loopTimes% 720 == 0){//10000*6*60*4   2小时刷新token
             mPresenter.login();
         }
 
