@@ -94,7 +94,6 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
 
             <TextView
@@ -105,7 +104,6 @@
                 android:layout_weight="1"
                 android:background="@color/bg_data"
                 android:gravity="center"
-                android:text="333m³     222m³"
                 android:textSize="@dimen/font15" />
         </LinearLayout>
 
