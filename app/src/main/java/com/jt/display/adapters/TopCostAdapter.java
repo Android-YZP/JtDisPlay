@@ -91,17 +91,17 @@ public class TopCostAdapter extends ListBaseAdapter<CustomerChannelCityOrderCost
     @SuppressLint("SetTextI18n")
     private void parseData(TextView tvCurrent, TextView tvArrow, TextView tvLast, float lastMonthOrderCost, float currentMonthOrderCost) {
         if (currentMonthOrderCost - lastMonthOrderCost > 0) {//增长
-            tvCurrent.setText(currentMonthOrderCost == 0f ? "0" : (int)currentMonthOrderCost + "");
+            tvCurrent.setText(currentMonthOrderCost == 0f ? "0" : (int) currentMonthOrderCost + "");
             tvArrow.setText("⬆");
             tvArrow.setTextColor(Color.GREEN);
-            tvLast.setText((int)lastMonthOrderCost - (int)currentMonthOrderCost + "");
+            tvLast.setText((int) currentMonthOrderCost - (int) lastMonthOrderCost + "");
         } else if (currentMonthOrderCost - lastMonthOrderCost < 0) {//减少
-            tvCurrent.setText(currentMonthOrderCost == 0f ? "0" : (int)currentMonthOrderCost + "");
+            tvCurrent.setText(currentMonthOrderCost == 0f ? "0" : (int) currentMonthOrderCost + "");
             tvArrow.setText("⬇");
             tvArrow.setTextColor(Color.RED);
-            tvLast.setText((int)lastMonthOrderCost - (int)currentMonthOrderCost + "");
+            tvLast.setText((int) lastMonthOrderCost - (int) currentMonthOrderCost + "");
         } else if (currentMonthOrderCost - lastMonthOrderCost == 0) {//持平
-            tvCurrent.setText(currentMonthOrderCost == 0f ? "0" : (int)currentMonthOrderCost + "");
+            tvCurrent.setText(currentMonthOrderCost == 0f ? "0" : (int) currentMonthOrderCost + "");
             tvArrow.setText("-");
             tvArrow.setTextColor(Color.GRAY);
             tvLast.setText("");

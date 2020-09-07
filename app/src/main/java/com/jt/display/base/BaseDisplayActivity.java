@@ -98,6 +98,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
      * 轮播动画回调
      */
     protected abstract void loopTimesListener(long loopTimes);
+
     protected abstract void animStart(int mAnimPager);
 
     /**
@@ -168,9 +169,9 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
         mTranslationAnimatorSet = new AnimatorSet();
         mTranslationAnimatorSet.playTogether(
-                ObjectAnimator.ofFloat(view1, "translationX", -view1.getWidth(), 0)
+                ObjectAnimator.ofFloat(view1, "translationX", view1.getWidth(), 0)
                         .setDuration(2000),
-                ObjectAnimator.ofFloat(view2, "translationX", 0, view1.getWidth())
+                ObjectAnimator.ofFloat(view2, "translationX", 0, -view1.getWidth())
                         .setDuration(2000),
 
                 ObjectAnimator.ofFloat(view1, "alpha", 0f, 1)

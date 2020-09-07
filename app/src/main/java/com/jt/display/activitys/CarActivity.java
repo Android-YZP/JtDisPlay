@@ -148,10 +148,12 @@ public class CarActivity extends BaseDisplayActivity {
 
     @Override
     protected void loopTimesListener(long loopTimes) {
-        mPresenter.shipmentSum(mMdcShipmentPage + "", +mHzShipmentPage + "");//出货
-        mPresenter.deliverySum(mRtwDeliveryPage + "", mDirectDeliveryPage + "");//提货
+        if (loopTimes % 6 == 0) {
+            mPresenter.shipmentSum(mMdcShipmentPage + "", +mHzShipmentPage + "");//出货
+            mPresenter.deliverySum(mRtwDeliveryPage + "", mDirectDeliveryPage + "");//提货
+        }
 
-        if (loopTimes% 720 == 0){//10000*6*60*4   2小时刷新token
+        if (loopTimes % 720 == 0) {//10000*6*60*4   2小时刷新token
             mPresenter.login();
         }
     }
