@@ -138,6 +138,15 @@ public class SalesActivity extends BaseDisplayActivity {
         }
     }
 
+    @Override
+    protected void animStart(int mAnimPager) {
+        if ((mAnimPager + 2) % 2 == 0) {
+            mOrderAmountChartOne.clear();
+        } else {
+            mOrderAmountChartTwo.clear();
+        }
+    }
+
     /**
      * 前缀：http://40.73.59.226:9000/jtms-order/
      * 销售主题：
@@ -202,8 +211,8 @@ public class SalesActivity extends BaseDisplayActivity {
 
     @SuppressLint("SetTextI18n")
     private void startTopChart(int page) {
-        mOrderAmountChartOne.clear();
-        mOrderAmountChartTwo.clear();
+//        mOrderAmountChartOne.clear();
+//        mOrderAmountChartTwo.clear();
         String customerName = mTopCustomerList.get(page).getCustomerName();
         mTvOrderAmountDesc.setText("Top10客户月销售环比(" + customerName + ")");
         mPresenter.getOrderAmountByCustomerName(customerName);

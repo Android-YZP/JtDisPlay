@@ -155,6 +155,11 @@ public class CostActivity extends BaseDisplayActivity {
         }
     }
 
+    @Override
+    protected void animStart(int mAnimPager) {
+
+    }
+
 
     @Override
     public void onSuccess(Object jsonResult, int type) {

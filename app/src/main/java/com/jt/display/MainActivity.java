@@ -206,6 +206,11 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
 
     }
 
+    @Override
+    protected void animStart(int mAnimPager) {
+
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(Object jsonResult, int type) {

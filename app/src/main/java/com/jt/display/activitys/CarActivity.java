@@ -157,6 +157,11 @@ public class CarActivity extends BaseDisplayActivity {
     }
 
     @Override
+    protected void animStart(int mAnimPager) {
+
+    }
+
+    @Override
     public void onSuccess(Object jsonResult, int type) {
 
         if (type == Constants.METHOD_LOGIN) {//登录

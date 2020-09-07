@@ -20,7 +20,6 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 public abstract class BaseDisplayActivity extends AppCompatActivity implements IBaseView {
@@ -30,6 +29,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
     public Handler handler = new Handler();
     private int mAnimPager = 1;
     public int mDelayTime = 10000;
+    public int mDelaAnimTime = 60000;
     public AnimatorSet mTranslationAnimatorSet;
     private List<View> mViewList = new ArrayList<>();
     private long mLoopTimes = 0;
@@ -51,8 +51,8 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
         @Override
         public void run() {
             if (!mAnimDataLoading)
-                nextPager(mAnimPager, mDelayTime);
-            handler.postDelayed(mAnimRunnable, mDelayTime);
+                nextPager(mAnimPager, mDelaAnimTime);
+            handler.postDelayed(mAnimRunnable, mDelaAnimTime);
         }
     };
 
@@ -98,6 +98,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
      * 轮播动画回调
      */
     protected abstract void loopTimesListener(long loopTimes);
+    protected abstract void animStart(int mAnimPager);
 
     /**
      * 初始化监听
@@ -110,8 +111,8 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
 
     public void startAnim() {
         if (mTranslationAnimatorSet == null) {
-            nextPager(mAnimPager, mDelayTime);
-            handler.postDelayed(mAnimRunnable, mDelayTime);
+            nextPager(mAnimPager, mDelaAnimTime);
+            handler.postDelayed(mAnimRunnable, mDelaAnimTime);
         }
     }
 
@@ -182,6 +183,7 @@ public abstract class BaseDisplayActivity extends AppCompatActivity implements I
             public void onAnimationStart(Animator animator) {
                 view1.setVisibility(View.VISIBLE);
                 view2.setVisibility(View.VISIBLE);
+                animStart(mAnimPager);
             }
 
             @Override
