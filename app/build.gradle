@@ -12,6 +12,21 @@ android {
         versionName "1.0"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('C:/androidapp/jt_assistant_rat/jt.jks')
+            storePassword 'jingtong12345'
+            keyAlias 'jt'
+            keyPassword 'jingtong12345'
+        }
+        debug {
+            storeFile file('C:/androidapp/jt_assistant_rat/jt.jks')
+            storePassword 'jingtong12345'
+            keyAlias 'jt'
+            keyPassword 'jingtong12345'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

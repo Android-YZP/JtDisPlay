@@ -1,21 +1,7 @@
 package com.jt.display.activitys;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v7.widget.GridLayoutManager;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.StyleSpan;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.jt.display.MainActivity;
@@ -27,14 +13,10 @@ import com.jt.display.base.BaseDisplayActivity;
 import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
 import com.jt.display.bean.ChannelCityOrderCostReportBean;
-import com.jt.display.bean.CurrentDeliveryPlanBean;
-import com.jt.display.bean.CurrentReceivePlanBean;
 import com.jt.display.bean.CustomerChannelCityOrderCostReportBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.utils.SharePreferenceUtils;
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +32,6 @@ public class CostActivity extends BaseDisplayActivity {
     private List<ChannelCityOrderCostReportBean.DataBean.OtherOrderCostListBean> otherOrderCostList;
     private TopCostAdapter mTopCostAdapter;
     private CustomerChannelCityOrderCostReportBean mCostReportBean;
-
     private int mTop10Page = 0;
     private boolean isTopFive = true;
     private boolean isLoading = true;
@@ -101,7 +82,6 @@ public class CostActivity extends BaseDisplayActivity {
         mLrvLanTong.setAdapter(mLuRecyclerViewAdapter);
         mLrvLanTong.setLoadMoreEnabled(false);
         mLrvLanTong.setPullRefreshEnabled(false);
-
 
         mLrvOther.setLayoutManager(new GridLayoutManager(mContext, 3));
         mOtherCostAdapter = new OtherCostAdapter(mContext);

@@ -435,7 +435,11 @@ public class ComPresenter extends BasePresenter {
 
 
     private String getToken() {
-        return "bearer " + SharePreferenceUtils.getLoginData((Context) mView).getData().getAccessToken();
+        if (SharePreferenceUtils.getLoginData((Context) mView) == null) {
+            return "bearer";
+        }else {
+            return "bearer " + SharePreferenceUtils.getLoginData((Context) mView).getData().getAccessToken();
+        }
     }
 
 }
