@@ -237,7 +237,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_hzShipment"
+                android:id="@+id/tv_mdcShipmen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp5"
@@ -247,7 +247,7 @@
                 android:textSize="@dimen/font15" />
 
             <TextView
-                android:id="@+id/tv_mdcShipmen"
+                android:id="@+id/tv_hzShipment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp5"

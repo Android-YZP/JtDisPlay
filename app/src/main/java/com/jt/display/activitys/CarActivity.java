@@ -89,7 +89,6 @@ public class CarActivity extends BaseDisplayActivity {
         mTvHzShipment = findViewById(R.id.tv_hzShipment);
         mTvMdcShipmen = findViewById(R.id.tv_mdcShipmen);
 
-
         mPresenter = new ComPresenter();
         mPresenter.attachView(this);
     }
@@ -191,8 +190,10 @@ public class CarActivity extends BaseDisplayActivity {
 
         mTvShipmentPlanVolum.setText("出货计划体积 \n" + shipmentBean.getData().getShipmentPlanVolum() + "m³");
         mTvShipmentVolum.setText("已出货体积 \n" + shipmentBean.getData().getShipmentVolum() + "m³");
+
         mTvHzShipment.setText(shipmentBean.getData().getHzShipment().getHzShipmentPlanVolum() + "m³    " +
                 shipmentBean.getData().getHzShipment().getHzShipmentVolum() + "m³");
+
         mTvMdcShipmen.setText(shipmentBean.getData().getMdcShipment().getMdcShipmentPlanVolum() + "m³    " +
                 shipmentBean.getData().getMdcShipment().getMdcShipmentVolum() + "m³");
 
