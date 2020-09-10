@@ -45,8 +45,11 @@ public class CurrentDeliveryPlanAdapter extends ListBaseAdapter<DeliveryPlanList
 
         tvDriver.setVisibility(View.GONE);
         tvLicence.setText(mDataList.get(position).getLicense());
-        tvVolume.setText(mDataList.get(position).getVolume());
-        tvCost.setText(((int) Float.parseFloat(mDataList.get(position).getCartonNum())) + "");
+        tvVolume.setText(((int) Float.parseFloat(mDataList.get(position).getVolume())) < 0 ?
+                "0" :  ((int) Float.parseFloat(mDataList.get(position).getVolume())) + "");
+
+        tvCost.setText(((int) Float.parseFloat(mDataList.get(position).getCartonNum())) < 0 ?
+                "0" :  ((int) Float.parseFloat(mDataList.get(position).getCartonNum())) + "");
         tvSCost.setText(TextUtils.isEmpty(mDataList.get(position).getCarReadyTime()) ? "无" :
                 mDataList.get(position).getCarReadyTime());
 
