@@ -8,8 +8,8 @@ android {
         applicationId "com.jt.display"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "V1.0.20.9.16"
     }
 
     signingConfigs {
@@ -24,6 +24,19 @@ android {
             storePassword 'jingtong12345'
             keyAlias 'jt'
             keyPassword 'jingtong12345'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            if(outputFileName.endsWith('.apk')) {
+//                variant.getPackageApplication().outputDirectory = new File("C:/Users/Smith/Desktop")
+                if (variant.buildType.name == 'release') {
+                    outputFileName = "数据展示_${defaultConfig.versionName}.apk"
+                }else{
+                    outputFileName = "数据展示_${defaultConfig.versionName}_debug.apk"
+                }
+            }
         }
     }
 

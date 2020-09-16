@@ -182,8 +182,8 @@ public class TransportActivity extends BaseDisplayActivity {
     private void initCurrentReceivePlan(CurrentReceivePlanBean currentReceivePlanBean) {
         int mCurrentReceivePlanPage = 0;
         mCurrentReceivePlanAdapter.setDataList(currentReceivePlanBean.getData().getReceiveWarePlanList());
-        mTvSumVolume.setText("计划出货体积\n" + currentReceivePlanBean.getData().getSumVolume() + " m³");
-        mTvHasStoredVolume.setText("已出货体积\n" + currentReceivePlanBean.getData().getHasStoredVolume() + " m³");
+        mTvSumVolume.setText("计划收货体积\n" + currentReceivePlanBean.getData().getSumVolume() + " m³");
+        mTvHasStoredVolume.setText("已收货体积\n" + currentReceivePlanBean.getData().getHasStoredVolume() + " m³");
         mTvWarehouseNum.setText("实时库容\n" + currentReceivePlanBean.getData().getCurrentVolumeAndWeightStorageCapacity().
                 getCurrentVolumeStorageCapacity() + " m³ \n" + currentReceivePlanBean.getData().getCurrentVolumeAndWeightStorageCapacity().
                 getCurrentWeightStorageCapacity() + " Kg");
