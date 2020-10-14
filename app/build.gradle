@@ -8,8 +8,8 @@ android {
         applicationId "com.jt.display"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 2
-        versionName "V1.0.20.9.16"
+        versionCode 3
+        versionName "V1.0.20.10.14"
     }
 
     signingConfigs {
@@ -32,9 +32,9 @@ android {
             if(outputFileName.endsWith('.apk')) {
 //                variant.getPackageApplication().outputDirectory = new File("C:/Users/Smith/Desktop")
                 if (variant.buildType.name == 'release') {
-                    outputFileName = "数据展示_${defaultConfig.versionName}.apk"
+                    outputFileName = "DISPLAY_${defaultConfig.versionName}.apk"
                 }else{
-                    outputFileName = "数据展示_${defaultConfig.versionName}_debug.apk"
+                    outputFileName = "DISPLAY_${defaultConfig.versionName}_debug.apk"
                 }
             }
         }

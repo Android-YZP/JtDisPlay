@@ -1,11 +1,14 @@
 package com.jt.display;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.jt.display.activitys.CarActivity;
@@ -24,6 +27,7 @@ import com.jt.display.bean.LastSixMonthSalesBean;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.utils.SharePreferenceUtils;
+import com.jt.display.utils.UpdateUtil;
 import com.jt.display.views.CLineChart;
 import com.jt.display.views.HBarChart;
 import com.jt.display.views.ManyBarChart;
@@ -35,7 +39,11 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class MainActivity extends BaseDisplayActivity implements View.OnFocusChangeListener {
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class MainActivity extends BaseDisplayActivity implements View.OnFocusChangeListener, EasyPermissions.PermissionCallbacks {
 
     private TextView mTvSales;
     private TextView mTvCar;
@@ -64,7 +72,8 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
             Color.parseColor("#fb4751"),
             Color.parseColor("#e06412"),
             Color.parseColor("#6ed062"),
-            Color.parseColor("#5afe01")
+            Color.parseColor("#5afe01"),
+            Color.parseColor("#ffffff")
     );
 
     private TextView mTvWeek;
@@ -124,6 +133,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         addAnimView(mCustomerSalesSortChartMonth);
         addAnimView(mCustomerSalesSortChartQuarterly);
         startAnim();
+        requestPermission();
     }
 
     @Override
@@ -424,10 +434,9 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         List<PieChartView.PieceDataHolder> pieceDataHolders = new ArrayList<>();
         for (CustomerSalesSortBean.DataBean data : dataBeanList) {
             pieceDataHolders.add(new PieChartView.PieceDataHolder(Float.parseFloat(data.getChannelSettleAmount()),
-                    colors.get(currentPosition), data.getCustomerName()));
+                    colors.get(currentPosition % 11), data.getCustomerName()));
             currentPosition++;
         }
-
         return pieceDataHolders;
     }
 
@@ -601,6 +610,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_UP:
                 mSecretCode = mSecretCode + 3;
+                update("https://gitee.com/androidYZP/RxHttp/raw/master/app.apk");
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 mSecretCode = mSecretCode + 5;
@@ -616,5 +626,49 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         return false;
     }
 
+    private void update(String s) {
+        new UpdateUtil(mContext, s, "app.apk");
+    }
+
+    String[] permissions = {Manifest.permission.CAMERA
+            , Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION};
+
+    @AfterPermissionGranted(500)
+    private void requestPermission() {
+        if (EasyPermissions.hasPermissions(this, permissions)) {
+        } else {
+            EasyPermissions.requestPermissions(this, "请授予应用相关权限", 500, permissions);
+        }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Toast.makeText(this, "没有相关权限!", Toast.LENGTH_SHORT).show();
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            if (requestCode == 500) {
+                new AppSettingsDialog.Builder(this).setTitle("权限申请").setRationale("请授予应用相关权限").build().show();
+            } else {
+                new AppSettingsDialog.Builder(this).build().show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        try {
+            EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
