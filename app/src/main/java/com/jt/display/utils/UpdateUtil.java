@@ -2,6 +2,7 @@ package com.jt.display.utils;
 
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -37,6 +38,8 @@ public class UpdateUtil {
     //下载apk
     private void downloadAPK(String url, String name) {
         Logger.e("============="+url);
+//        openBrowser(mContext,url);
+
         //创建下载任务
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         //在通知栏中显示，默认就是显示的
@@ -134,6 +137,27 @@ public class UpdateUtil {
             runtime.exec(command);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 调用第三方浏览器打开
+     * @param context
+     * @param url 要浏览的资源地址
+     */
+    public static  void openBrowser(Context context,String url){
+        final Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        // 注意此处的判断intent.resolveActivity()可以返回显示该Intent的Activity对应的组件名
+        // 官方解释 : Name of the component implementing an activity that can display the intent
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            final ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+            // 打印Log   ComponentName到底是什么
+            Log.d("componentName = " , componentName.getClassName());
+            context.startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        } else {
+            Toast.makeText(context.getApplicationContext(), "请下载浏览器", Toast.LENGTH_SHORT).show();
         }
     }
 }
