@@ -2,8 +2,9 @@ package com.jt.display.base;
 
 
 public class Constants {
-//    public static final String WMS_URL_BASE = "http://40.73.59.226:9000";
-    public static final String WMS_URL_BASE = "http://47.114.120.136:9000";
+    public static final String WMS_URL_BASE = "http://40.73.59.226:9000";
+    public static final String UPDATE_URL = "http://40.73.59.226:9102/app/upgrade";
+//    public static final String WMS_URL_BASE = "http://47.114.120.136:9000";
     public static final String AES_PASSWORD = "16b9c7e8695438dc";
     public static final String TENANTID = "000000";
 
@@ -35,6 +36,7 @@ public class Constants {
     public static final int METHOD_FIVE = 10006;
     public static final int METHOD_SIX = 10007;
     public static final int METHOD_SEVEN = 10008;
+    public static final int METHOD_CHECK_UPGRADE = 10009;
 
     public static final int HTTP_SUCCESS = 200;
     public static final int HTTP_SUCCESS_PICK_FINISH = 100;

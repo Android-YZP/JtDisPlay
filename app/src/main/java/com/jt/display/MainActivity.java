@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.google.gson.Gson;
 import com.jt.display.activitys.CarActivity;
 import com.jt.display.activitys.CostActivity;
 import com.jt.display.activitys.SalesActivity;
@@ -24,6 +25,7 @@ import com.jt.display.bean.CustomerSalesSortBean;
 import com.jt.display.bean.LastSevenCarCostBean;
 import com.jt.display.bean.LastSevenDaysSalesBean;
 import com.jt.display.bean.LastSixMonthSalesBean;
+import com.jt.display.bean.UpgradeInfo;
 import com.jt.display.presenter.ComPresenter;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.utils.SharePreferenceUtils;
@@ -284,11 +286,17 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                         bean.getData().get(0).getCurrentWeightStorageCapacity() + " Kg");
             }
         } else if (type == Constants.METHOD_SEVEN) {//当日装卸方数
+            mPresenter.checkUpgrade(mPresenter.getAppInfo(MainActivity.this));//版本升级
+
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 CurrentDateLoadAndUnloadVolumeBean currentDateLoadAndUnloadVolumeBean =
                         GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentDateLoadAndUnloadVolumeBean.class);
                 initLoadAndUnloadVolumeChart(currentDateLoadAndUnloadVolumeBean);
             }
+        } else if (type == Constants.METHOD_CHECK_UPGRADE) {//当日装卸方数
+            UpgradeInfo upgradeInfo = new Gson().fromJson(new Gson().toJson(jsonResult), UpgradeInfo.class);
+            mPresenter.startUpdate(MainActivity.this, Constants.WMS_URL_BASE +
+                    (upgradeInfo.getData().getUpgradeUrl() + "").replace("api/jtms-logistics/", ""));
         }
     }
 
@@ -610,7 +618,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_UP:
                 mSecretCode = mSecretCode + 3;
-                update("https://gitee.com/androidYZP/RxHttp/raw/master/app.apk");
+
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 mSecretCode = mSecretCode + 5;

@@ -1,15 +1,23 @@
 package com.jt.display.presenter;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 import com.jt.display.base.BasePresenter;
 import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
+import com.jt.display.bean.AppInfo;
 import com.jt.display.http.RxScheduler;
 import com.jt.display.model.ComModel;
 import com.jt.display.utils.GsonUtil;
 import com.jt.display.utils.SharePreferenceUtils;
+import com.jt.display.utils.UpdateUtil;
 import com.orhanobut.logger.Logger;
+
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 import io.reactivex.functions.Consumer;
 
@@ -433,13 +441,102 @@ public class ComPresenter extends BasePresenter {
                 });
     }
 
+    public void checkUpgrade(final AppInfo appInfo) {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.checkUpgrade(getToken(), appInfo)
+                .compose(RxScheduler.<JsonResult>flowableIoMain())
+                .as(mView.<JsonResult>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult>() {
+                    @Override
+                    public void accept(JsonResult bean) throws Exception {
+                        mView.onSuccess(bean, Constants.METHOD_CHECK_UPGRADE);
+                        mView.hideLoading();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    public void startUpdate(Context context, String apkUrl) {
+
+        new UpdateUtil(context, apkUrl, "DISPLAY.apk");
+    }
+
+    public AppInfo getAppInfo(Context context) {
+        return new AppInfo(context.getPackageName(), getLocalVersion(context), getMachineHardwareAddress());
+    }
 
     private String getToken() {
         if (SharePreferenceUtils.getLoginData((Context) mView) == null) {
             return "bearer";
-        }else {
+        } else {
             return "bearer " + SharePreferenceUtils.getLoginData((Context) mView).getData().getAccessToken();
         }
+    }
+    public int getLocalVersion(Context ctx) {
+        int localVersion = 0;
+        try {
+            PackageInfo packageInfo = ctx.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(ctx.getPackageName(), 0);
+            localVersion = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return localVersion;
+    }
+
+
+    private String getMachineHardwareAddress() {
+        Enumeration<NetworkInterface> interfaces = null;
+        try {
+            interfaces = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        String hardWareAddress = null;
+        NetworkInterface iF = null;
+        if (interfaces == null) {
+            return null;
+        }
+        while (interfaces.hasMoreElements()) {
+            iF = interfaces.nextElement();
+            try {
+                hardWareAddress = bytesToString(iF.getHardwareAddress());
+                if (hardWareAddress != null)
+                    break;
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
+        }
+        return hardWareAddress;
+    }
+
+    /***
+     * byte转为String
+     *
+     * @param bytes
+     * @return
+     */
+    private String bytesToString(byte[] bytes) {
+        if (bytes == null || bytes.length == 0) {
+            return null;
+        }
+        StringBuilder buf = new StringBuilder();
+        for (byte b : bytes) {
+            buf.append(String.format("%02X:", b));
+        }
+        if (buf.length() > 0) {
+            buf.deleteCharAt(buf.length() - 1);
+        }
+        return buf.toString();
     }
 
 }

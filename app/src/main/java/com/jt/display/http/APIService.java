@@ -1,6 +1,7 @@
 package com.jt.display.http;
 
 import com.jt.display.base.JsonResult;
+import com.jt.display.bean.AppInfo;
 
 import io.reactivex.Flowable;
 import retrofit2.Call;
@@ -123,6 +124,12 @@ public interface APIService {
     @GET("/jtms-order/reportForm/getCustomerChannelCityOrderCostReportForm")
     Flowable<JsonResult> getCustomerChannelCityOrderCostReportForm(@Header("Authorization") String authorization,
                                                                    @Header("Blade-Auth") String blade_auth);
+
+    @POST
+    Flowable<JsonResult> checkUpgrade(@Url String url,
+                                      @Header("Authorization") String authorization,
+                                      @Header("Token") String token,
+                                      @Body AppInfo appInfo);
 
 
 //

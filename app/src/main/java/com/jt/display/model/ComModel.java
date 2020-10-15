@@ -1,6 +1,8 @@
 package com.jt.display.model;
 
+import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
+import com.jt.display.bean.AppInfo;
 import com.jt.display.http.Authorization;
 import com.jt.display.http.RetrofitClient;
 
@@ -76,14 +78,14 @@ public class ComModel {
                 token, page1, pageSize1, page2, pageSize2);
     }
 
-    public Flowable<JsonResult> getCurrentReceivePlan(String token,String currentPage,String pageSize) {
+    public Flowable<JsonResult> getCurrentReceivePlan(String token, String currentPage, String pageSize) {
         return RetrofitClient.getInstance().getApi().getCurrentReceivePlan(Authorization.getInstance().getAuthorization(),
-                token,currentPage,pageSize);
+                token, currentPage, pageSize);
     }
 
-    public Flowable<JsonResult> getCurrentDeliveryPlan(String token,String currentPage,String pageSize) {
+    public Flowable<JsonResult> getCurrentDeliveryPlan(String token, String currentPage, String pageSize) {
         return RetrofitClient.getInstance().getApi().getCurrentDeliveryPlan(Authorization.getInstance().getAuthorization(),
-                token,currentPage,pageSize);
+                token, currentPage, pageSize);
     }
 
     public Flowable<JsonResult> getChannelCityOrderCostReportForm(String token) {
@@ -96,4 +98,8 @@ public class ComModel {
                 token);
     }
 
+    public Flowable<JsonResult> checkUpgrade(String token, AppInfo appInfo) {
+        return RetrofitClient.getInstance().getApi().checkUpgrade(Constants.UPDATE_URL,
+                Authorization.getInstance().getAuthorization(), token, appInfo);
+    }
 }
