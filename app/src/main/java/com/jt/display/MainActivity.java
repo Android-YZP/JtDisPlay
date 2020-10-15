@@ -25,6 +25,8 @@ import com.jt.display.bean.CustomerSalesSortBean;
 import com.jt.display.bean.LastSevenCarCostBean;
 import com.jt.display.bean.LastSevenDaysSalesBean;
 import com.jt.display.bean.LastSixMonthSalesBean;
+import com.jt.display.bean.LoginData;
+import com.jt.display.bean.PDALoginData;
 import com.jt.display.bean.UpgradeInfo;
 import com.jt.display.bean.User;
 import com.jt.display.presenter.ComPresenter;
@@ -227,9 +229,6 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
     @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(Object jsonResult, int type) {
-        if (((JsonResult) jsonResult).getCode() != Constants.HTTP_SUCCESS) {
-            show(((JsonResult) jsonResult).getMsg());
-        }
 
         if (type == Constants.METHOD_LOGIN) {//登录
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
@@ -295,13 +294,19 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 initLoadAndUnloadVolumeChart(currentDateLoadAndUnloadVolumeBean);
             }
         } else if (type == Constants.METHOD_CHECK_UPGRADE) {//升级
-            UpgradeInfo upgradeInfo = new Gson().fromJson(new Gson().toJson(jsonResult), UpgradeInfo.class);
-            mPresenter.startUpdate(MainActivity.this, Constants.WMS_URL_BASE +
-                    (upgradeInfo.getData().getUpgradeUrl() + "").replace("api/jtms-logistics/", ""));
+            if (((JsonResult) jsonResult).getCode() == 0) {
+                UpgradeInfo upgradeInfo = new Gson().fromJson(new Gson().toJson(jsonResult), UpgradeInfo.class);
+                Logger.e("============="+new Gson().toJson(jsonResult));
+                mPresenter.startUpdate(MainActivity.this, Constants.PDA_DOWNLOAD_URL +
+                        (upgradeInfo.getData().getUpgradeUrl() + "").replace("api/jtms-logistics/", ""));
+            }
+
 
         } else if (type == Constants.METHOD_LOGIN_PDA) {//PDA登录
-            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
-                mPresenter.checkUpgrade(mPresenter.getAppInfo(MainActivity.this));//版本升级
+            if (((JsonResult<PDALoginData>) jsonResult).getCode() == 0) {
+                String token = ((JsonResult<PDALoginData>) jsonResult).getData().getToken();
+                mPresenter.checkUpgrade(mPresenter.getAppInfo(MainActivity.this),token);//版本升级
+
             }
         }
     }

@@ -1,11 +1,15 @@
 package com.jt.display.http;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.jt.display.utils.AesUtil;
+import com.jt.display.utils.HexUtil;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -53,7 +57,6 @@ public class JsonConverterFactory extends Converter.Factory {
 
     /**
      * JsonRequestBodyConverter<T>
-     *
      * @param <T>
      */
     public static class JsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
@@ -77,7 +80,7 @@ public class JsonConverterFactory extends Converter.Factory {
             //再将数据post给服务器，同时要注意，你的T到底指的那个对象
             //加密操作，返回字节数组
             String json = null;
-            if (value instanceof String) {
+            if ( value instanceof String){
                 json = (String) value;
             } else {
                 json = gson.toJson(value);
@@ -85,16 +88,16 @@ public class JsonConverterFactory extends Converter.Factory {
             byte[] encrypt = AesUtil.encrypt(json);
 
 
-//            LogUtils.log( "加密后的字节数组：" + new Gson().toJson(encrypt));//打印：字节数组
+            Logger.e("向服务器传输:" + json); //打印：加密前的json字符串
+            Log.i(TAG, "加密后的字节数组：" + new Gson().toJson(encrypt));//打印：字节数组
 
             //传入字节数组，创建RequestBody 对象
-            return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+            return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), HexUtil.encodeHexStr(encrypt));
         }
     }
 
     /**
      * JsonResponseBodyConverter<T>
-     *
      * @param <T>
      */
     public class JsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
@@ -121,14 +124,12 @@ public class JsonConverterFactory extends Converter.Factory {
 
             byte[] bytes = responseBody.bytes();
 
-//            LogUtils.log("需要解密的服务器数据字节数组：" + bytes.length);
-
-//            String jsonString = new String(AesUtil.decrypt(HexUtil.decodeHex(new String(bytes).toCharArray())));
-            String s = new String(bytes);
-//            LogUtils.log("解密后的服务器数据字符串：" + s);
+            Logger.d("需要解密的服务器数据字节数组：" + bytes.toString());
+            String jsonString = new String(AesUtil.decrypt(HexUtil.decodeHex(new String(bytes).toCharArray())));
+            Logger.e("服务器返回：" + jsonString);
 
             //这部分代码参考GsonConverterFactory中GsonResponseBodyConverter<T>的源码对json的处理
-            Reader reader = StringToReader(s);
+            Reader reader = StringToReader(jsonString);
             JsonReader jsonReader = gson.newJsonReader(reader);
             try {
                 return adapter.read(jsonReader);
@@ -140,12 +141,11 @@ public class JsonConverterFactory extends Converter.Factory {
 
         /**
          * String转Reader
-         *
          * @param json
          * @return
          */
-        private Reader StringToReader(String json) {
-            Reader reader = new StringReader(json);
+        private Reader StringToReader(String json){
+            Reader reader  = new StringReader(json);
             return reader;
         }
     }

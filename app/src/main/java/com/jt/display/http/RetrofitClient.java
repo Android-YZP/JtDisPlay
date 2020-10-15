@@ -24,6 +24,7 @@ public class RetrofitClient {
 
     private static volatile RetrofitClient instance;
     private APIService apiService;
+    private APIService EncryptionapiService;
 
     private RetrofitClient() {
     }
@@ -76,6 +77,32 @@ public class RetrofitClient {
         //创建—— 网络请求接口—— 实例
         apiService = retrofit.create(APIService.class);
         return apiService;
+    }
+
+
+    public APIService getEncryptionApi() {
+        //初始化一个client,不然retrofit会自己默认添加一个
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                //设置拦截器
+                .addInterceptor(getInterceptor())
+                .addInterceptor(new Retry(Constants.HTTP_RETRY_COUNT))
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
+                //设置网络请求的Url地址
+                .baseUrl(Constants.WMS_URL_BASE)
+                //设置数据解析器
+//                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(JsonConverterFactory.create())
+                //设置网络请求适配器，使其支持RxJava与RxAndroid
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        //创建—— 网络请求接口—— 实例
+        EncryptionapiService = retrofit.create(APIService.class);
+        return EncryptionapiService;
     }
 
 

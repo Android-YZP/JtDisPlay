@@ -455,7 +455,6 @@ public class ComPresenter extends BasePresenter {
                 .subscribe(new Consumer<JsonResult<PDALoginData>>() {
                     @Override
                     public void accept(JsonResult<PDALoginData> bean) throws Exception {
-
                         mView.onSuccess(bean, Constants.METHOD_LOGIN_PDA);
                         mView.hideLoading();
                     }
@@ -470,12 +469,12 @@ public class ComPresenter extends BasePresenter {
     }
 
 
-    public void checkUpgrade(final AppInfo appInfo) {
+    public void checkUpgrade(final AppInfo appInfo, String token) {
         if (!isViewAttached()) {
             return;
         }
         mView.showLoading();
-        mLoginModel.checkUpgrade(getToken(), appInfo)
+        mLoginModel.checkUpgrade(token, appInfo)
                 .compose(RxScheduler.<JsonResult>flowableIoMain())
                 .as(mView.<JsonResult>bindAutoDispose())
                 .subscribe(new Consumer<JsonResult>() {

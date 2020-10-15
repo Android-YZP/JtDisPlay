@@ -13,6 +13,7 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
@@ -35,7 +36,7 @@ public class UpdateUtil {
 
     //下载apk
     private void downloadAPK(String url, String name) {
-        Log.e("JsonConverterFactory", url);
+        Logger.e("============="+url);
         //创建下载任务
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         //在通知栏中显示，默认就是显示的

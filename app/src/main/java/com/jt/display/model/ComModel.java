@@ -104,15 +104,15 @@ public class ComModel {
         return RetrofitClient.getInstance().getApi().getCustomerChannelCityOrderCostReportForm(Authorization.getInstance().getAuthorization(),
                 token);
     }
-    public  String TOKEN = "a7db4f7859784f4982b218f73d1a7706";
+
     public Flowable<JsonResult> checkUpgrade(String token, AppInfo appInfo) {
-        return RetrofitClient.getInstance().getApi().checkUpgrade(Constants.UPDATE_URL,
-                getAuthorization(), TOKEN, appInfo);
+        return RetrofitClient.getInstance().getEncryptionApi().checkUpgrade(Constants.UPDATE_URL,
+                getAuthorization(), token, appInfo);
     }
 
 
     public Flowable<JsonResult<PDALoginData>> doLogin(User user) {
-        return RetrofitClient.getInstance().getApi().doLogin(Constants.PDA_LOGIN_URL,getAuthorization(),user);
+        return RetrofitClient.getInstance().getEncryptionApi().doLogin(Constants.PDA_LOGIN_URL,getAuthorization(),user);
     }
 
 
