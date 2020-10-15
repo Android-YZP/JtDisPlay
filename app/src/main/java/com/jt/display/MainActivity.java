@@ -618,7 +618,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_UP:
                 mSecretCode = mSecretCode + 3;
-
+                mPresenter.checkUpgrade(mPresenter.getAppInfo(MainActivity.this));//版本升级
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 mSecretCode = mSecretCode + 5;
