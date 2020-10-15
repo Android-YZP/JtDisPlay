@@ -8,6 +8,8 @@ import com.jt.display.base.BasePresenter;
 import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
 import com.jt.display.bean.AppInfo;
+import com.jt.display.bean.PDALoginData;
+import com.jt.display.bean.User;
 import com.jt.display.http.RxScheduler;
 import com.jt.display.model.ComModel;
 import com.jt.display.utils.GsonUtil;
@@ -440,6 +442,33 @@ public class ComPresenter extends BasePresenter {
                     }
                 });
     }
+
+
+    public void doLogin(final User user) {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.doLogin(user)
+                .compose(RxScheduler.<JsonResult<PDALoginData>>flowableIoMain())
+                .as(mView.<JsonResult<PDALoginData>>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult<PDALoginData>>() {
+                    @Override
+                    public void accept(JsonResult<PDALoginData> bean) throws Exception {
+
+                        mView.onSuccess(bean, Constants.METHOD_LOGIN_PDA);
+                        mView.hideLoading();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+
+    }
+
 
     public void checkUpgrade(final AppInfo appInfo) {
         if (!isViewAttached()) {

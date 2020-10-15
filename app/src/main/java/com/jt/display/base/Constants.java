@@ -4,6 +4,7 @@ package com.jt.display.base;
 public class Constants {
     public static final String WMS_URL_BASE = "http://40.73.59.226:9000";
     public static final String UPDATE_URL = "http://40.73.59.226:9102/app/upgrade";
+    public static final String PDA_LOGIN_URL = "http://40.73.59.226:9102/app/user/login";
 //    public static final String WMS_URL_BASE = "http://47.114.120.136:9000";
     public static final String AES_PASSWORD = "16b9c7e8695438dc";
     public static final String TENANTID = "000000";
@@ -28,6 +29,7 @@ public class Constants {
     public static final int MSG_UPDATE_WAREHOUSE = 1004;
 
 
+    public static final int METHOD_LOGIN_PDA= 100001;
     public static final int METHOD_LOGIN= 10000;
     public static final int METHOD_ONE= 10002;
     public static final int METHOD_TWO = 10003;

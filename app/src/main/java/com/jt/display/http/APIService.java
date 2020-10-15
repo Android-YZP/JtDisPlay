@@ -2,6 +2,8 @@ package com.jt.display.http;
 
 import com.jt.display.base.JsonResult;
 import com.jt.display.bean.AppInfo;
+import com.jt.display.bean.PDALoginData;
+import com.jt.display.bean.User;
 
 import io.reactivex.Flowable;
 import retrofit2.Call;
@@ -131,6 +133,8 @@ public interface APIService {
                                       @Header("Token") String token,
                                       @Body AppInfo appInfo);
 
+    @POST
+    Flowable<JsonResult<PDALoginData>> doLogin(@Url String url,@Header("Authorization") String authorization, @Body User user);
 
 //
 //    //查询容器内库存数据  blade-auth就是token

@@ -5,6 +5,8 @@ import android.text.format.Time;
 import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
 import com.jt.display.bean.AppInfo;
+import com.jt.display.bean.PDALoginData;
+import com.jt.display.bean.User;
 import com.jt.display.http.Authorization;
 import com.jt.display.http.RetrofitClient;
 import com.jt.display.utils.CryptUtil;
@@ -105,18 +107,22 @@ public class ComModel {
     public  String TOKEN = "a7db4f7859784f4982b218f73d1a7706";
     public Flowable<JsonResult> checkUpgrade(String token, AppInfo appInfo) {
         return RetrofitClient.getInstance().getApi().checkUpgrade(Constants.UPDATE_URL,
-                Authorization.getInstance().getAuthorization(), TOKEN, appInfo);
+                getAuthorization(), TOKEN, appInfo);
+    }
+
+
+    public Flowable<JsonResult<PDALoginData>> doLogin(User user) {
+        return RetrofitClient.getInstance().getApi().doLogin(Constants.PDA_LOGIN_URL,getAuthorization(),user);
     }
 
 
     String AUTH_SECRET_KEY = "OmOCClU3mnDIlXBs0heiLEYyDNVhB9AIu6eniwJgu6g=";
     public String getAuthorization(){
-
         //passwordDigest = md5(SHA1(nonce+createTimestamp+secretKey))
         //PasswordDigest="cccccccccccccccccc",Nonce="6FQHGU7M01ZMIA5G",Created="2017-01-01T15:00:00+08:00"
         String nonce = getRandomString(16);
         String created = getRFC3339Time();
-        String passwordDigest = CryptUtil.encryptToMD5(CryptUtil.encryptToSHA(AUTH_SECRET_KEY).toUpperCase());
+        String passwordDigest = CryptUtil.encryptToMD5(CryptUtil.encryptToSHA(nonce+created+AUTH_SECRET_KEY).toUpperCase());
         return String.format("PasswordDigest=\"%s\",Nonce=\"%s\",Created=\"%s\"",passwordDigest,nonce,created);
     }
 
