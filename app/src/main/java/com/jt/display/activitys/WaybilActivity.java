@@ -46,6 +46,7 @@ public class WaybilActivity extends BaseDisplayActivity {
             }
         }, 500);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -63,11 +64,10 @@ public class WaybilActivity extends BaseDisplayActivity {
     public void initView() {
         mPresenter = new ComPresenter();
         mPresenter.attachView(this);
-        mPresenter.waybillAgingCus(mCusPage);
-        mPresenter.waybillAgingCity(mCityPage);
-
         mLrvWaybillCus = findViewById(R.id.lrv_Waybill_cus);
         mLrvWaybillCity = findViewById(R.id.lrv_Waybill_city);
+        mPresenter.waybillAgingCus(mCusPage);
+        mPresenter.waybillAgingCity(mCityPage);
     }
 
     @Override
@@ -96,7 +96,12 @@ public class WaybilActivity extends BaseDisplayActivity {
 
     @Override
     protected void loopTimesListener(long loopTimes) {
+        mPresenter.waybillAgingCus(mCusPage);
+        mPresenter.waybillAgingCity(mCityPage);
 
+        if (loopTimes % 720 == 0) {//10000*6*60*4   2小时刷新token
+            mPresenter.login();
+        }
     }
 
     @Override
@@ -111,20 +116,37 @@ public class WaybilActivity extends BaseDisplayActivity {
 
     @Override
     public void onSuccess(Object jsonResult, int type) {
+        if (type == Constants.METHOD_LOGIN) {//登录
+            if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
+                SharePreferenceUtils.putLoginData(mContext, GsonUtil.GsonString(jsonResult));
+            }
+        }
 
         if (type == Constants.METHOD_ONE) {//waybillAgingCus
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 WaybillAgingCusBean waybillAgingCusBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), WaybillAgingCusBean.class);
                 List<WaybillAgingCusBean.DataBean.RecordsBean> records = waybillAgingCusBean.getData().getRecords();
+                mWaybillCusAdapter.getDataList().clear();
                 mWaybillCusAdapter.getDataList().addAll(records);
                 mWaybillCusAdapter.notifyDataSetChanged();
+                if (waybillAgingCusBean.getData().getPages() <= mCusPage) {
+                    mCusPage = 0;
+                }else {
+                    mCusPage++;
+                }
             }
         } else if (type == Constants.METHOD_TWO) {//
             if (((JsonResult) jsonResult).getCode() == Constants.HTTP_SUCCESS) {
                 WaybillAgingCityBean waybillAgingCityBean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), WaybillAgingCityBean.class);
                 List<WaybillAgingCityBean.DataBean.RecordsBean> recordsBeans = waybillAgingCityBean.getData().getRecords();
+                mWaybillCityAdapter.getDataList().clear();
                 mWaybillCityAdapter.getDataList().addAll(recordsBeans);
                 mWaybillCityAdapter.notifyDataSetChanged();
+                if (waybillAgingCityBean.getData().getPages() <= mCityPage) {
+                    mCityPage = 0;
+                }else {
+                    mCityPage++;
+                }
             }
         }
 
