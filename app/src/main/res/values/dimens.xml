@@ -19,4 +19,5 @@
     <dimen name="SP22">22sp</dimen>
     <dimen name="dp32">32dp</dimen>
     <dimen name="dp33">33dp</dimen>
+    <dimen name="dp48">48dp</dimen>
 </resources>

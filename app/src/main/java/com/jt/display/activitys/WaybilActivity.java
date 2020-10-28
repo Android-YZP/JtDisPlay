@@ -96,8 +96,10 @@ public class WaybilActivity extends BaseDisplayActivity {
 
     @Override
     protected void loopTimesListener(long loopTimes) {
-        mPresenter.waybillAgingCus(mCusPage);
-        mPresenter.waybillAgingCity(mCityPage);
+        if (loopTimes % 3 == 0) {
+            mPresenter.waybillAgingCus(mCusPage);
+            mPresenter.waybillAgingCity(mCityPage);
+        }
 
         if (loopTimes % 720 == 0) {//10000*6*60*4   2小时刷新token
             mPresenter.login();

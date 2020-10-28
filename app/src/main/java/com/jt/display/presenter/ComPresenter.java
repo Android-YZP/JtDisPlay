@@ -403,7 +403,7 @@ public class ComPresenter extends BasePresenter {
         }
         mView.showLoading();
         mLoginModel.waybillAgingCus(getToken(), "2020-10-01", "2020-10-31",
-                page + "", Constants.TRANSPORT_PAGER_SIZE + "")
+                page + "", 10 + "")
                 .compose(RxScheduler.<JsonResult>flowableIoMain())
                 .as(mView.<JsonResult>bindAutoDispose())
                 .subscribe(new Consumer<JsonResult>() {
