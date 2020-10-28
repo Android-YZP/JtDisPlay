@@ -16,6 +16,7 @@ import com.jt.display.activitys.CarActivity;
 import com.jt.display.activitys.CostActivity;
 import com.jt.display.activitys.SalesActivity;
 import com.jt.display.activitys.TransportActivity;
+import com.jt.display.activitys.WaybilActivity;
 import com.jt.display.base.BaseDisplayActivity;
 import com.jt.display.base.Constants;
 import com.jt.display.base.JsonResult;
@@ -164,6 +165,13 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 startActivity(new Intent(mContext, TransportActivity.class));
             }
         });
+        mTvCost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(mContext, WaybilActivity.class));
+            }
+        });
 
         mTvTransport.setOnFocusChangeListener(this);
         mTvSales.setOnFocusChangeListener(this);
@@ -296,7 +304,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         } else if (type == Constants.METHOD_CHECK_UPGRADE) {//升级
             if (((JsonResult) jsonResult).getCode() == 0) {
                 UpgradeInfo upgradeInfo = new Gson().fromJson(new Gson().toJson(jsonResult), UpgradeInfo.class);
-                Logger.e("============="+new Gson().toJson(jsonResult));
+                Logger.e("=============" + new Gson().toJson(jsonResult));
                 mPresenter.startUpdate(MainActivity.this, Constants.PDA_DOWNLOAD_URL +
                         (upgradeInfo.getData().getUpgradeUrl() + "").replace("api/jtms-logistics/", ""));
             }
@@ -305,7 +313,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
         } else if (type == Constants.METHOD_LOGIN_PDA) {//PDA登录
             if (((JsonResult<PDALoginData>) jsonResult).getCode() == 0) {
                 String token = ((JsonResult<PDALoginData>) jsonResult).getData().getToken();
-                mPresenter.checkUpgrade(mPresenter.getAppInfo(MainActivity.this),token);//版本升级
+                mPresenter.checkUpgrade(mPresenter.getAppInfo(MainActivity.this), token);//版本升级
 
             }
         }

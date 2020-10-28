@@ -127,6 +127,26 @@ public interface APIService {
     Flowable<JsonResult> getCustomerChannelCityOrderCostReportForm(@Header("Authorization") String authorization,
                                                                    @Header("Blade-Auth") String blade_auth);
 
+    //http://40.73.59.226:1888/api/jtms-logistics/waybill/waybillAgingCity?startTime=2020-10-01+00:00:00&endTime=2020-10-31+00:00:00&current=2&size=10
+    //http://40.73.59.226:1888/api/jtms-logistics/waybill/waybillAgingCus?startTime=2020-10-01+00:00:00&endTime=2020-10-31+00:00:00&current=2&size=10
+
+    @GET("/jtms-logistics/waybill/waybillAgingCity")
+    Flowable<JsonResult> waybillAgingCity(@Header("Authorization") String authorization,
+                                          @Header("Blade-Auth") String blade_auth,
+                                          @Query("startTime") String startTime,
+                                          @Query("endTime") String endTime,
+                                          @Query("current") String currentPage,
+                                          @Query("size") String pageSize);
+
+    @GET("/jtms-logistics/waybill/waybillAgingCus")
+    Flowable<JsonResult> waybillAgingCus(@Header("Authorization") String authorization,
+                                         @Header("Blade-Auth") String blade_auth,
+                                         @Query("startTime") String startTime,
+                                         @Query("endTime") String endTime,
+                                         @Query("current") String currentPage,
+                                         @Query("size") String pageSize);
+
+
     @POST
     Flowable<JsonResult> checkUpgrade(@Url String url,
                                       @Header("Authorization") String authorization,
@@ -134,7 +154,7 @@ public interface APIService {
                                       @Body AppInfo appInfo);
 
     @POST
-    Flowable<JsonResult<PDALoginData>> doLogin(@Url String url,@Header("Authorization") String authorization, @Body User user);
+    Flowable<JsonResult<PDALoginData>> doLogin(@Url String url, @Header("Authorization") String authorization, @Body User user);
 
 //
 //    //查询容器内库存数据  blade-auth就是token

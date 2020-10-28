@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:text="客户运单时效"
+                android:textSize="@dimen/font15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
+                android:background="@color/bg_data">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="0.9"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="客户"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="0.8"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="运单总数"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="0.7"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="异常数量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="超时效数量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="达标数量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="达标率"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+
+            </LinearLayout>
+
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_Waybill_cus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@color/bg_data"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:text="流向运单时效"
+                android:textSize="@dimen/font15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
+                android:background="@color/bg_data">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="0.9"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="城市"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="0.8"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="运单总数"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="0.7"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="异常数量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="超时效数量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="达标数量"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@color/bg_data"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp5"
+                    android:paddingTop="@dimen/dp5"
+                    android:paddingEnd="@dimen/dp5"
+                    android:text="达标率"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/transport_fount" />
+
+
+            </LinearLayout>
+
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/lrv_Waybill_city"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

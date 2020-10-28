@@ -396,6 +396,56 @@ public class ComPresenter extends BasePresenter {
 
     }
 
+
+    public void waybillAgingCus(int page) {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.waybillAgingCus(getToken(), "2020-10-01", "2020-10-31",
+                page + "", Constants.TRANSPORT_PAGER_SIZE + "")
+                .compose(RxScheduler.<JsonResult>flowableIoMain())
+                .as(mView.<JsonResult>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult>() {
+                    @Override
+                    public void accept(JsonResult bean) throws Exception {
+                        mView.onSuccess(bean, Constants.METHOD_ONE);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+
+    }
+
+    public void waybillAgingCity(int page) {
+        if (!isViewAttached()) {
+            return;
+        }
+        mView.showLoading();
+        mLoginModel.waybillAgingCity(getToken(), "2020-10-01", "2020-10-31",
+                page + "", 10 + "")
+                .compose(RxScheduler.<JsonResult>flowableIoMain())
+                .as(mView.<JsonResult>bindAutoDispose())
+                .subscribe(new Consumer<JsonResult>() {
+                    @Override
+                    public void accept(JsonResult bean) throws Exception {
+                        mView.onSuccess(bean, Constants.METHOD_TWO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading();
+                    }
+                });
+
+    }
+
+
     public void getChannelCityOrderCostReportForm() {
         if (!isViewAttached()) {
             return;
@@ -508,6 +558,7 @@ public class ComPresenter extends BasePresenter {
             return "bearer " + SharePreferenceUtils.getLoginData((Context) mView).getData().getAccessToken();
         }
     }
+
     public int getLocalVersion(Context ctx) {
         int localVersion = 0;
         try {
