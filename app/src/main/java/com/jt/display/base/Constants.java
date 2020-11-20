@@ -2,12 +2,12 @@ package com.jt.display.base;
 
 
 public class Constants {
-    public static final String WMS_URL_BASE = "http://40.73.59.226:9000";
+//    public static final String WMS_URL_BASE = "http://40.73.59.226:9000";
 //    public static final String UPDATE_URL = "http://40.73.59.226:9102/app/upgrade";
 //    public static final String PDA_LOGIN_URL = "http://40.73.59.226:9102/app/user/login";
 
     public static final String PDA_DOWNLOAD_URL = "http://47.114.120.136:9102";
-//    public static final String WMS_URL_BASE = "http://47.114.120.136:9000";
+    public static final String WMS_URL_BASE = "http://47.114.120.136:9000";
     public static final String UPDATE_URL = "http://47.114.120.136:9102/app/upgrade";
     public static final String PDA_LOGIN_URL = "http://47.114.120.136:9102/app/user/login";
 
