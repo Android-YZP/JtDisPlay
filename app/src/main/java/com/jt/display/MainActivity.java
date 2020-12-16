@@ -287,7 +287,7 @@ public class MainActivity extends BaseDisplayActivity implements View.OnFocusCha
                 CurrentReceiveDeliveryBean bean = GsonUtil.GsonToBean(GsonUtil.GsonString(jsonResult), CurrentReceiveDeliveryBean.class);
                 initReceiveBar(bean);
                 mTvTodayReceiving.setText("今日收货\n" + bean.getData().get(0).getReceiveVolume() + " m³\n" +
-                        bean.getData().get(0).getReceiveVolume() + " Kg");
+                        bean.getData().get(0).getReceiveWeight() + " Kg");
                 mTvTodayShipment.setText("今日发货\n" + bean.getData().get(0).getDeliveryVolume() + " m³\n" +
                         bean.getData().get(0).getDeliveryWeight() + " Kg");
                 mTvTodayInventory.setText("今日库存\n" + bean.getData().get(0).getCurrentVolumeStorageCapacity() + " m³\n" +
